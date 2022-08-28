@@ -1,0 +1,30 @@
+{
+  "mainnet": {
+    "feeRecipient": "0xCa3A16281b4dfBe8991BCD4848aF3E6Be56AC496",
+    "feePercent": 59
+  },
+  "bsc": {
+    "feeRecipient": "0xCa3A16281b4dfBe8991BCD4848aF3E6Be56AC496",
+    "feePercent": 59
+  },
+  "matic": {
+    "feeRecipient": "0xCa3A16281b4dfBe8991BCD4848aF3E6Be56AC496",
+    "feePercent": 59
+  },
+  "avax": {
+    "feeRecipient": "0xCa3A16281b4dfBe8991BCD4848aF3E6Be56AC496",
+    "feePercent": 59
+  },
+  "ftm": {
+    "feeRecipient": "0xCa3A16281b4dfBe8991BCD4848aF3E6Be56AC496",
+    "feePercent": 59
+  },
+  "optimism": {
+    "feeRecipient": "0xCa3A16281b4dfBe8991BCD4848aF3E6Be56AC496",
+    "feePercent": 59
+  },
+  "bsct": {
+    "feeRecipient": "0xCa3A16281b4dfBe8991BCD4848aF3E6Be56AC496",
+    "feePercent": 59
+  }
+}
