@@ -1,0 +1,114 @@
+@import "../variables.scss";
+
+.section__content {
+  width: 90%;
+  margin: auto;
+  max-width: $content-max-width;
+}
+
+// bg
+
+.bg-primary {
+  background-color: $primary-color;
+}
+
+.bg-base {
+  background-color: $base-color;
+}
+
+.bg-transparent {
+  background-color: $transparent-color;
+}
+
+// text
+
+.text-primary {
+  color: $text-primary-color;
+}
+
+.text-secondary {
+  color: $text-secondary-color;
+}
+
+.text-high-emphesis {
+  color: $text-high-emphesis-color;
+}
+
+.text-base {
+  color: $base-color;
+}
+
+.text-white {
+  color: $white-color;
+}
+
+.text-black {
+  color: $black-color;
+}
+
+// border
+.border-purple {
+  border-color: rgb(167, 85, 221);
+}
+
+.hover\:border-blue:hover {
+  border-color: rgb(9, 147, 236);
+}
+
+// shadow
+.shadow {
+  box-shadow: $shadow;
+}
+
+// modal
+.modal-drop {
+  background: rgba(9, 9, 9, 0.56);
+  backdrop-filter: blur(57px);
+
+  &.modal-drop--visible {
+    backdrop-filter: blur(0.5px);
+  }
+}
+
+// circle-loader
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 56px;
+  height: 56px;
+}
+
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  margin: 4px;
+  border: 4px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fff transparent transparent transparent;
+}
+
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

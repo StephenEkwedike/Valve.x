@@ -12,4 +12,4 @@
 - BTC: https://testnet.bscscan.com/address/0x8c0640134B0C75E45DB79449a147736C020D09ac
 - FTM: https://testnet.bscscan.com/address/0x64D5a9B640414312Dbf50e7153070FFE0CffB910
 
-- Valve: https://testnet.bscscan.com/address/0x7Fb9C7AF440Af2BE8CdAc00B4fAD279f0c241E3b
+- Valve: https://testnet.bscscan.com/address/0x7f57C43f677621219271094A41AbeA71bFE96856

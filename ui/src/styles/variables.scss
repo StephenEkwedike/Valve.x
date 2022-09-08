@@ -1,0 +1,25 @@
+// colors
+$black-color: #000;
+$white-color: #fff;
+$transparent-color: #0000;
+
+$base-color: #202231;
+$primary-color: #0d0415;
+
+// text colors
+$text-primary-color: #bfbfbf;
+$text-secondary-color: rgb(127, 127, 127);
+$text-high-emphesis-color: rgb(227, 227, 227);
+// shadow
+$shadow-color: #0d0415;
+$shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+$shadow-colored: 0 4px 6px -1px var(shadow-color),
+  0 2px 4px -2px var(shadow-color);
+//
+
+// gradients
+//
+$header-height: 90px;
+$content-max-width: 1200px;
+$border-radius-primary: 56px;
+$navbar-width: 260px;

@@ -36,11 +36,20 @@ contract Valve is Initializable, OwnableUpgradeable, ReentrancyGuardUpgradeable,
     uint256 public validDuration;
     TokenTransfer[] public transfers;
     mapping(address => uint256[]) public transferCreators;
+    mapping(address => uint256[]) public transferReceivers;
     mapping(bytes32 => uint256) public transferInfo;
 
     event Pause();
     event Unpause();
-    event NewTransfer(uint256 id, IERC20 token, address to, uint256 amount, uint256 expireAt, bytes32 exId);
+    event NewTransfer(
+        address from,
+        uint256 id,
+        IERC20 token,
+        address to,
+        uint256 amount,
+        uint256 expireAt,
+        bytes32 exId
+    );
     event TransferAccepted(uint256 id, bytes32 exId);
     event TransferCancelled(uint256 id, bytes32 exId);
 
@@ -71,6 +80,59 @@ contract Valve is Initializable, OwnableUpgradeable, ReentrancyGuardUpgradeable,
 
         for (uint256 index = 0; index < size; index++) {
             ts[index] = transfers[transferCreators[user][index]];
+        }
+    }
+
+    function getUserSubTransfers(
+        address user,
+        uint256 fIndex,
+        uint256 count
+    ) external view returns (TokenTransfer[] memory ts, uint256 size) {
+        size = transferCreators[user].length;
+
+        uint256 realCount = count;
+
+        if (fIndex + realCount >= size) {
+            realCount = size - fIndex;
+        }
+
+        ts = new TokenTransfer[](realCount);
+
+        for (uint256 index = 0; index < realCount; index++) {
+            ts[index] = transfers[transferCreators[user][index + fIndex]];
+        }
+    }
+
+    function getUserReceiveCount(address user) external view returns (uint256) {
+        return transferReceivers[user].length;
+    }
+
+    function getUserReceives(address user) external view returns (TokenTransfer[] memory ts) {
+        uint256 size = transferReceivers[user].length;
+        ts = new TokenTransfer[](size);
+
+        for (uint256 index = 0; index < size; index++) {
+            ts[index] = transfers[transferReceivers[user][index]];
+        }
+    }
+
+    function getUserSubReceives(
+        address user,
+        uint256 fIndex,
+        uint256 count
+    ) external view returns (TokenTransfer[] memory ts, uint256 size) {
+        size = transferReceivers[user].length;
+
+        uint256 realCount = count;
+
+        if (fIndex + realCount >= size) {
+            realCount = size - fIndex;
+        }
+
+        ts = new TokenTransfer[](realCount);
+
+        for (uint256 index = 0; index < realCount; index++) {
+            ts[index] = transfers[transferReceivers[user][index + fIndex]];
         }
     }
 
@@ -113,9 +175,10 @@ contract Valve is Initializable, OwnableUpgradeable, ReentrancyGuardUpgradeable,
             )
         );
         transferCreators[msg.sender].push(id);
+        transferReceivers[to].push(id);
         transferInfo[exId] = id;
 
-        emit NewTransfer(id, token, to, realAmount, block.timestamp + validDuration, exId);
+        emit NewTransfer(msg.sender, id, token, to, realAmount, block.timestamp + validDuration, exId);
     }
 
     /**

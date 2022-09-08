@@ -1,0 +1,8 @@
+@import "../../variables.scss";
+
+@import "./Header.scss";
+@import "./Footer.scss";
+
+.layout__main {
+  padding-top: $header-height;
+}

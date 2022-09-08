@@ -1,0 +1,23 @@
+@import '../../variables.scss';
+
+.layout__main__footer {
+
+
+    .layout__main__footer__content {
+        .layout__main__footer__content__socials {
+            .layout__main__footer__content__socials__item {
+                width: 42px;
+                height: 42px;
+                border-radius: 50%;
+                background-color: rgba($white-color, 0.1);
+                margin: 0 14px;
+
+                transition: all 0.4s;
+
+                &:hover {
+                    opacity: 0.7;
+                }
+            }
+        }
+    }
+}
