@@ -3,10 +3,15 @@ import { AddressInput } from "components/Input/AddressInput";
 import { NULL_ADDRESS, ZERO } from "config/constants";
 import { useConnectedWeb3Context } from "contexts";
 import { BigNumber } from "ethers";
-import { useTokenBalance } from "helpers";
+import { useServices, useTokenBalance } from "helpers";
 import { useEffect, useState } from "react";
+import { ERC20Service } from "services";
 import { IToken } from "types/types";
 import { isAddress } from "utils/tools";
+
+interface IProps {
+  onReload: () => Promise<void>;
+}
 
 interface IState {
   token?: IToken;
@@ -14,8 +19,9 @@ interface IState {
   recipient: string;
 }
 
-export const TransferSection = () => {
-  const { networkId } = useConnectedWeb3Context();
+export const TransferSection = (props: IProps) => {
+  const { networkId, setTxModalInfo, account } = useConnectedWeb3Context();
+  const { valve } = useServices();
   const [state, setState] = useState<IState>({ amount: ZERO, recipient: "" });
   const { balance } = useTokenBalance(state.token?.address || NULL_ADDRESS);
 
@@ -23,7 +29,58 @@ export const TransferSection = () => {
     setState((prev) => ({ ...prev, token: undefined }));
   }, [networkId]);
 
-  const onTransfer = async () => {};
+  const onTransfer = async () => {
+    if (!state.token || !networkId || !account) {
+      return;
+    }
+    try {
+      if (state.token.address === NULL_ADDRESS) {
+        // bnb
+      } else {
+        setTxModalInfo(true, "Checking allowance");
+        const token = new ERC20Service(
+          valve.provider,
+          account,
+          state.token.address
+        );
+        const hasEnoughAllowance = await token.hasEnoughAllowance(
+          account,
+          valve.address,
+          state.amount
+        );
+        if (!hasEnoughAllowance) {
+          setTxModalInfo(true, "Approving");
+          const hash = await token.approveUnlimited(valve.address);
+          setTxModalInfo(
+            true,
+            "Approving",
+            "Please wait until transaction is confirmed",
+            hash
+          );
+          await token.provider.waitForTransaction(hash);
+        }
+      }
+      setTxModalInfo(true, "Doing Transfer");
+      const hash = await valve.createTransfer(
+        state.token.address,
+        state.recipient,
+        state.amount
+      );
+      setTxModalInfo(
+        true,
+        "Approving",
+        "Please wait until transaction is confirmed",
+        hash
+      );
+      await valve.provider.waitForTransaction(hash);
+
+      await props.onReload();
+
+      setTxModalInfo(false);
+    } catch (error) {
+      setTxModalInfo(false);
+    }
+  };
 
   const getMessage = () => {
     if (!state.token) {

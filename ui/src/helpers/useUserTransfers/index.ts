@@ -24,16 +24,22 @@ export const useUserTransfers = () => {
     setState((prev) => ({ ...prev, loading: true }));
     try {
       const count = await valve.getUserTransferCount(account);
-      const calls = new Array(count).map((_, index) => ({
-        name: "transferCreators",
-        address: valve.address,
-        params: [index],
-      }));
+      const calls = [];
+      for (let index = 0; index < count; index++) {
+        calls.push({
+          name: "transferCreators",
+          address: valve.address,
+          params: [account, index],
+        });
+      }
+
       const response = await multicall.multicallv2(abis.Valve, calls);
+
       const ids = response.map((e: any) => e[0].toNumber());
-      setState((prev) => ({ ...prev, transferIds: ids, loading: true }));
+      setState((prev) => ({ ...prev, transferIds: ids, loading: false }));
     } catch (error) {
-      setState((prev) => ({ ...prev, transferIds: [], loading: true }));
+      console.error(error);
+      setState((prev) => ({ ...prev, transferIds: [], loading: false }));
     }
   };
 
@@ -46,6 +52,7 @@ export const useUserTransfers = () => {
 
     if (account) {
       interval = setInterval(load, 60000);
+      load();
     }
     return () => {
       if (account && interval) {

@@ -1,24 +1,8 @@
 import { XIcon } from "@heroicons/react/solid";
-import { useWeb3React } from "@web3-react/core";
 import React, { useEffect, useCallback } from "react";
-import { ConnectorNames } from "utils/enums";
-import connectors from "utils/connectors";
-import {
-  DEFAULT_NETWORK_ID,
-  STORAGE_KEY_CONNECTOR,
-  WALLET_ICONS,
-} from "config/constants";
-import {
-  supportedNetworkIds,
-  setupNetwork,
-  networkIds,
-  networks,
-  knownTokens,
-  getToken,
-} from "config/networks";
-import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
+import { knownTokens, getToken } from "config/networks";
 import { useConnectedWeb3Context } from "contexts";
-import { IToken, KnownToken, NetworkId } from "types/types";
+import { IToken, KnownToken } from "types/types";
 
 interface IProps {
   token?: IToken;
@@ -29,9 +13,9 @@ interface IProps {
 export const TokenSelectModal = (props: IProps) => {
   const { token, onClose, onSelect } = props;
   const { networkId } = useConnectedWeb3Context();
-  const tokens = Object.keys(knownTokens).map((key) =>
-    getToken(key as KnownToken, networkId)
-  );
+  const tokens = Object.keys(knownTokens)
+    .map((key) => getToken(key as KnownToken, networkId))
+    .filter((token) => token.address !== "");
 
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">
@@ -68,8 +52,8 @@ export const TokenSelectModal = (props: IProps) => {
                     }
                     onClick={() => {
                       if (!isSelected) {
-                        props.onSelect(tokenItem);
-                        props.onClose();
+                        onSelect(tokenItem);
+                        onClose();
                       }
                     }}
                   >

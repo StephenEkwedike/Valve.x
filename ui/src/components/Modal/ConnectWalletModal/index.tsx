@@ -117,24 +117,24 @@ export const ConnectWalletModal = (props: IProps) => {
         onClick={onClickCloseButton}
       />
       <div
-        className="px-8 py-8 pt-6 rounded-3xl w-96 bg-black relative"
+        className="px-6 py-6 pt-4 rounded-2xl w-96 bg-black relative"
         onClick={(e) => e.preventDefault()}
       >
         <div className="flex justify-between items-center">
           <p className="text-lg font-medium text-white">Connect Wallet</p>
           {!isConnectingToWallet && (
             <button className="p-2" onClick={onClickCloseButton}>
-              <XIcon className="w-8 h-8 text-white" />
+              <XIcon className="w-6 h-6 text-white" />
             </button>
           )}
         </div>
-        <div className="mt-4">
+        <div className="mt-3">
           {Object.values(ConnectorNames).map((connector) => {
             return (
               <button
                 key={connector}
                 disabled={disableMetamask}
-                className="w-full flex items-center btn__connect_wallet rounded-2xl p-4 py-3"
+                className="w-full flex items-center btn__connect_wallet rounded-lg p-3 py-2"
                 onClick={() => {
                   onClick(connector);
                 }}

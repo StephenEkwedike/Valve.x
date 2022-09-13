@@ -9,7 +9,7 @@ import {
   KnownToken,
   NetworkId,
 } from "types/types";
-import { DEFAULT_NETWORK_ID } from "./constants";
+import { DEFAULT_NETWORK_ID, NULL_ADDRESS } from "./constants";
 
 export const networkIds = {
   mainnet: 1,
@@ -139,7 +139,7 @@ export const knownTokens: { [K in KnownToken]: IKnownTokenData } = {
     addresses: {
       [networkIds.bsct]: "0xc979B0BB215137bdb8aE8be1731F28e796bd00B8",
       [networkIds.bsc]: "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
-      [networkIds.mainnet]: "",
+      [networkIds.mainnet]: NULL_ADDRESS,
       [networkIds.matic]: "",
       [networkIds.avax]: "",
       [networkIds.ftm]: "",
@@ -213,7 +213,7 @@ export const knownTokens: { [K in KnownToken]: IKnownTokenData } = {
       [networkIds.bsc]: "0x1ce0c2827e2ef14d5c4f29a091d735a204794041",
       [networkIds.mainnet]: "",
       [networkIds.matic]: "",
-      [networkIds.avax]: "",
+      [networkIds.avax]: NULL_ADDRESS,
       [networkIds.ftm]: "",
       [networkIds.optimism]: "",
     },
@@ -227,14 +227,14 @@ export const knownTokens: { [K in KnownToken]: IKnownTokenData } = {
       [networkIds.optimism]: 18,
     },
     image: ["/assets/tokens/avax.png"],
-    coingeckoId: "avalanche",
+    coingeckoId: "avalanche-2",
   },
   bnb: {
     name: "BNB",
     symbol: "BNB",
     addresses: {
-      [networkIds.bsct]: "0xec81748e905ad1ffbd3e6e492c429b1c8c585327",
-      [networkIds.bsc]: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+      [networkIds.bsct]: NULL_ADDRESS,
+      [networkIds.bsc]: NULL_ADDRESS,
       [networkIds.mainnet]: "",
       [networkIds.matic]: "",
       [networkIds.avax]: "",
@@ -251,7 +251,7 @@ export const knownTokens: { [K in KnownToken]: IKnownTokenData } = {
       [networkIds.optimism]: 18,
     },
     image: ["/assets/tokens/bnb.png"],
-    coingeckoId: "bnb",
+    coingeckoId: "binancecoin",
   },
   matic: {
     name: "MATIC",
@@ -260,7 +260,7 @@ export const knownTokens: { [K in KnownToken]: IKnownTokenData } = {
       [networkIds.bsct]: "0x71514b29526a86b9e6047c6994C3be4C4C735fD7",
       [networkIds.bsc]: "0xc836d8dc361e44dbe64c4862d55ba041f88ddd39",
       [networkIds.mainnet]: "",
-      [networkIds.matic]: "",
+      [networkIds.matic]: NULL_ADDRESS,
       [networkIds.avax]: "",
       [networkIds.ftm]: "",
       [networkIds.optimism]: "",
@@ -275,7 +275,7 @@ export const knownTokens: { [K in KnownToken]: IKnownTokenData } = {
       [networkIds.optimism]: 18,
     },
     image: ["/assets/tokens/matic.png"],
-    coingeckoId: "polygon",
+    coingeckoId: "matic-network",
   },
   btc: {
     name: "BTC",
@@ -310,7 +310,7 @@ export const knownTokens: { [K in KnownToken]: IKnownTokenData } = {
       [networkIds.mainnet]: "",
       [networkIds.matic]: "",
       [networkIds.avax]: "",
-      [networkIds.ftm]: "",
+      [networkIds.ftm]: NULL_ADDRESS,
       [networkIds.optimism]: "",
     },
     decimals: {
@@ -335,7 +335,7 @@ export const knownTokens: { [K in KnownToken]: IKnownTokenData } = {
       [networkIds.matic]: "",
       [networkIds.avax]: "",
       [networkIds.ftm]: "",
-      [networkIds.optimism]: "",
+      [networkIds.optimism]: NULL_ADDRESS,
     },
     decimals: {
       [networkIds.bsct]: 18,

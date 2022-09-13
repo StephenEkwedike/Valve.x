@@ -7,6 +7,7 @@ import { IToken } from "types/types";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { formatBigNumber } from "utils";
 import { TokenSelectModal } from "components/Modal";
+import { formatEther } from "ethers/lib/utils";
 
 interface IProps {
   token?: IToken;

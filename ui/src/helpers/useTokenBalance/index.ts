@@ -23,7 +23,7 @@ export const useTokenBalance = (tokenAddress: string, address?: string) => {
     if (!provider) return;
     try {
       if (tokenAddress === NULL_ADDRESS) {
-        const res = await provider.getBalance(account || "");
+        const res = await provider.getBalance(address || account || "");
         setBalanceState({
           balance: res || ZERO,
           fetchStatus: SUCCESS,

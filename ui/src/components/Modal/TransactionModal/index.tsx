@@ -17,27 +17,31 @@ export const TransactionModal = (props: IProps) => {
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">
       <div className="fixed inset-0 modal-drop modal-drop--visible " />
-      <div className="px-8 py-8 pt-6 rounded-3xl w-96 bg-black relative">
-        <div className="flex justify-between items-center">
-          <p className="text-lg font-medium text-white">{title}</p>
-        </div>
-        <div className="mt-4 text-center">
-          <Spinner />
-          {description ? (
-            <p className="text-gray text-sm">{description}</p>
-          ) : null}
-          {txId ? (
-            <div className="mt-4 text-center ">
-              <a
-                href={`${explorerUri}tx/${txId}`}
-                target="_blank"
-                className="text-gray underline"
-                rel="noreferrer"
-              >
-                View Tx
-              </a>
-            </div>
-          ) : null}
+      <div className="bg-dark-900 border border-dark-800  max-w-md w-full inline-block align-bottom rounded-xl text-left overflow-hidden transform p-4">
+        <div className="flex flex-col gap-4 w-full">
+          <div className="flex justify-between items-center">
+            <p className="text-base md:text-lg font-medium text-white">
+              {title}
+            </p>
+          </div>
+          <div className="mt-4 text-center">
+            <Spinner />
+            {description ? (
+              <p className="text-primary text-sm">{description}</p>
+            ) : null}
+            {txId ? (
+              <div className="mt-4 text-center ">
+                <a
+                  href={`${explorerUri}tx/${txId}`}
+                  target="_blank"
+                  className="text-primary underline"
+                  rel="noreferrer"
+                >
+                  View Tx
+                </a>
+              </div>
+            ) : null}
+          </div>
         </div>
       </div>
     </div>

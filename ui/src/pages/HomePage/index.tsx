@@ -1,4 +1,5 @@
 import { useConnectedWeb3Context } from "contexts";
+import { useUserReceives, useUserTransfers } from "helpers";
 import React, { useEffect, useState } from "react";
 import { HomeTab } from "utils/enums";
 import {
@@ -14,15 +15,35 @@ interface IState {
 
 const HomePage = () => {
   const [state, setState] = useState<IState>({ tab: HomeTab.Transfer });
+  const {
+    transferIds,
+    load: loadTransfers,
+    loading: transferLoading,
+  } = useUserTransfers();
+  const {
+    transferIds: receiveIds,
+    load: loadReceives,
+    loading: receivesLoading,
+  } = useUserReceives();
 
   const renderContent = () => {
     switch (state.tab) {
       case HomeTab.Transfer:
-        return <TransferSection />;
+        return (
+          <TransferSection
+            onReload={async () => {
+              await Promise.all([loadTransfers(), loadReceives()]);
+            }}
+          />
+        );
       case HomeTab.Sent:
-        return <SentSection />;
+        return (
+          <SentSection transferIds={transferIds} loading={transferLoading} />
+        );
       case HomeTab.Received:
-        return <ReceivedSection />;
+        return (
+          <ReceivedSection transferIds={receiveIds} loading={receivesLoading} />
+        );
     }
   };
 
