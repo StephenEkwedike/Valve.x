@@ -38,7 +38,8 @@ export type KnownToken =
   | "avax"
   | "btc"
   | "ftm"
-  | "op";
+  | "op"
+  | "apecoin";
 
 export interface IKnownTokenData {
   name: string;

@@ -16,7 +16,7 @@ const logger = getLogger("ConnectWalletModal::Index");
 
 const Connector_Name = {
   [ConnectorNames.Injected]: "Metamask",
-  // [ConnectorNames.TrustWallet]: "Trust Wallet",
+  [ConnectorNames.TrustWallet]: "Trust Wallet",
   [ConnectorNames.WalletConnect]: "Wallet Connect",
 };
 

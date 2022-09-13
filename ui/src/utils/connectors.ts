@@ -15,6 +15,6 @@ const walletconnect = new WalletConnectConnector({
 
 export default {
   injected,
-  // trustwallet: injected,
+  trustwallet: injected,
   walletconnect,
 };

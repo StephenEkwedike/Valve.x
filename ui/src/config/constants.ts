@@ -10,7 +10,7 @@ export const DEFAULT_NETWORK_ID = 97; // mainnet
 
 export const WALLET_ICONS: { [key in ConnectorNames]: string } = {
   [ConnectorNames.Injected]: "/assets/wallets/metamask-color.svg",
-  // [ConnectorNames.TrustWallet]: "/assets/wallets/trust-wallet.svg",
+  [ConnectorNames.TrustWallet]: "/assets/wallets/trust-wallet.svg",
   [ConnectorNames.WalletConnect]: "/assets/wallets/wallet-connect.svg",
 };
 

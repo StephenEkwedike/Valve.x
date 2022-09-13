@@ -1,6 +1,6 @@
 export enum ConnectorNames {
   Injected = "injected",
-  // TrustWallet = "trustwallet",
+  TrustWallet = "trustwallet",
   WalletConnect = "walletconnect",
 }
 

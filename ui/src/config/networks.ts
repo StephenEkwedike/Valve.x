@@ -349,6 +349,30 @@ export const knownTokens: { [K in KnownToken]: IKnownTokenData } = {
     image: ["/assets/tokens/op.png"],
     coingeckoId: "optimism",
   },
+  apecoin: {
+    name: "ApeCoin",
+    symbol: "APE",
+    addresses: {
+      [networkIds.bsct]: "",
+      [networkIds.bsc]: "",
+      [networkIds.mainnet]: "0x4d224452801aced8b2f0aebe155379bb5d594381",
+      [networkIds.matic]: "0xb7b31a6bc18e48888545ce79e83e06003be70930",
+      [networkIds.avax]: "",
+      [networkIds.ftm]: "",
+      [networkIds.optimism]: "",
+    },
+    decimals: {
+      [networkIds.bsct]: 18,
+      [networkIds.bsc]: 18,
+      [networkIds.mainnet]: 18,
+      [networkIds.matic]: 18,
+      [networkIds.avax]: 18,
+      [networkIds.ftm]: 18,
+      [networkIds.optimism]: 18,
+    },
+    image: ["/assets/tokens/apecoin.png"],
+    coingeckoId: "apecoin",
+  },
 };
 
 export const tokenIds = Object.keys(knownTokens);
