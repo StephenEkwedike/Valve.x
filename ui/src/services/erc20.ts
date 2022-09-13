@@ -1,7 +1,6 @@
 import { BigNumber, Contract, Wallet, ethers, utils } from "ethers";
 import { hexlify } from "ethers/lib/utils";
-import { IToken, Maybe } from "../types/types";
-import { isAddress, isContract } from "utils/tools";
+import { Maybe } from "../types/types";
 import abis from "abis";
 
 const erc20Abi = abis.ERC20;
@@ -105,30 +104,6 @@ class ERC20Service {
       this.contract.name(),
     ]);
     return { name, symbol, decimals };
-  };
-
-  getInfo = async (): Promise<IToken> => {
-    if (!isAddress(this.contract.address)) {
-      throw new Error("Is not a valid erc20 address");
-    }
-
-    if (!isContract(this.provider, this.contract.address)) {
-      throw new Error("Is not a valid contract");
-    }
-
-    const [decimals, symbol, name] = await Promise.all([
-      this.contract.decimals(),
-      this.contract.symbol(),
-      this.contract.name(),
-    ]);
-
-    return {
-      name,
-      symbol,
-      address: this.address,
-      decimals,
-      image: [""],
-    };
   };
 
   static encodeTransferFrom = (

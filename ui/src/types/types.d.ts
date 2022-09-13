@@ -46,6 +46,7 @@ export interface IKnownTokenData {
   addresses: { [key in NetworkId]: string };
   decimals: { [key in NetworkId]: number };
   image: string[];
+  coingeckoId: string;
 }
 
 export interface IToken {
@@ -54,6 +55,7 @@ export interface IToken {
   symbol: string;
   name: string;
   image: string[];
+  coingeckoId: string;
 }
 
 export interface Call {

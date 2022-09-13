@@ -1,7 +1,12 @@
 import { useConnectedWeb3Context } from "contexts";
 import React, { useEffect, useState } from "react";
 import { HomeTab } from "utils/enums";
-import { TabBar, TransferSection } from "./components";
+import {
+  ReceivedSection,
+  SentSection,
+  TabBar,
+  TransferSection,
+} from "./components";
 
 interface IState {
   tab: HomeTab;
@@ -14,6 +19,10 @@ const HomePage = () => {
     switch (state.tab) {
       case HomeTab.Transfer:
         return <TransferSection />;
+      case HomeTab.Sent:
+        return <SentSection />;
+      case HomeTab.Received:
+        return <ReceivedSection />;
     }
   };
 

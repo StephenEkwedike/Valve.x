@@ -112,7 +112,10 @@ export const ConnectWalletModal = (props: IProps) => {
 
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">
-      <div className="fixed inset-0 modal-drop" onClick={onClickCloseButton} />
+      <div
+        className="fixed inset-0 modal-drop  modal-drop--visible"
+        onClick={onClickCloseButton}
+      />
       <div
         className="px-8 py-8 pt-6 rounded-3xl w-96 bg-black relative"
         onClick={(e) => e.preventDefault()}

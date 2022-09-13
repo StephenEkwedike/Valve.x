@@ -108,7 +108,7 @@ export const networks: { [K in NetworkId]: INetwork } = {
   },
 };
 
-const knownTokens: { [K in KnownToken]: IKnownTokenData } = {
+export const knownTokens: { [K in KnownToken]: IKnownTokenData } = {
   usdt: {
     name: "USDT",
     symbol: "USDT",
@@ -131,6 +131,7 @@ const knownTokens: { [K in KnownToken]: IKnownTokenData } = {
       [networkIds.optimism]: 18,
     },
     image: ["/assets/tokens/usdt.png"],
+    coingeckoId: "tether",
   },
   eth: {
     name: "Ethereum",
@@ -154,6 +155,7 @@ const knownTokens: { [K in KnownToken]: IKnownTokenData } = {
       [networkIds.optimism]: 18,
     },
     image: ["/assets/tokens/eth.png"],
+    coingeckoId: "ethereum",
   },
   busd: {
     name: "BUSD",
@@ -177,6 +179,7 @@ const knownTokens: { [K in KnownToken]: IKnownTokenData } = {
       [networkIds.optimism]: 18,
     },
     image: ["/assets/tokens/busd.png"],
+    coingeckoId: "binance-usd",
   },
   usdc: {
     name: "USDC",
@@ -200,6 +203,7 @@ const knownTokens: { [K in KnownToken]: IKnownTokenData } = {
       [networkIds.optimism]: 18,
     },
     image: ["/assets/tokens/usdc.png"],
+    coingeckoId: "usd-coin",
   },
   avax: {
     name: "AVAX",
@@ -223,6 +227,7 @@ const knownTokens: { [K in KnownToken]: IKnownTokenData } = {
       [networkIds.optimism]: 18,
     },
     image: ["/assets/tokens/avax.png"],
+    coingeckoId: "avalanche",
   },
   bnb: {
     name: "BNB",
@@ -245,7 +250,8 @@ const knownTokens: { [K in KnownToken]: IKnownTokenData } = {
       [networkIds.ftm]: 18,
       [networkIds.optimism]: 18,
     },
-    image: ["/assets/tokens/wbnb.png"],
+    image: ["/assets/tokens/bnb.png"],
+    coingeckoId: "bnb",
   },
   matic: {
     name: "MATIC",
@@ -269,6 +275,7 @@ const knownTokens: { [K in KnownToken]: IKnownTokenData } = {
       [networkIds.optimism]: 18,
     },
     image: ["/assets/tokens/matic.png"],
+    coingeckoId: "polygon",
   },
   btc: {
     name: "BTC",
@@ -292,6 +299,7 @@ const knownTokens: { [K in KnownToken]: IKnownTokenData } = {
       [networkIds.optimism]: 18,
     },
     image: ["/assets/tokens/btc.png"],
+    coingeckoId: "bitcoin",
   },
   ftm: {
     name: "FTM",
@@ -315,10 +323,11 @@ const knownTokens: { [K in KnownToken]: IKnownTokenData } = {
       [networkIds.optimism]: 18,
     },
     image: ["/assets/tokens/ftm.png"],
+    coingeckoId: "fantom",
   },
   op: {
-    name: "FTM",
-    symbol: "FTM",
+    name: "Optimism",
+    symbol: "OP",
     addresses: {
       [networkIds.bsct]: "0x64D5a9B640414312Dbf50e7153070FFE0CffB910",
       [networkIds.bsc]: "0xad29abb318791d579433d831ed122afeaf29dcfe",
@@ -337,7 +346,8 @@ const knownTokens: { [K in KnownToken]: IKnownTokenData } = {
       [networkIds.ftm]: 18,
       [networkIds.optimism]: 18,
     },
-    image: ["/assets/tokens/ftm.png"],
+    image: ["/assets/tokens/op.png"],
+    coingeckoId: "optimism",
   },
 };
 
@@ -377,6 +387,7 @@ export const getToken = (tokenId: KnownToken, networkId?: number): IToken => {
     decimals: token.decimals[fNetworkId],
     address: token.addresses[fNetworkId],
     image: token.image,
+    coingeckoId: token.coingeckoId,
   };
 };
 
@@ -405,6 +416,7 @@ export const getTokenFromAddress = (
         decimals: token.decimals[networkId],
         address: tokenAddress,
         image: token.image,
+        coingeckoId: token.coingeckoId,
       };
     }
   }
