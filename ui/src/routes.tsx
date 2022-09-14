@@ -14,7 +14,7 @@ export const renderRoutes = (routes = []) => (
       }
     />
     <Route
-      path="/transfer"
+      path="/transfer/:exId/:networkId"
       element={
         <MainLayout>
           <TransferPage />

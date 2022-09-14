@@ -3,6 +3,9 @@ import React, { useEffect, useCallback } from "react";
 import { knownTokens, getToken } from "config/networks";
 import { useConnectedWeb3Context } from "contexts";
 import { IToken, KnownToken } from "types/types";
+import { useTokenBalances } from "helpers";
+import { formatBigNumber } from "utils";
+import { ZERO } from "config/constants";
 
 interface IProps {
   token?: IToken;
@@ -16,6 +19,7 @@ export const TokenSelectModal = (props: IProps) => {
   const tokens = Object.keys(knownTokens)
     .map((key) => getToken(key as KnownToken, networkId))
     .filter((token) => token.address !== "");
+  const balances = useTokenBalances(tokens);
 
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">
@@ -63,13 +67,20 @@ export const TokenSelectModal = (props: IProps) => {
                         src={tokenItem.image[0]}
                         alt="img"
                       />
-                      <div className="flex flex-col">
+                      <div className="flex flex-col flex-1">
                         <div className="text-[0.625rem] leading-[1.2] font-medium text-secondary">
                           {tokenItem.name}{" "}
                         </div>
                         <div className="text-sm leading-5 font-bold text-high-emphesis">
                           {tokenItem.symbol}
                         </div>
+                      </div>
+                      <div className="text-sm leading-5 text-primary">
+                        {formatBigNumber(
+                          balances[tokenItem.address.toLowerCase()] || ZERO,
+                          tokenItem.decimals,
+                          4
+                        )}
                       </div>
                     </div>
                   </div>

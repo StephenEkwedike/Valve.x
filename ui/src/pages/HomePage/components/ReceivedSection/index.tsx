@@ -31,7 +31,7 @@ export const ReceivedSection = (props: IProps) => {
       ) : (
         <div className="overflow-hidden overflow-y-auto border rounded border-dark-800 bg-[rgba(0,0,0,0.2)]  max-h-80">
           <div className="flex flex-col flex-1 flex-grow min-h-[50vh] lg:min-h-fit overflow-hidden h-full divide-y divide-dark-800">
-            {transferIds.map((id) => (
+            {transferIds.reverse().map((id) => (
               <TransferItem transferId={id} key={`${id}`} />
             ))}
           </div>

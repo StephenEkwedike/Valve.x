@@ -124,5 +124,5 @@ export const isValidUrl = (url: string) => {
 
 export const getTimeStr = (timestamp: number) => {
   const obj = moment.unix(timestamp);
-  return obj.format("MM/DD/YYYY HH:MM:SS");
+  return obj.format("MM/DD/YYYY HH:mm:ss");
 };

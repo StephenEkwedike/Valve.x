@@ -113,6 +113,13 @@
   box-shadow: $shadow;
 }
 
+// transferItem
+.items__column {
+  & > * + * {
+    margin-top: 0.5rem;
+  }
+}
+
 // modal
 .modal-drop {
   background: rgba(9, 9, 9, 0.56);
@@ -123,25 +130,55 @@
   }
 }
 
+// notifications
+
+.Toastify__toast {
+  background: linear-gradient(to right, #0993ec, #e50eae) !important;
+  .Toastify__toast-body {
+    div {
+      color: $white-color;
+    }
+  }
+  .Toastify__close-button {
+    opacity: 0.7;
+    svg {
+      fill: $white-color;
+    }
+  }
+  .Toastify__toast-icon {
+    display: none;
+  }
+}
+
 // circle-loader
 .lds-ring {
   display: inline-block;
   position: relative;
   width: 56px;
   height: 56px;
-}
+  div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    margin: 4px;
+    border: 4px solid #fff;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #fff transparent transparent transparent;
+  }
 
-.lds-ring div {
-  box-sizing: border-box;
-  display: block;
-  position: absolute;
-  width: 48px;
-  height: 48px;
-  margin: 4px;
-  border: 4px solid #fff;
-  border-radius: 50%;
-  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: #fff transparent transparent transparent;
+  &.lds-ring--small {
+    width: 32px;
+    height: 32px;
+    div {
+      width: 30px;
+      height: 30px;
+      margin: 2px;
+      border-width: 2px;
+    }
+  }
 }
 
 .lds-ring div:nth-child(1) {

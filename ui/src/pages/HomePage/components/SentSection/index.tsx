@@ -32,7 +32,7 @@ export const SentSection = (props: IProps) => {
       ) : (
         <div className="overflow-hidden overflow-y-auto max-h-80">
           <div className="flex flex-col flex-1 flex-grow min-h-[50vh] lg:min-h-fit overflow-hidden h-full divide-y divide-dark-800">
-            {transferIds.map((id) => (
+            {transferIds.reverse().map((id) => (
               <TransferItem transferId={id} key={`${id}`} />
             ))}
           </div>

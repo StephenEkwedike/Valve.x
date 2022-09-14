@@ -5,6 +5,7 @@ import { useConnectedWeb3Context } from "contexts";
 import { BigNumber } from "ethers";
 import { useServices, useTokenBalance } from "helpers";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { ERC20Service } from "services";
 import { IToken } from "types/types";
 import { isAddress } from "utils/tools";
@@ -68,7 +69,7 @@ export const TransferSection = (props: IProps) => {
       );
       setTxModalInfo(
         true,
-        "Approving",
+        "Doing Transfer",
         "Please wait until transaction is confirmed",
         hash
       );
@@ -77,8 +78,10 @@ export const TransferSection = (props: IProps) => {
       await props.onReload();
 
       setTxModalInfo(false);
+      toast.success("Transfer is created successfully!");
     } catch (error) {
       setTxModalInfo(false);
+      toast.error("Something went wrong!");
     }
   };
 

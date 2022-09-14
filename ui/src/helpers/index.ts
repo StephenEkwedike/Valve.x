@@ -7,3 +7,4 @@ export * from "./useTransfer";
 export * from "./useUserReceives";
 export * from "./useUserTransfers";
 export * from "./useTokenPrice";
+export * from "./useTokenBalances";

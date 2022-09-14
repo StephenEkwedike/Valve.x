@@ -24,7 +24,7 @@ export const TransactionModal = (props: IProps) => {
               {title}
             </p>
           </div>
-          <div className="mt-4 text-center">
+          <div className="text-center">
             <Spinner />
             {description ? (
               <p className="text-primary text-sm">{description}</p>

@@ -31,6 +31,12 @@ class ValveService {
     return count.toNumber();
   }
 
+  async getTransferId(exId: string): Promise<number> {
+    const count = await this.contract.transferInfo(exId);
+
+    return count.toNumber();
+  }
+
   async getUserReceiveCount(account: string): Promise<number> {
     const count = await this.contract.getUserReceiveCount(account);
 
