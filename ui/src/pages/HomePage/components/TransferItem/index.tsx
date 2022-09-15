@@ -1,21 +1,42 @@
-import { AddressItem, BaseButton, Spinner } from "components";
+import { AddressItem, Spinner } from "components";
 import { getTokenFromAddress } from "config/networks";
 import { useConnectedWeb3Context } from "contexts";
 import { useServices, useTransfer } from "helpers";
-import { formatBigNumber, getCurrentTimestamp, getTimeStr } from "utils";
+import { formatBigNumber, getCurrentTimestamp } from "utils";
 import { TransferStatus } from "utils/enums";
 import copy from "copy-to-clipboard";
 import { toast } from "react-toastify";
 import { DocumentDuplicateIcon } from "@heroicons/react/solid";
+import { useEffect, useState } from "react";
 
 interface IProps {
   transferId: number;
+}
+
+interface IState {
+  timestamp: number;
 }
 
 export const TransferItem = (props: IProps) => {
   const { account, networkId, setTxModalInfo } = useConnectedWeb3Context();
   const { loading, data, load } = useTransfer(props.transferId);
   const { valve } = useServices();
+  const [state, setState] = useState<IState>({
+    timestamp: getCurrentTimestamp(),
+  });
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const timestamp = getCurrentTimestamp();
+      if (data && timestamp < data.expireAt) {
+        setState((prev) => ({ ...prev, timestamp: getCurrentTimestamp() }));
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   const onCancel = async () => {
     if (!data) return;
@@ -87,7 +108,9 @@ export const TransferItem = (props: IProps) => {
             To: <AddressItem address={data.to} />
           </div>
           <div className="text-primary">
-            Expire At: {getTimeStr(data.expireAt)}
+            {timestamp < data.expireAt ? (
+              <>Expire In {data.expireAt - timestamp} sec(s)</>
+            ) : null}
           </div>
         </div>
 
@@ -111,9 +134,14 @@ export const TransferItem = (props: IProps) => {
             </button>
           ) : null}
           {data.status === TransferStatus.Sent ||
-          data.status === TransferStatus.Cancelled ? (
+          data.status === TransferStatus.Cancelled ||
+          (data.status === TransferStatus.Init && timestamp > data.expireAt) ? (
             <p className="text-primary">
-              {data.status === TransferStatus.Sent ? "Sent" : "Cancelled"}
+              {data.status === TransferStatus.Sent
+                ? "Sent"
+                : data.status === TransferStatus.Cancelled
+                ? "Cancelled"
+                : "Expired"}
             </p>
           ) : null}
           <br />
