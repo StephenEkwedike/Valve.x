@@ -39,7 +39,11 @@ export type KnownToken =
   | "btc"
   | "ftm"
   | "op"
-  | "apecoin";
+  | "apecoin"
+  | "uni"
+  | "sushi"
+  | "cake"
+  | "0x";
 
 export interface IKnownTokenData {
   name: string;
