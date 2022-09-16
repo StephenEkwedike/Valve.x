@@ -12,6 +12,9 @@ export const WALLET_ICONS: { [key in ConnectorNames]: string } = {
   [ConnectorNames.Injected]: "/assets/wallets/metamask-color.svg",
   [ConnectorNames.TrustWallet]: "/assets/wallets/trust-wallet.svg",
   [ConnectorNames.WalletConnect]: "/assets/wallets/wallet-connect.svg",
+  [ConnectorNames.Trezor]: "/assets/wallets/trezor.svg",
+  [ConnectorNames.Ledger]: "/assets/wallets/ledger.svg",
+  [ConnectorNames.Fortmatic]: "/assets/wallets/fortmatic.svg",
 };
 
 export const ETHER_DECIMAL = 18;

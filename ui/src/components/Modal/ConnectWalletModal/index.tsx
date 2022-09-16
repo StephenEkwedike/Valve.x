@@ -18,6 +18,9 @@ const Connector_Name = {
   [ConnectorNames.Injected]: "Metamask",
   [ConnectorNames.TrustWallet]: "Trust Wallet",
   [ConnectorNames.WalletConnect]: "Wallet Connect",
+  [ConnectorNames.Ledger]: "Ledger",
+  [ConnectorNames.Trezor]: "Trezor",
+  [ConnectorNames.Fortmatic]: "Fortmatic",
 };
 
 export const ConnectWalletModal = (props: IProps) => {

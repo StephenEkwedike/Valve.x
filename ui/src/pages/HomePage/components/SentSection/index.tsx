@@ -14,7 +14,9 @@ export const SentSection = (props: IProps) => {
   if (!account) {
     return (
       <div className="my-5">
-        <p className="text-primary font-bold text-2xl">Please connect wallet</p>
+        <p className="text-primary font-bold text-2xl  text-center">
+          Please connect wallet
+        </p>
       </div>
     );
   }

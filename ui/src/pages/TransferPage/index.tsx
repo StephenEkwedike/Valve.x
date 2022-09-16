@@ -35,7 +35,9 @@ const TransferPage = () => {
     if (!networkId) {
       return (
         <div className="my-4">
-          <p className="text-primary text-lg">Please connect wallet</p>
+          <p className="text-primary text-lg text-center">
+            Please connect wallet
+          </p>
         </div>
       );
     }

@@ -2,6 +2,9 @@ export enum ConnectorNames {
   Injected = "injected",
   TrustWallet = "trustwallet",
   WalletConnect = "walletconnect",
+  Ledger = "ledger",
+  Trezor = "trezor",
+  Fortmatic = "fortmatic",
 }
 
 export enum FetchStatus {

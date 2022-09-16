@@ -1,6 +1,5 @@
 import { InjectedConnector } from "@web3-react/injected-connector";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
-import { GnosisSafe } from "@web3-react/gnosis-safe";
 import { FortmaticConnector } from "@web3-react/fortmatic-connector";
 import { LedgerConnector } from "@web3-react/ledger-connector";
 import { TrezorConnector } from "@web3-react/trezor-connector";
@@ -42,4 +41,7 @@ export default {
   injected,
   trustwallet: injected,
   walletconnect,
+  ledger,
+  trezor,
+  fortmatic,
 };
