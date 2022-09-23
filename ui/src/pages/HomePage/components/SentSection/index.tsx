@@ -29,7 +29,7 @@ export const SentSection = (props: IProps) => {
         </div>
       ) : transferIds.length === 0 ? (
         <div className="my-2">
-          <p className="text-primary text-2xl">No transfers</p>
+          <p className="text-primary text-2xl text-center">No transfers</p>
         </div>
       ) : (
         <div className="overflow-hidden overflow-y-auto max-h-80">

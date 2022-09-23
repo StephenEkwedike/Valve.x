@@ -2,7 +2,7 @@ import { AddressItem, Spinner } from "components";
 import { getTokenFromAddress } from "config/networks";
 import { useConnectedWeb3Context } from "contexts";
 import { useServices, useTransfer } from "helpers";
-import { formatBigNumber, getCurrentTimestamp } from "utils";
+import { formatBigNumber, formatSeconds, getCurrentTimestamp } from "utils";
 import { TransferStatus } from "utils/enums";
 import copy from "copy-to-clipboard";
 import { toast } from "react-toastify";
@@ -109,7 +109,7 @@ export const TransferItem = (props: IProps) => {
           </div>
           <div className="text-primary">
             {timestamp < data.expireAt ? (
-              <>Expire In {data.expireAt - timestamp} sec(s)</>
+              <>Expire In {formatSeconds(data.expireAt - timestamp)}</>
             ) : null}
           </div>
         </div>

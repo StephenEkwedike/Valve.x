@@ -78,28 +78,28 @@ export const formatSeconds = (secs: number) => {
 
   const mins = Math.floor(secs / 60);
 
-  if (sec > 0 || mins === 0) res.push(`${sec}S`);
+  if (sec > 0 || mins === 0) res.push(`${sec}s`);
 
   if (mins > 0) {
     const min = mins % 60;
-    if (min > 0) res.push(`${min}M`);
+    if (min > 0) res.push(`${min}m`);
 
     const hours = Math.floor(mins / 60);
     if (hours > 0) {
       const hour = hours % 24;
-      if (hour > 0) res.push(`${hour}H`);
+      if (hour > 0) res.push(`${hour}h`);
 
       const days = Math.floor(hours / 24);
 
       if (days > 0) {
         if (days % 7 === 0 && days >= 7) {
-          res.push(`${days / 7}W`);
+          res.push(`${days / 7}w`);
         } else {
           const year = Math.floor(days / 365);
           const remainingDays = days % 365;
           const month = Math.floor(remainingDays / 30);
           const day = remainingDays % 30;
-          res.push(`${day}D`);
+          res.push(`${day}d`);
           if (month > 0) {
             res.push(`${month}M`);
           }

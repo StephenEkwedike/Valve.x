@@ -28,7 +28,7 @@ export const ReceivedSection = (props: IProps) => {
         </div>
       ) : transferIds.length === 0 ? (
         <div className="my-2">
-          <p className="text-primary text-2xl">No receives</p>
+          <p className="text-primary text-2xl text-center">No receives</p>
         </div>
       ) : (
         <div className="overflow-hidden overflow-y-auto border rounded border-dark-800 bg-[rgba(0,0,0,0.2)]  max-h-80">
