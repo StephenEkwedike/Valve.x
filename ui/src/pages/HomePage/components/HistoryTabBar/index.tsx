@@ -1,27 +1,22 @@
 import { HomeTab } from "utils/enums";
 
 interface IProps {
-  tab: HomeTab;
+  tab: string;
   onChange: (_: HomeTab) => void;
 }
 
-export const TabBar = (props: IProps) => {
+export const HistoryTabBar = (props: IProps) => {
   return (
     <div className="px-2">
       <div className="flex gap-4">
-        {["Transfer", "History"].map((tab) => {
-          const isSelected =
-            tab === "Transfer"
-              ? props.tab === HomeTab.Transfer
-              : props.tab !== HomeTab.Transfer;
+        {["Sent", "Received"].map((tab) => {
+          const isSelected = tab === props.tab;
 
           return (
             <div
               key={tab}
               onClick={() => {
-                props.onChange(
-                  tab === "Transfer" ? HomeTab.Transfer : HomeTab.Sent
-                );
+                props.onChange(tab as HomeTab);
               }}
               className={`leading-5 font-bold cursor-pointer select-none text-secondary hover:text-white ${
                 isSelected && "text-high-emphesis"

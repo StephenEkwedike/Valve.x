@@ -3,6 +3,7 @@ import { useUserReceives, useUserTransfers } from "helpers";
 import React, { useEffect, useState } from "react";
 import { HomeTab } from "utils/enums";
 import {
+  HistoryTabBar,
   ReceivedSection,
   SentSection,
   TabBar,
@@ -36,13 +37,25 @@ const HomePage = () => {
             }}
           />
         );
-      case HomeTab.Sent:
+      default:
         return (
-          <SentSection transferIds={transferIds} loading={transferLoading} />
-        );
-      case HomeTab.Received:
-        return (
-          <ReceivedSection transferIds={receiveIds} loading={receivesLoading} />
+          <>
+            <HistoryTabBar
+              tab={state.tab}
+              onChange={(tab) => setState((prev) => ({ ...prev, tab }))}
+            />
+            {state.tab === HomeTab.Sent ? (
+              <SentSection
+                transferIds={transferIds}
+                loading={transferLoading}
+              />
+            ) : (
+              <ReceivedSection
+                transferIds={receiveIds}
+                loading={receivesLoading}
+              />
+            )}
+          </>
         );
     }
   };
