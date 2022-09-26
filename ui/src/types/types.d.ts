@@ -36,7 +36,7 @@ export type KnownToken =
   | "bnb"
   | "matic"
   | "avax"
-  | "btc"
+  | "wbtc"
   | "ftm"
   | "op"
   | "apecoin"

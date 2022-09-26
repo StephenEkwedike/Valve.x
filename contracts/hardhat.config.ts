@@ -54,6 +54,7 @@ const config: HardhatUserConfig = {
       accounts: [PRIVATEKEY],
       url: "https://polygon-rpc.com/",
       chainId: chainIds.matic,
+      gasPrice: 35000000000,
     },
     ftm: {
       accounts: [PRIVATEKEY],

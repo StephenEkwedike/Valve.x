@@ -17,11 +17,11 @@ async function main(): Promise<void> {
 
   // construction params
 
-  const Multicall2: ContractFactory = await ethers.getContractFactory("Multicall2");
-  const multicall2: Contract = await Multicall2.deploy();
-  await multicall2.deployed();
+  // const Multicall2: ContractFactory = await ethers.getContractFactory("Multicall2");
+  // const multicall2: Contract = await Multicall2.deploy();
+  // await multicall2.deployed();
 
-  console.log("Multicall2 deployed to:", multicall2.address);
+  // console.log("Multicall2 deployed to:", multicall2.address);
 
   const Valve: ContractFactory = await ethers.getContractFactory("Valve");
 

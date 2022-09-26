@@ -40,8 +40,8 @@ export const networks: { [K in NetworkId]: INetwork } = {
     icon: "/assets/tokens/bnb.png",
     url: "https://bsc-dataseed.binance.org/",
     contracts: {
-      valve: "",
-      multicall: "",
+      valve: "0x1A2cF3BB19391a96aC06F6Bc2c5b42750E1b60D6",
+      multicall: "0x87B45489F1cC9Cc8DB1D75AaaF094da1a6C433de",
     },
     etherscanUri: "https://bscscan.com/",
     subgraph: {},
@@ -52,8 +52,8 @@ export const networks: { [K in NetworkId]: INetwork } = {
     symbol: "ETH",
     url: "https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
     contracts: {
-      valve: "",
-      multicall: "",
+      valve: "0x1A2cF3BB19391a96aC06F6Bc2c5b42750E1b60D6",
+      multicall: "0x87B45489F1cC9Cc8DB1D75AaaF094da1a6C433de",
     },
     etherscanUri: "https://etherscan.io/",
     subgraph: {},
@@ -64,8 +64,8 @@ export const networks: { [K in NetworkId]: INetwork } = {
     icon: "/assets/tokens/matic.png",
     url: "https://polygon-rpc.com/",
     contracts: {
-      valve: "",
-      multicall: "",
+      valve: "0x42AB0B20B6f4C6d93cC6eEc75Bf2A54D3321a43f",
+      multicall: "0x87B45489F1cC9Cc8DB1D75AaaF094da1a6C433de",
     },
     etherscanUri: "https://polygonscan.com/",
     subgraph: {},
@@ -76,8 +76,8 @@ export const networks: { [K in NetworkId]: INetwork } = {
     icon: "/assets/tokens/avax.png",
     url: "https://api.avax.network/ext/bc/C/rpc",
     contracts: {
-      valve: "",
-      multicall: "",
+      valve: "0x1A2cF3BB19391a96aC06F6Bc2c5b42750E1b60D6",
+      multicall: "0x87B45489F1cC9Cc8DB1D75AaaF094da1a6C433de",
     },
     etherscanUri: "https://snowtrace.io/",
     subgraph: {},
@@ -88,8 +88,8 @@ export const networks: { [K in NetworkId]: INetwork } = {
     icon: "/assets/tokens/op.png",
     url: "https://mainnet.optimism.io",
     contracts: {
-      valve: "",
-      multicall: "",
+      valve: "0x1A2cF3BB19391a96aC06F6Bc2c5b42750E1b60D6",
+      multicall: "0x87B45489F1cC9Cc8DB1D75AaaF094da1a6C433de",
     },
     etherscanUri: "https://optimistic.etherscan.io/",
     subgraph: {},
@@ -100,8 +100,8 @@ export const networks: { [K in NetworkId]: INetwork } = {
     icon: "/assets/tokens/ftm.png",
     url: "https://rpc.ankr.com/fantom/",
     contracts: {
-      valve: "",
-      multicall: "",
+      valve: "0x1A2cF3BB19391a96aC06F6Bc2c5b42750E1b60D6",
+      multicall: "0x87B45489F1cC9Cc8DB1D75AaaF094da1a6C433de",
     },
     etherscanUri: "https://ftmscan.com/",
     subgraph: {},
@@ -109,9 +109,9 @@ export const networks: { [K in NetworkId]: INetwork } = {
 };
 
 export const knownTokens: { [K in KnownToken]: IKnownTokenData } = {
-  btc: {
-    name: "BTC",
-    symbol: "BTC",
+  wbtc: {
+    name: "wrapped BTC",
+    symbol: "wBTC",
     addresses: {
       [networkIds.bsct]: "0x8c0640134B0C75E45DB79449a147736C020D09ac",
       [networkIds.bsc]: "",
