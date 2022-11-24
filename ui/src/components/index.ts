@@ -5,3 +5,4 @@ export * from "./Logo";
 export * from "./Input";
 export * from "./Spinner";
 export * from "./AddressItem";
+export * from "./LifiWidget";
