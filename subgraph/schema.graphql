@@ -1,23 +1,221 @@
-type AdminChanged @entity(immutable: true) {
+
+type NewTransfer @entity(immutable: true) {
   id: Bytes!
-  previousAdmin: Bytes! # address
-  newAdmin: Bytes! # address
+  from: Bytes! # address
+  tid: BigInt! # uint256
+  token: Bytes! # address
+  to: Bytes! # address
+  amount: BigInt! # uint256
+  expireAt: BigInt! # uint256
+  exId: Bytes! # bytes32
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
 
-type BeaconUpgraded @entity(immutable: true) {
+type OwnershipTransferred @entity(immutable: true) {
   id: Bytes!
-  beacon: Bytes! # address
+  previousOwner: Bytes! # address
+  newOwner: Bytes! # address
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
 
-type Upgraded @entity(immutable: true) {
+type Pause @entity(immutable: true) {
   id: Bytes!
-  implementation: Bytes! # address
+
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Paused @entity(immutable: true) {
+  id: Bytes!
+  account: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TransferAccepted @entity(immutable: true) {
+  id: Bytes!
+  tid: BigInt! # uint256
+  exId: Bytes! # bytes32
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TransferCancelled @entity(immutable: true) {
+  id: Bytes!
+  tid: BigInt! # uint256
+  exId: Bytes! # bytes32
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Unpause @entity(immutable: true) {
+  id: Bytes!
+
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Unpaused @entity(immutable: true) {
+  id: Bytes!
+  account: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Valve721NewTransfer @entity(immutable: true) {
+  id: Bytes!
+  from: Bytes! # address
+  tid: BigInt! # uint256
+  token: Bytes! # address
+  to: Bytes! # address
+  tokenId: BigInt! # uint256
+  data: Bytes! # bytes
+  expireAt: BigInt! # uint256
+  exId: Bytes! # bytes32
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Valve721OwnershipTransferred @entity(immutable: true) {
+  id: Bytes!
+  previousOwner: Bytes! # address
+  newOwner: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Valve721Pause @entity(immutable: true) {
+  id: Bytes!
+
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Valve721Paused @entity(immutable: true) {
+  id: Bytes!
+  account: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Valve721TransferAccepted @entity(immutable: true) {
+  id: Bytes!
+  tid: BigInt! # uint256
+  exId: Bytes! # bytes32
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Valve721TransferCancelled @entity(immutable: true) {
+  id: Bytes!
+  tid: BigInt! # uint256
+  exId: Bytes! # bytes32
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Valve721Unpause @entity(immutable: true) {
+  id: Bytes!
+
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Valve721Unpaused @entity(immutable: true) {
+  id: Bytes!
+  account: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Valve1155NewTransfer @entity(immutable: true) {
+  id: Bytes!
+  from: Bytes! # address
+  tid: BigInt! # uint256
+  token: Bytes! # address
+  to: Bytes! # address
+  tokenIds: [BigInt!] # uint256[]
+  amounts: [BigInt!] # uint256[]
+  data: Bytes! # bytes
+  expireAt: BigInt! # uint256
+  exId: Bytes! # bytes32
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Valve1155OwnershipTransferred @entity(immutable: true) {
+  id: Bytes!
+  previousOwner: Bytes! # address
+  newOwner: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Valve1155Pause @entity(immutable: true) {
+  id: Bytes!
+
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Valve1155Paused @entity(immutable: true) {
+  id: Bytes!
+  account: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Valve1155TransferAccepted @entity(immutable: true) {
+  id: Bytes!
+  tid: BigInt! # uint256
+  exId: Bytes! # bytes32
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Valve1155TransferCancelled @entity(immutable: true) {
+  id: Bytes!
+  tid: BigInt! # uint256
+  exId: Bytes! # bytes32
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Valve1155Unpause @entity(immutable: true) {
+  id: Bytes!
+
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Valve1155Unpaused @entity(immutable: true) {
+  id: Bytes!
+  account: Bytes! # address
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
