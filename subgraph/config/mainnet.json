@@ -2,5 +2,6 @@
   "network": "mainnet",
   "addrValve": "0x1A2cF3BB19391a96aC06F6Bc2c5b42750E1b60D6",
   "addrValve721": "",
-  "addrValve1155": ""
+  "addrValve1155": "",
+  "startBlockNum": 0
 }

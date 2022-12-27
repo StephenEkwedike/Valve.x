@@ -8,39 +8,25 @@ dataSources:
     source:
       address: '{{addrValve}}'
       abi: Valve
+      startBlock: {{startBlockNum}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - NewTransfer
-        - OwnershipTransferred
-        - Pause
-        - Paused
         - TransferAccepted
         - TransferCancelled
-        - Unpause
-        - Unpaused
       abis:
         - name: Valve
           file: ./abis/Valve.json
       eventHandlers:
         - event: NewTransfer(address,uint256,address,address,uint256,uint256,bytes32)
           handler: handleNewTransfer
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: handleOwnershipTransferred
-        - event: Pause()
-          handler: handlePause
-        - event: Paused(address)
-          handler: handlePaused
         - event: TransferAccepted(uint256,bytes32)
           handler: handleTransferAccepted
         - event: TransferCancelled(uint256,bytes32)
           handler: handleTransferCancelled
-        - event: Unpause()
-          handler: handleUnpause
-        - event: Unpaused(address)
-          handler: handleUnpaused
       file: ./src/valve.ts
   - kind: ethereum
     name: Valve721
@@ -48,39 +34,25 @@ dataSources:
     source:
       address: '{{addrValve721}}'
       abi: Valve721
+      startBlock: {{startBlockNum}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - Valve721NewTransfer
-        - Valve721OwnershipTransferred
-        - Valve721Pause
-        - Valve721Paused
-        - Valve721TransferAccepted
-        - Valve721TransferCancelled
-        - Valve721Unpause
-        - Valve721Unpaused
+        - TransferAccepted
+        - TransferCancelled
       abis:
         - name: Valve721
           file: ./abis/Valve721.json
       eventHandlers:
         - event: Valve721NewTransfer(address,uint256,address,address,uint256,bytes,uint256,bytes32)
           handler: handleValve721NewTransfer
-        - event: Valve721OwnershipTransferred(indexed address,indexed address)
-          handler: handleValve721OwnershipTransferred
-        - event: Valve721Pause()
-          handler: handleValve721Pause
-        - event: Valve721Paused(address)
-          handler: handleValve721Paused
         - event: Valve721TransferAccepted(uint256,bytes32)
           handler: handleValve721TransferAccepted
         - event: Valve721TransferCancelled(uint256,bytes32)
           handler: handleValve721TransferCancelled
-        - event: Valve721Unpause()
-          handler: handleValve721Unpause
-        - event: Valve721Unpaused(address)
-          handler: handleValve721Unpaused
       file: ./src/valve-721.ts
   - kind: ethereum
     name: Valve1155
@@ -88,37 +60,23 @@ dataSources:
     source:
       address: '{{addrValve1155}}'
       abi: Valve1155
+      startBlock: {{startBlockNum}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - Valve1155NewTransfer
-        - Valve1155OwnershipTransferred
-        - Valve1155Pause
-        - Valve1155Paused
-        - Valve1155TransferAccepted
-        - Valve1155TransferCancelled
-        - Valve1155Unpause
-        - Valve1155Unpaused
+        - TransferAccepted
+        - TransferCancelled
       abis:
         - name: Valve1155
           file: ./abis/Valve1155.json
       eventHandlers:
         - event: Valve1155NewTransfer(address,uint256,address,address,uint256[],uint256[],bytes,uint256,bytes32)
           handler: handleValve1155NewTransfer
-        - event: Valve1155OwnershipTransferred(indexed address,indexed address)
-          handler: handleValve1155OwnershipTransferred
-        - event: Valve1155Pause()
-          handler: handleValve1155Pause
-        - event: Valve1155Paused(address)
-          handler: handleValve1155Paused
         - event: Valve1155TransferAccepted(uint256,bytes32)
           handler: handleValve1155TransferAccepted
         - event: Valve1155TransferCancelled(uint256,bytes32)
           handler: handleValve1155TransferCancelled
-        - event: Valve1155Unpause()
-          handler: handleValve1155Unpause
-        - event: Valve1155Unpaused(address)
-          handler: handleValve1155Unpaused
       file: ./src/valve-1155.ts

@@ -2,13 +2,8 @@ import { newMockEvent } from "matchstick-as"
 import { ethereum, Address, BigInt, Bytes } from "@graphprotocol/graph-ts"
 import {
   NewTransfer,
-  OwnershipTransferred,
-  Pause,
-  Paused,
   TransferAccepted,
   TransferCancelled,
-  Unpause,
-  Unpaused
 } from "../generated/Valve/Valve"
 
 export function createNewTransferEvent(
@@ -20,7 +15,7 @@ export function createNewTransferEvent(
   expireAt: BigInt,
   exId: Bytes
 ): NewTransfer {
-  let newTransferEvent = changetype<NewTransfer>(newMockEvent())
+  let newTransferEvent = <NewTransfer>(newMockEvent())
 
   newTransferEvent.parameters = new Array()
 
@@ -52,54 +47,11 @@ export function createNewTransferEvent(
   return newTransferEvent
 }
 
-export function createOwnershipTransferredEvent(
-  previousOwner: Address,
-  newOwner: Address
-): OwnershipTransferred {
-  let ownershipTransferredEvent = changetype<OwnershipTransferred>(
-    newMockEvent()
-  )
-
-  ownershipTransferredEvent.parameters = new Array()
-
-  ownershipTransferredEvent.parameters.push(
-    new ethereum.EventParam(
-      "previousOwner",
-      ethereum.Value.fromAddress(previousOwner)
-    )
-  )
-  ownershipTransferredEvent.parameters.push(
-    new ethereum.EventParam("newOwner", ethereum.Value.fromAddress(newOwner))
-  )
-
-  return ownershipTransferredEvent
-}
-
-export function createPauseEvent(): Pause {
-  let pauseEvent = changetype<Pause>(newMockEvent())
-
-  pauseEvent.parameters = new Array()
-
-  return pauseEvent
-}
-
-export function createPausedEvent(account: Address): Paused {
-  let pausedEvent = changetype<Paused>(newMockEvent())
-
-  pausedEvent.parameters = new Array()
-
-  pausedEvent.parameters.push(
-    new ethereum.EventParam("account", ethereum.Value.fromAddress(account))
-  )
-
-  return pausedEvent
-}
-
 export function createTransferAcceptedEvent(
   tid: BigInt,
   exId: Bytes
 ): TransferAccepted {
-  let transferAcceptedEvent = changetype<TransferAccepted>(newMockEvent())
+  let transferAcceptedEvent = <TransferAccepted>(newMockEvent())
 
   transferAcceptedEvent.parameters = new Array()
 
@@ -117,7 +69,7 @@ export function createTransferCancelledEvent(
   tid: BigInt,
   exId: Bytes
 ): TransferCancelled {
-  let transferCancelledEvent = changetype<TransferCancelled>(newMockEvent())
+  let transferCancelledEvent = <TransferCancelled>(newMockEvent())
 
   transferCancelledEvent.parameters = new Array()
 
@@ -129,24 +81,4 @@ export function createTransferCancelledEvent(
   )
 
   return transferCancelledEvent
-}
-
-export function createUnpauseEvent(): Unpause {
-  let unpauseEvent = changetype<Unpause>(newMockEvent())
-
-  unpauseEvent.parameters = new Array()
-
-  return unpauseEvent
-}
-
-export function createUnpausedEvent(account: Address): Unpaused {
-  let unpausedEvent = changetype<Unpaused>(newMockEvent())
-
-  unpausedEvent.parameters = new Array()
-
-  unpausedEvent.parameters.push(
-    new ethereum.EventParam("account", ethereum.Value.fromAddress(account))
-  )
-
-  return unpausedEvent
 }
