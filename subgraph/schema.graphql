@@ -10,67 +10,41 @@ enum TokenType {
   ERC1155
 }
 
-type NewTransfer @entity(immutable: true) {
-  id: Bytes!
-  from: Bytes! # address
-  tid: BigInt! # uint256
-  token: Bytes! # address
-  to: Bytes! # address
-  amount: BigInt! # uint256
-  expireAt: BigInt! # uint256
-  exId: Bytes! # bytes32
+type Transfer @entity {
+  id: ID!
+  tid: BigInt!
+  status: TransferStatus!
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
+  from: User!
+  to: User!
+  token: Token!
 }
 
-type TransferAccepted @entity(immutable: true) {
-  id: Bytes!
-  tid: BigInt! # uint256
-  exId: Bytes! # bytes32
-  tokenType: TokenType!
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+type User @entity {
+  id: ID!
+  address: Bytes!
+  fromTransfers: Transfer! @derivedFrom(field: "from")
+  toTransfers: Transfer! @derivedFrom(field: "to")
+  fromCount: BigInt!
+  toCount: BigInt!
+  acceptedCount: BigInt!
 }
 
-type TransferCancelled @entity(immutable: true) {
-  id: Bytes!
-  tid: BigInt! # uint256
-  exId: Bytes! # bytes32
-  tokenType: TokenType!
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+type Token @entity {
+  id: ID!
+  address: Bytes!
+  transfers: Transfer! @derivedFrom(field: "token")
+  type: TokenType!
 }
 
-type Valve721NewTransfer @entity(immutable: true) {
-  id: Bytes!
-  from: Bytes! # address
-  tid: BigInt! # uint256
-  token: Bytes! # address
-  to: Bytes! # address
-  tokenId: BigInt! # uint256
-  data: Bytes! # bytes
-  expireAt: BigInt! # uint256
-  exId: Bytes! # bytes32
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
-type Valve1155NewTransfer @entity(immutable: true) {
-  id: Bytes!
-  from: Bytes! # address
-  tid: BigInt! # uint256
-  token: Bytes! # address
-  to: Bytes! # address
-  tokenIds: [BigInt!] # uint256[]
-  amounts: [BigInt!] # uint256[]
-  data: Bytes! # bytes
-  expireAt: BigInt! # uint256
-  exId: Bytes! # bytes32
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+type Overview @entity {
+  id: ID!
+  erc20TokenCount: BigInt!
+  erc1155TokenCount: BigInt!
+  erc721TokenCount: BigInt!
+  transferCount: BigInt!
+  totalAccepted: BigInt!
+  totalCancelled: BigInt!
 }

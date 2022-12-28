@@ -14,9 +14,10 @@ dataSources:
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - NewTransfer
-        - TransferAccepted
-        - TransferCancelled
+        - Transfer
+        - User
+        - Token
+        - Overview
       abis:
         - name: Valve
           file: ./abis/Valve.json
@@ -27,7 +28,7 @@ dataSources:
           handler: handleTransferAccepted
         - event: TransferCancelled(uint256,bytes32)
           handler: handleTransferCancelled
-      file: ./src/valve.ts
+      file: ./src/mappings/valve.ts
   - kind: ethereum
     name: Valve721
     network: '{{network}}'
@@ -40,20 +41,21 @@ dataSources:
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - Valve721NewTransfer
-        - TransferAccepted
-        - TransferCancelled
+        - Transfer
+        - User
+        - Token
+        - Overview
       abis:
         - name: Valve721
           file: ./abis/Valve721.json
       eventHandlers:
-        - event: Valve721NewTransfer(address,uint256,address,address,uint256,bytes,uint256,bytes32)
+        - event: NewTransfer(address,uint256,address,address,uint256,bytes,uint256,bytes32)
           handler: handleValve721NewTransfer
-        - event: Valve721TransferAccepted(uint256,bytes32)
+        - event: TransferAccepted(uint256,bytes32)
           handler: handleValve721TransferAccepted
-        - event: Valve721TransferCancelled(uint256,bytes32)
+        - event: TransferCancelled(uint256,bytes32)
           handler: handleValve721TransferCancelled
-      file: ./src/valve-721.ts
+      file: ./src/mappings/valve-721.ts
   - kind: ethereum
     name: Valve1155
     network: '{{network}}'
@@ -66,17 +68,18 @@ dataSources:
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - Valve1155NewTransfer
-        - TransferAccepted
-        - TransferCancelled
+        - Transfer
+        - User
+        - Token
+        - Overview
       abis:
         - name: Valve1155
           file: ./abis/Valve1155.json
       eventHandlers:
-        - event: Valve1155NewTransfer(address,uint256,address,address,uint256[],uint256[],bytes,uint256,bytes32)
+        - event: NewTransfer(address,uint256,address,address,uint256[],uint256[],bytes,uint256,bytes32)
           handler: handleValve1155NewTransfer
-        - event: Valve1155TransferAccepted(uint256,bytes32)
+        - event: TransferAccepted(uint256,bytes32)
           handler: handleValve1155TransferAccepted
-        - event: Valve1155TransferCancelled(uint256,bytes32)
+        - event: TransferCancelled(uint256,bytes32)
           handler: handleValve1155TransferCancelled
-      file: ./src/valve-1155.ts
+      file: ./src/mappings/valve-1155.ts

@@ -57,7 +57,7 @@
         "type": "bytes32"
       }
     ],
-    "name": "Valve1155NewTransfer",
+    "name": "NewTransfer",
     "type": "event"
   },
   {
@@ -76,13 +76,13 @@
         "type": "address"
       }
     ],
-    "name": "Valve1155OwnershipTransferred",
+    "name": "OwnershipTransferred",
     "type": "event"
   },
   {
     "anonymous": false,
     "inputs": [],
-    "name": "Valve1155Pause",
+    "name": "Pause",
     "type": "event"
   },
   {
@@ -95,7 +95,7 @@
         "type": "address"
       }
     ],
-    "name": "Valve1155Paused",
+    "name": "Paused",
     "type": "event"
   },
   {
@@ -114,7 +114,7 @@
         "type": "bytes32"
       }
     ],
-    "name": "Valve1155TransferAccepted",
+    "name": "TransferAccepted",
     "type": "event"
   },
   {
@@ -133,13 +133,13 @@
         "type": "bytes32"
       }
     ],
-    "name": "Valve1155TransferCancelled",
+    "name": "TransferCancelled",
     "type": "event"
   },
   {
     "anonymous": false,
     "inputs": [],
-    "name": "Valve1155Unpause",
+    "name": "Unpause",
     "type": "event"
   },
   {
@@ -152,12 +152,16 @@
         "type": "address"
       }
     ],
-    "name": "Valve1155Unpaused",
+    "name": "Unpaused",
     "type": "event"
   },
   {
     "inputs": [
-      { "internalType": "bytes32", "name": "exId", "type": "bytes32" }
+      {
+        "internalType": "bytes32",
+        "name": "exId",
+        "type": "bytes32"
+      }
     ],
     "name": "acceptTransfer",
     "outputs": [],
@@ -166,7 +170,11 @@
   },
   {
     "inputs": [
-      { "internalType": "bytes32", "name": "exId", "type": "bytes32" }
+      {
+        "internalType": "bytes32",
+        "name": "exId",
+        "type": "bytes32"
+      }
     ],
     "name": "cancelTransfer",
     "outputs": [],
@@ -180,10 +188,26 @@
         "name": "token",
         "type": "address"
       },
-      { "internalType": "address", "name": "to", "type": "address" },
-      { "internalType": "uint256[]", "name": "tokenIds", "type": "uint256[]" },
-      { "internalType": "uint256[]", "name": "amounts", "type": "uint256[]" },
-      { "internalType": "bytes", "name": "data", "type": "bytes" }
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "tokenIds",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
+      }
     ],
     "name": "createTransfer",
     "outputs": [],
@@ -193,33 +217,61 @@
   {
     "inputs": [],
     "name": "fee",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "feeRecipient",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "index", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+      }
     ],
     "name": "getTransfer",
     "outputs": [
       {
         "components": [
-          { "internalType": "uint256", "name": "tid", "type": "uint256" },
+          {
+            "internalType": "uint256",
+            "name": "tid",
+            "type": "uint256"
+          },
           {
             "internalType": "contract IERC1155",
             "name": "token",
             "type": "address"
           },
-          { "internalType": "address", "name": "from", "type": "address" },
-          { "internalType": "address", "name": "to", "type": "address" },
+          {
+            "internalType": "address",
+            "name": "from",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "to",
+            "type": "address"
+          },
           {
             "internalType": "uint256[]",
             "name": "tokenIds",
@@ -230,14 +282,26 @@
             "name": "amounts",
             "type": "uint256[]"
           },
-          { "internalType": "bytes", "name": "data", "type": "bytes" },
-          { "internalType": "uint256", "name": "expireAt", "type": "uint256" },
+          {
+            "internalType": "bytes",
+            "name": "data",
+            "type": "bytes"
+          },
+          {
+            "internalType": "uint256",
+            "name": "expireAt",
+            "type": "uint256"
+          },
           {
             "internalType": "enum Valve1155.TransferStatus",
             "name": "status",
             "type": "uint8"
           },
-          { "internalType": "bytes32", "name": "exId", "type": "bytes32" }
+          {
+            "internalType": "bytes32",
+            "name": "exId",
+            "type": "bytes32"
+          }
         ],
         "internalType": "struct Valve1155.TokenTransfer",
         "name": "",
@@ -250,7 +314,13 @@
   {
     "inputs": [],
     "name": "getTransferCount",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
@@ -260,14 +330,26 @@
     "outputs": [
       {
         "components": [
-          { "internalType": "uint256", "name": "tid", "type": "uint256" },
+          {
+            "internalType": "uint256",
+            "name": "tid",
+            "type": "uint256"
+          },
           {
             "internalType": "contract IERC1155",
             "name": "token",
             "type": "address"
           },
-          { "internalType": "address", "name": "from", "type": "address" },
-          { "internalType": "address", "name": "to", "type": "address" },
+          {
+            "internalType": "address",
+            "name": "from",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "to",
+            "type": "address"
+          },
           {
             "internalType": "uint256[]",
             "name": "tokenIds",
@@ -278,14 +360,26 @@
             "name": "amounts",
             "type": "uint256[]"
           },
-          { "internalType": "bytes", "name": "data", "type": "bytes" },
-          { "internalType": "uint256", "name": "expireAt", "type": "uint256" },
+          {
+            "internalType": "bytes",
+            "name": "data",
+            "type": "bytes"
+          },
+          {
+            "internalType": "uint256",
+            "name": "expireAt",
+            "type": "uint256"
+          },
           {
             "internalType": "enum Valve1155.TransferStatus",
             "name": "status",
             "type": "uint8"
           },
-          { "internalType": "bytes32", "name": "exId", "type": "bytes32" }
+          {
+            "internalType": "bytes32",
+            "name": "exId",
+            "type": "bytes32"
+          }
         ],
         "internalType": "struct Valve1155.TokenTransfer[]",
         "name": "",
@@ -297,29 +391,55 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
     ],
     "name": "getUserReceiveCount",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
     ],
     "name": "getUserReceives",
     "outputs": [
       {
         "components": [
-          { "internalType": "uint256", "name": "tid", "type": "uint256" },
+          {
+            "internalType": "uint256",
+            "name": "tid",
+            "type": "uint256"
+          },
           {
             "internalType": "contract IERC1155",
             "name": "token",
             "type": "address"
           },
-          { "internalType": "address", "name": "from", "type": "address" },
-          { "internalType": "address", "name": "to", "type": "address" },
+          {
+            "internalType": "address",
+            "name": "from",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "to",
+            "type": "address"
+          },
           {
             "internalType": "uint256[]",
             "name": "tokenIds",
@@ -330,14 +450,26 @@
             "name": "amounts",
             "type": "uint256[]"
           },
-          { "internalType": "bytes", "name": "data", "type": "bytes" },
-          { "internalType": "uint256", "name": "expireAt", "type": "uint256" },
+          {
+            "internalType": "bytes",
+            "name": "data",
+            "type": "bytes"
+          },
+          {
+            "internalType": "uint256",
+            "name": "expireAt",
+            "type": "uint256"
+          },
           {
             "internalType": "enum Valve1155.TransferStatus",
             "name": "status",
             "type": "uint8"
           },
-          { "internalType": "bytes32", "name": "exId", "type": "bytes32" }
+          {
+            "internalType": "bytes32",
+            "name": "exId",
+            "type": "bytes32"
+          }
         ],
         "internalType": "struct Valve1155.TokenTransfer[]",
         "name": "ts",
@@ -349,22 +481,46 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" },
-      { "internalType": "uint256", "name": "fIndex", "type": "uint256" },
-      { "internalType": "uint256", "name": "count", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "fIndex",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "count",
+        "type": "uint256"
+      }
     ],
     "name": "getUserSubReceives",
     "outputs": [
       {
         "components": [
-          { "internalType": "uint256", "name": "tid", "type": "uint256" },
+          {
+            "internalType": "uint256",
+            "name": "tid",
+            "type": "uint256"
+          },
           {
             "internalType": "contract IERC1155",
             "name": "token",
             "type": "address"
           },
-          { "internalType": "address", "name": "from", "type": "address" },
-          { "internalType": "address", "name": "to", "type": "address" },
+          {
+            "internalType": "address",
+            "name": "from",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "to",
+            "type": "address"
+          },
           {
             "internalType": "uint256[]",
             "name": "tokenIds",
@@ -375,42 +531,82 @@
             "name": "amounts",
             "type": "uint256[]"
           },
-          { "internalType": "bytes", "name": "data", "type": "bytes" },
-          { "internalType": "uint256", "name": "expireAt", "type": "uint256" },
+          {
+            "internalType": "bytes",
+            "name": "data",
+            "type": "bytes"
+          },
+          {
+            "internalType": "uint256",
+            "name": "expireAt",
+            "type": "uint256"
+          },
           {
             "internalType": "enum Valve1155.TransferStatus",
             "name": "status",
             "type": "uint8"
           },
-          { "internalType": "bytes32", "name": "exId", "type": "bytes32" }
+          {
+            "internalType": "bytes32",
+            "name": "exId",
+            "type": "bytes32"
+          }
         ],
         "internalType": "struct Valve1155.TokenTransfer[]",
         "name": "ts",
         "type": "tuple[]"
       },
-      { "internalType": "uint256", "name": "size", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "size",
+        "type": "uint256"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" },
-      { "internalType": "uint256", "name": "fIndex", "type": "uint256" },
-      { "internalType": "uint256", "name": "count", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "fIndex",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "count",
+        "type": "uint256"
+      }
     ],
     "name": "getUserSubTransfers",
     "outputs": [
       {
         "components": [
-          { "internalType": "uint256", "name": "tid", "type": "uint256" },
+          {
+            "internalType": "uint256",
+            "name": "tid",
+            "type": "uint256"
+          },
           {
             "internalType": "contract IERC1155",
             "name": "token",
             "type": "address"
           },
-          { "internalType": "address", "name": "from", "type": "address" },
-          { "internalType": "address", "name": "to", "type": "address" },
+          {
+            "internalType": "address",
+            "name": "from",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "to",
+            "type": "address"
+          },
           {
             "internalType": "uint256[]",
             "name": "tokenIds",
@@ -421,49 +617,91 @@
             "name": "amounts",
             "type": "uint256[]"
           },
-          { "internalType": "bytes", "name": "data", "type": "bytes" },
-          { "internalType": "uint256", "name": "expireAt", "type": "uint256" },
+          {
+            "internalType": "bytes",
+            "name": "data",
+            "type": "bytes"
+          },
+          {
+            "internalType": "uint256",
+            "name": "expireAt",
+            "type": "uint256"
+          },
           {
             "internalType": "enum Valve1155.TransferStatus",
             "name": "status",
             "type": "uint8"
           },
-          { "internalType": "bytes32", "name": "exId", "type": "bytes32" }
+          {
+            "internalType": "bytes32",
+            "name": "exId",
+            "type": "bytes32"
+          }
         ],
         "internalType": "struct Valve1155.TokenTransfer[]",
         "name": "ts",
         "type": "tuple[]"
       },
-      { "internalType": "uint256", "name": "size", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "size",
+        "type": "uint256"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
     ],
     "name": "getUserTransferCount",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
     ],
     "name": "getUserTransfers",
     "outputs": [
       {
         "components": [
-          { "internalType": "uint256", "name": "tid", "type": "uint256" },
+          {
+            "internalType": "uint256",
+            "name": "tid",
+            "type": "uint256"
+          },
           {
             "internalType": "contract IERC1155",
             "name": "token",
             "type": "address"
           },
-          { "internalType": "address", "name": "from", "type": "address" },
-          { "internalType": "address", "name": "to", "type": "address" },
+          {
+            "internalType": "address",
+            "name": "from",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "to",
+            "type": "address"
+          },
           {
             "internalType": "uint256[]",
             "name": "tokenIds",
@@ -474,14 +712,26 @@
             "name": "amounts",
             "type": "uint256[]"
           },
-          { "internalType": "bytes", "name": "data", "type": "bytes" },
-          { "internalType": "uint256", "name": "expireAt", "type": "uint256" },
+          {
+            "internalType": "bytes",
+            "name": "data",
+            "type": "bytes"
+          },
+          {
+            "internalType": "uint256",
+            "name": "expireAt",
+            "type": "uint256"
+          },
           {
             "internalType": "enum Valve1155.TransferStatus",
             "name": "status",
             "type": "uint8"
           },
-          { "internalType": "bytes32", "name": "exId", "type": "bytes32" }
+          {
+            "internalType": "bytes32",
+            "name": "exId",
+            "type": "bytes32"
+          }
         ],
         "internalType": "struct Valve1155.TokenTransfer[]",
         "name": "ts",
@@ -500,34 +750,92 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "", "type": "address" },
-      { "internalType": "address", "name": "", "type": "address" },
-      { "internalType": "uint256[]", "name": "", "type": "uint256[]" },
-      { "internalType": "uint256[]", "name": "", "type": "uint256[]" },
-      { "internalType": "bytes", "name": "", "type": "bytes" }
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "bytes",
+        "name": "",
+        "type": "bytes"
+      }
     ],
     "name": "onERC1155BatchReceived",
-    "outputs": [{ "internalType": "bytes4", "name": "", "type": "bytes4" }],
+    "outputs": [
+      {
+        "internalType": "bytes4",
+        "name": "",
+        "type": "bytes4"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "", "type": "address" },
-      { "internalType": "address", "name": "", "type": "address" },
-      { "internalType": "uint256", "name": "", "type": "uint256" },
-      { "internalType": "uint256", "name": "", "type": "uint256" },
-      { "internalType": "bytes", "name": "", "type": "bytes" }
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "",
+        "type": "bytes"
+      }
     ],
     "name": "onERC1155Received",
-    "outputs": [{ "internalType": "bytes4", "name": "", "type": "bytes4" }],
+    "outputs": [
+      {
+        "internalType": "bytes4",
+        "name": "",
+        "type": "bytes4"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "owner",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
@@ -541,7 +849,13 @@
   {
     "inputs": [],
     "name": "paused",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
@@ -554,8 +868,16 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "_feeRecipient", "type": "address" },
-      { "internalType": "uint256", "name": "_fee", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "_feeRecipient",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_fee",
+        "type": "uint256"
+      }
     ],
     "name": "setFeeInfo",
     "outputs": [],
@@ -564,7 +886,11 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "_validDuration", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "_validDuration",
+        "type": "uint256"
+      }
     ],
     "name": "setValidDuration",
     "outputs": [],
@@ -573,33 +899,73 @@
   },
   {
     "inputs": [
-      { "internalType": "bytes4", "name": "interfaceId", "type": "bytes4" }
+      {
+        "internalType": "bytes4",
+        "name": "interfaceId",
+        "type": "bytes4"
+      }
     ],
     "name": "supportsInterface",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "", "type": "address" },
-      { "internalType": "uint256", "name": "", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
     ],
     "name": "transferCreators",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
-    "name": "transferInfo",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "newOwner", "type": "address" }
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "name": "transferInfo",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
     ],
     "name": "transferOwnership",
     "outputs": [],
@@ -608,34 +974,78 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "", "type": "address" },
-      { "internalType": "uint256", "name": "", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
     ],
     "name": "transferReceivers",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "name": "transfers",
     "outputs": [
-      { "internalType": "uint256", "name": "tid", "type": "uint256" },
+      {
+        "internalType": "uint256",
+        "name": "tid",
+        "type": "uint256"
+      },
       {
         "internalType": "contract IERC1155",
         "name": "token",
         "type": "address"
       },
-      { "internalType": "address", "name": "from", "type": "address" },
-      { "internalType": "address", "name": "to", "type": "address" },
-      { "internalType": "bytes", "name": "data", "type": "bytes" },
-      { "internalType": "uint256", "name": "expireAt", "type": "uint256" },
+      {
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
+      },
+      {
+        "internalType": "uint256",
+        "name": "expireAt",
+        "type": "uint256"
+      },
       {
         "internalType": "enum Valve1155.TransferStatus",
         "name": "status",
         "type": "uint8"
       },
-      { "internalType": "bytes32", "name": "exId", "type": "bytes32" }
+      {
+        "internalType": "bytes32",
+        "name": "exId",
+        "type": "bytes32"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
@@ -650,7 +1060,13 @@
   {
     "inputs": [],
     "name": "validDuration",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   }
