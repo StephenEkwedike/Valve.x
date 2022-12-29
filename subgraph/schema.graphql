@@ -15,8 +15,8 @@ type Transfer @entity {
   tId: BigInt!
   status: TransferStatus!
   exId: Bytes!
-  amount: BigInt!
-  tokenId: BigInt!
+  amount: BigInt
+  tokenId: BigInt
   amounts: [BigInt!]
   tokenIds: [BigInt!]
   from: User!
@@ -24,10 +24,10 @@ type Transfer @entity {
   token: Token!
   createTimestamp: BigInt!
   createHash: Bytes!
-  acceptTimestamp: BigInt!
-  acceptHash: Bytes!
-  cancelTimestamp: BigInt!
-  cancelHash: Bytes!
+  acceptTimestamp: BigInt
+  acceptHash: Bytes
+  cancelTimestamp: BigInt
+  cancelHash: Bytes
 }
 
 type User @entity {
