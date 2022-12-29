@@ -1,0 +1,9 @@
+# Dependency directories
+node_modules/
+
+# Compiled directories
+build/
+generated/
+
+# Generated files
+subgraph.yaml

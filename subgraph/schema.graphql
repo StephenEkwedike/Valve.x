@@ -1,0 +1,58 @@
+enum TransferStatus { 
+  Init, 
+  Sent, 
+  Cancelled 
+}
+
+enum TokenType {
+  ERC20,
+  ERC721,
+  ERC1155
+}
+
+type Transfer @entity {
+  id: ID!
+  tId: BigInt!
+  status: TransferStatus!
+  exId: Bytes!
+  amount: BigInt
+  tokenId: BigInt
+  amounts: [BigInt!]
+  tokenIds: [BigInt!]
+  from: User!
+  to: User!
+  token: Token!
+  createTimestamp: BigInt!
+  createHash: Bytes!
+  acceptTimestamp: BigInt
+  acceptHash: Bytes
+  cancelTimestamp: BigInt
+  cancelHash: Bytes
+}
+
+type User @entity {
+  id: ID!
+  address: Bytes!
+  fromTransfers: Transfer! @derivedFrom(field: "from")
+  toTransfers: Transfer! @derivedFrom(field: "to")
+  fromCount: BigInt!
+  toCount: BigInt!
+  acceptedCount: BigInt!
+}
+
+type Token @entity {
+  id: ID!
+  address: Bytes!
+  transfers: Transfer! @derivedFrom(field: "token")
+  type: TokenType!
+}
+
+type Overview @entity {
+  id: ID!
+  erc20TokenCount: BigInt!
+  erc1155TokenCount: BigInt!
+  erc721TokenCount: BigInt!
+  transferCount: BigInt!
+  totalAccepted: BigInt!
+  totalCancelled: BigInt!
+}
