@@ -14,6 +14,11 @@ type Transfer @entity {
   id: ID!
   tid: BigInt!
   status: TransferStatus!
+  exId: Bytes!
+  amount: BigInt!
+  tokenId: BigInt!
+  amounts: [BigInt!]
+  tokenIds: [BigInt!]
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!

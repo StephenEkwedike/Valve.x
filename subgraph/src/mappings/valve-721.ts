@@ -26,6 +26,8 @@ export function handleValve721NewTransfer(
   transfer.token = getOrCreateToken(event.params.token, mapTokenType(TokenType.ERC721)).id
   transfer.from = increaseFromCount(event.params.from).id
   transfer.to = increaseToCount(event.params.to).id
+  transfer.exId = event.params.exId
+  transfer.tokenId = event.params.tokenId
   transfer.blockNumber = event.block.number
   transfer.blockTimestamp = event.block.timestamp
   transfer.transactionHash = event.transaction.hash

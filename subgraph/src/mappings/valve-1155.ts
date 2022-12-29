@@ -26,6 +26,9 @@ export function handleValve1155NewTransfer(
   transfer.token = getOrCreateToken(event.params.token, mapTokenType(TokenType.ERC1155)).id
   transfer.from = increaseFromCount(event.params.from).id
   transfer.to = increaseToCount(event.params.to).id
+  transfer.exId = event.params.exId
+  transfer.amounts = event.params.amounts
+  transfer.tokenIds = event.params.tokenIds
   transfer.blockNumber = event.block.number
   transfer.blockTimestamp = event.block.timestamp
   transfer.transactionHash = event.transaction.hash

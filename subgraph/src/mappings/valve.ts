@@ -24,6 +24,8 @@ export function handleNewTransfer(event: NewTransferEvent): void {
   transfer.token = getOrCreateToken(event.params.token, mapTokenType(TokenType.ERC20)).id
   transfer.from = increaseFromCount(event.params.from).id
   transfer.to = increaseToCount(event.params.to).id
+  transfer.exId = event.params.exId
+  transfer.amount = event.params.amount
   transfer.blockNumber = event.block.number
   transfer.blockTimestamp = event.block.timestamp
   transfer.transactionHash = event.transaction.hash
