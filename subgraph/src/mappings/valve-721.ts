@@ -21,16 +21,15 @@ export function handleValve721NewTransfer(
     mapTokenType(TokenType.ERC721) + '-' + event.params.tid.toString()
   )
   
-  transfer.tid = event.params.tid
+  transfer.tId = event.params.tid
   transfer.status = mapTransferStatus(TransferStatus.Init)
   transfer.token = getOrCreateToken(event.params.token, mapTokenType(TokenType.ERC721)).id
   transfer.from = increaseFromCount(event.params.from).id
   transfer.to = increaseToCount(event.params.to).id
   transfer.exId = event.params.exId
   transfer.tokenId = event.params.tokenId
-  transfer.blockNumber = event.block.number
-  transfer.blockTimestamp = event.block.timestamp
-  transfer.transactionHash = event.transaction.hash
+  transfer.createTimestamp = event.block.timestamp
+  transfer.createHash = event.transaction.hash
 
   transfer.save()
 }
@@ -41,12 +40,13 @@ export function handleValve721TransferAccepted(
   increaseAccepted()
 
   let transfer = Transfer.load(mapTokenType(TokenType.ERC721) + '-' + event.params.tid.toString())
+
   if(transfer){
-    transfer.status = mapTransferStatus(TransferStatus.Sent)
     increaseAcceptedCount(Address.fromString(transfer.to))
-    transfer.blockNumber = event.block.number
-    transfer.blockTimestamp = event.block.timestamp
-    transfer.transactionHash = event.transaction.hash
+
+    transfer.status = mapTransferStatus(TransferStatus.Sent)
+    transfer.acceptTimestamp = event.block.timestamp
+    transfer.acceptHash = event.transaction.hash
     
     transfer.save()
   }
@@ -58,12 +58,11 @@ export function handleValve721TransferCancelled(
   increaseCancelled()
   
   let transfer = Transfer.load(mapTokenType(TokenType.ERC721) + '-' + event.params.tid.toString())
+  
   if(transfer){
     transfer.status = mapTransferStatus(TransferStatus.Cancelled)
-
-    transfer.blockNumber = event.block.number
-    transfer.blockTimestamp = event.block.timestamp
-    transfer.transactionHash = event.transaction.hash
+    transfer.cancelTimestamp = event.block.timestamp
+    transfer.cancelHash = event.transaction.hash
     
     transfer.save()
   }

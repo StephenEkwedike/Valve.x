@@ -12,19 +12,22 @@ enum TokenType {
 
 type Transfer @entity {
   id: ID!
-  tid: BigInt!
+  tId: BigInt!
   status: TransferStatus!
   exId: Bytes!
   amount: BigInt!
   tokenId: BigInt!
   amounts: [BigInt!]
   tokenIds: [BigInt!]
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
   from: User!
   to: User!
   token: Token!
+  createTimestamp: BigInt!
+  createHash: Bytes!
+  acceptTimestamp: BigInt!
+  acceptHash: Bytes!
+  cancelTimestamp: BigInt!
+  cancelHash: Bytes!
 }
 
 type User @entity {

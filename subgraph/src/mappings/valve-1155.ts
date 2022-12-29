@@ -21,7 +21,7 @@ export function handleValve1155NewTransfer(
     mapTokenType(TokenType.ERC1155) + '-' + event.params.tid.toString()
   )
   
-  transfer.tid = event.params.tid
+  transfer.tId = event.params.tid
   transfer.status = mapTransferStatus(TransferStatus.Init)
   transfer.token = getOrCreateToken(event.params.token, mapTokenType(TokenType.ERC1155)).id
   transfer.from = increaseFromCount(event.params.from).id
@@ -29,9 +29,8 @@ export function handleValve1155NewTransfer(
   transfer.exId = event.params.exId
   transfer.amounts = event.params.amounts
   transfer.tokenIds = event.params.tokenIds
-  transfer.blockNumber = event.block.number
-  transfer.blockTimestamp = event.block.timestamp
-  transfer.transactionHash = event.transaction.hash
+  transfer.createTimestamp = event.block.timestamp
+  transfer.createHash = event.transaction.hash
 
   transfer.save()
 }
@@ -42,13 +41,13 @@ export function handleValve1155TransferAccepted(
   increaseAccepted()
 
   let transfer = Transfer.load(mapTokenType(TokenType.ERC1155) + '-' + event.params.tid.toString())
+
   if(transfer){
-    transfer.status = mapTransferStatus(TransferStatus.Sent)
     increaseAcceptedCount(Address.fromString(transfer.to))
-    
-    transfer.blockNumber = event.block.number
-    transfer.blockTimestamp = event.block.timestamp
-    transfer.transactionHash = event.transaction.hash
+
+    transfer.status = mapTransferStatus(TransferStatus.Sent)
+    transfer.acceptTimestamp = event.block.timestamp
+    transfer.acceptHash = event.transaction.hash
     
     transfer.save()
   }
@@ -60,12 +59,11 @@ export function handleValve1155TransferCancelled(
   increaseCancelled()
   
   let transfer = Transfer.load(mapTokenType(TokenType.ERC1155) + '-' + event.params.tid.toString())
+  
   if(transfer){
     transfer.status = mapTransferStatus(TransferStatus.Cancelled)
-
-    transfer.blockNumber = event.block.number
-    transfer.blockTimestamp = event.block.timestamp
-    transfer.transactionHash = event.transaction.hash
+    transfer.cancelTimestamp = event.block.timestamp
+    transfer.cancelHash = event.transaction.hash
     
     transfer.save()
   }
