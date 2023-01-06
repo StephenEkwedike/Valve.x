@@ -18,7 +18,9 @@ export enum TransferStatus {
 }
 
 export enum HomeTab {
-  Transfer = "Transfer",
+  Token = "Token",
+  NFT = "NFT",
+  ERC1155 = "ERC1155",
   Sent = "Sent",
   Received = "Received",
 }

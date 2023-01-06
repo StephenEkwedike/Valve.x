@@ -10,17 +10,35 @@ export const TabBar = (props: IProps) => {
     <div className="px-2">
       <div className="flex gap-4">
         {["Transfer", "History"].map((tab) => {
-          const isSelected =
-            tab === "Transfer"
-              ? props.tab === HomeTab.Transfer
-              : props.tab !== HomeTab.Transfer;
+          let isSelected = true;
+          
+          switch (props.tab) {
+            case HomeTab.Token:
+              isSelected = tab === "Transfer";
+              break;
+
+            case HomeTab.NFT:
+              isSelected = tab === "Transfer";
+              break;
+
+            case HomeTab.Sent:
+              isSelected = tab === "History";
+              break;
+
+            case HomeTab.Received:
+              isSelected = tab === "History";
+              break;
+              
+            default:
+              isSelected = true;
+          }
 
           return (
             <div
               key={tab}
               onClick={() => {
                 props.onChange(
-                  tab === "Transfer" ? HomeTab.Transfer : HomeTab.Sent
+                  tab === "Transfer" ? HomeTab.Token : HomeTab.Sent
                 );
               }}
               className={`leading-5 font-bold cursor-pointer select-none text-secondary hover:text-white ${

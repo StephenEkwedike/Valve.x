@@ -16,6 +16,8 @@ export interface INetwork {
   icon: string;
   contracts: {
     valve: string;
+    valve721: string;
+    valve1155: string;
     multicall: string;
   };
   etherscanUri: string;
@@ -61,6 +63,30 @@ export interface IToken {
   name: string;
   image: string[];
   coingeckoId: string;
+}
+
+export type KnownNFT = 
+  | "cryptopunks"
+  | "azuki"
+  | "valhalla"
+  | "doodle";
+
+export interface IKnownNFTData {
+  name: string;
+  symbol: string;
+  address: string;
+  image: string[];
+  collectionId: string;
+  platformId: number;
+}
+
+export interface INFT {
+  address: string;
+  symbol: string;
+  name: string;
+  image: string[];
+  collectionId: string;
+  platformId: number;
 }
 
 export interface Call {

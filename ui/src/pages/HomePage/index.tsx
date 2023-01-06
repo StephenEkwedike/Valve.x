@@ -1,6 +1,5 @@
-import { useConnectedWeb3Context } from "contexts";
 import { useUserReceives, useUserTransfers } from "helpers";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { HomeTab } from "utils/enums";
 import {
   HistoryTabBar,
@@ -9,13 +8,15 @@ import {
   TabBar,
   TransferSection,
 } from "./components";
+import { ERC721Transfer } from "./components/ERC721Transfer";
+import { TransferTabBar } from "./components/TransferTabBar";
 
 interface IState {
   tab: HomeTab;
 }
 
 const HomePage = () => {
-  const [state, setState] = useState<IState>({ tab: HomeTab.Transfer });
+  const [state, setState] = useState<IState>({ tab: HomeTab.Token });
   const {
     transferIds,
     load: loadTransfers,
@@ -29,32 +30,70 @@ const HomePage = () => {
 
   const renderContent = () => {
     switch (state.tab) {
-      case HomeTab.Transfer:
+      case HomeTab.Token:
         return (
-          <TransferSection
-            onReload={async () => {
-              await Promise.all([loadTransfers(), loadReceives()]);
-            }}
-          />
+          <>
+            <TransferTabBar 
+              tab={state.tab}
+              onChange={(tab) => setState((prev) => ({ ...prev, tab }))}
+            />
+            <TransferSection
+              onReload={async () => {
+                await Promise.all([loadTransfers(), loadReceives()]);
+              }}
+            />
+          </>
         );
-      default:
+      case HomeTab.NFT:
+        return (
+          <>
+            <TransferTabBar 
+              tab={state.tab}
+              onChange={(tab) => setState((prev) => ({ ...prev, tab }))}
+            />
+            <ERC721Transfer
+              onReload={async () => {}}
+            />
+          </>
+        )
+      case HomeTab.Sent:
         return (
           <>
             <HistoryTabBar
               tab={state.tab}
               onChange={(tab) => setState((prev) => ({ ...prev, tab }))}
             />
-            {state.tab === HomeTab.Sent ? (
-              <SentSection
-                transferIds={transferIds}
-                loading={transferLoading}
-              />
-            ) : (
-              <ReceivedSection
-                transferIds={receiveIds}
-                loading={receivesLoading}
-              />
-            )}
+            <SentSection
+              transferIds={transferIds}
+              loading={transferLoading}
+            />
+          </>
+        );
+      case HomeTab.Received:
+        return (
+          <>
+            <HistoryTabBar
+              tab={state.tab}
+              onChange={(tab) => setState((prev) => ({ ...prev, tab }))}
+            />
+            <ReceivedSection
+              transferIds={receiveIds}
+              loading={receivesLoading}
+            />
+          </>
+        )
+      default:
+        return (
+          <>
+            <TransferTabBar 
+              tab={state.tab}
+              onChange={(tab) => setState((prev) => ({ ...prev, tab }))}
+            />
+            <TransferSection
+              onReload={async () => {
+                await Promise.all([loadTransfers(), loadReceives()]);
+              }}
+            />
           </>
         );
     }

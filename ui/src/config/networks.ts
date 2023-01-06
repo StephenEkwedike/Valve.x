@@ -1,10 +1,13 @@
 import { providers } from "ethers";
 import { entries } from "utils/type-utils";
 import {
+  IKnownNFTData,
   IKnownTokenData,
   INetwork,
+  INFT,
   IToken,
   KnownContracts,
+  KnownNFT,
   KnownSubgraph,
   KnownToken,
   NetworkId,
@@ -29,6 +32,8 @@ export const networks: { [K in NetworkId]: INetwork } = {
     url: "https://data-seed-prebsc-1-s1.binance.org:8545/",
     contracts: {
       valve: "0x7f57C43f677621219271094A41AbeA71bFE96856",
+      valve721: "0x261F4EFb8C96C5ec13Ba446E8e1923aEd9dd0917",
+      valve1155: "0xF3121eD0E4F5a5603217815c7f0212a799185879",
       multicall: "0x62dDb8449123CF925137632ca214E8Be6Ec92b5e",
     },
     etherscanUri: "https://testnet.bscscan.com/",
@@ -41,6 +46,8 @@ export const networks: { [K in NetworkId]: INetwork } = {
     url: "https://bsc-dataseed.binance.org/",
     contracts: {
       valve: "0x1A2cF3BB19391a96aC06F6Bc2c5b42750E1b60D6",
+      valve721: "",
+      valve1155: "",
       multicall: "0x87B45489F1cC9Cc8DB1D75AaaF094da1a6C433de",
     },
     etherscanUri: "https://bscscan.com/",
@@ -53,6 +60,8 @@ export const networks: { [K in NetworkId]: INetwork } = {
     url: "https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
     contracts: {
       valve: "0x1A2cF3BB19391a96aC06F6Bc2c5b42750E1b60D6",
+      valve721: "",
+      valve1155: "",
       multicall: "0x87B45489F1cC9Cc8DB1D75AaaF094da1a6C433de",
     },
     etherscanUri: "https://etherscan.io/",
@@ -65,6 +74,8 @@ export const networks: { [K in NetworkId]: INetwork } = {
     url: "https://polygon-rpc.com/",
     contracts: {
       valve: "0x42AB0B20B6f4C6d93cC6eEc75Bf2A54D3321a43f",
+      valve721: "",
+      valve1155: "",
       multicall: "0x87B45489F1cC9Cc8DB1D75AaaF094da1a6C433de",
     },
     etherscanUri: "https://polygonscan.com/",
@@ -77,6 +88,8 @@ export const networks: { [K in NetworkId]: INetwork } = {
     url: "https://api.avax.network/ext/bc/C/rpc",
     contracts: {
       valve: "0x1A2cF3BB19391a96aC06F6Bc2c5b42750E1b60D6",
+      valve721: "",
+      valve1155: "",
       multicall: "0x87B45489F1cC9Cc8DB1D75AaaF094da1a6C433de",
     },
     etherscanUri: "https://snowtrace.io/",
@@ -89,6 +102,8 @@ export const networks: { [K in NetworkId]: INetwork } = {
     url: "https://mainnet.optimism.io",
     contracts: {
       valve: "0x1A2cF3BB19391a96aC06F6Bc2c5b42750E1b60D6",
+      valve721: "",
+      valve1155: "",
       multicall: "0x87B45489F1cC9Cc8DB1D75AaaF094da1a6C433de",
     },
     etherscanUri: "https://optimistic.etherscan.io/",
@@ -101,6 +116,8 @@ export const networks: { [K in NetworkId]: INetwork } = {
     url: "https://rpc.ankr.com/fantom/",
     contracts: {
       valve: "0x1A2cF3BB19391a96aC06F6Bc2c5b42750E1b60D6",
+      valve721: "",
+      valve1155: "",
       multicall: "0x87B45489F1cC9Cc8DB1D75AaaF094da1a6C433de",
     },
     etherscanUri: "https://ftmscan.com/",
@@ -473,6 +490,41 @@ export const knownTokens: { [K in KnownToken]: IKnownTokenData } = {
   },
 };
 
+export const knownNFTs: { [K in KnownNFT] : IKnownNFTData } = {
+  cryptopunks: {
+    name: "CryptoPunks",
+    symbol: "punk",
+    address: "0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB",
+    platformId: networkIds.mainnet,
+    image: ["/assets/nfts/cryptopunks.png"],
+    collectionId: "cryptopunks",
+  },
+  azuki: {
+    name: "Azuki",
+    symbol: "azuki",
+    address: "0xed5af388653567af2f388e6224dc7c4b3241c544",
+    platformId: networkIds.mainnet,
+    image: ["/assets/nfts/azuki.png"],
+    collectionId: "azuki",
+  },
+  valhalla: {
+    name: "Valhalla",
+    symbol: "valhalla",
+    address: "0x231d3559aa848Bf10366fB9868590F01d34bF240",
+    platformId: networkIds.mainnet,
+    image: ["/assets/nfts/valhalla.png"],
+    collectionId: "valhalla"
+  },
+  doodle: {
+    name: "Doodles",
+    symbol: "doodle",
+    address: "0x8a90cab2b38dba80c64b7734e58ee1db38b8992e",
+    platformId: networkIds.mainnet,
+    image: ["/assets/nfts/doodles.png"],
+    collectionId: "doodles-official",
+  },
+};
+
 export const tokenIds = Object.keys(knownTokens);
 
 export const supportedNetworkIds = Object.keys(networks).map(
@@ -546,6 +598,22 @@ export const getTokenFromAddress = (
   throw new Error(
     `Couldn't find token with address '${address}' in network '${networkId}'`
   );
+};
+
+export const getNFT = (nftId: KnownNFT): INFT => {
+  const nft = knownNFTs[nftId];
+
+  if (!nft) {
+    throw new Error(`Unsupported NFT: '${nftId}'`);
+  }
+  return {
+    name: nft.name,
+    symbol: nft.symbol,
+    address: nft.address,
+    image: nft.image,
+    collectionId: nft.collectionId,
+    platformId: nft.platformId,
+  };
 };
 
 export const getEtherscanUri = (networkId?: number): string => {
