@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { parseEther } from "ethers/lib/utils";
 
@@ -8,9 +8,9 @@ import { INFT } from "types/types";
 export const useNFTPrice = (nft?: INFT) => {
   const [price, setPrice] = useState(ZERO);
 
-  useEffect(() => {
-    const loadPrice = async () => {
-      if (nft) {
+  const loadPrice = useCallback(async () => {
+    if (nft) {
+      try {
         const response = (
           await axios.get(
             `https://api.coingecko.com/api/v3/nft/${nft.collectionId}`
@@ -18,11 +18,16 @@ export const useNFTPrice = (nft?: INFT) => {
         ).data;
         const price = response.floor_price.usd;
         setPrice(parseEther(String(price)));
+      } catch (error) {
+        console.log(error);
+        setPrice(ZERO);
       }
-    };
-
-    loadPrice();
+    }
   }, [nft]);
+
+  useEffect(() => {
+    loadPrice();
+  }, [loadPrice]);
 
   return price;
 };

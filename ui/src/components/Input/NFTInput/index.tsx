@@ -11,20 +11,17 @@ interface IProps {
   nft?: INFT;
   amount: BigNumber;
   onChangeNFT: (_: INFT) => void;
-  onChangeAmount: (_: BigNumber) => void;
 }
 
 interface IState {
-  amountStr: string;
   nftSelectVisible: boolean;
   priceLeft: number;
 }
 
 export const NFTInput = (props: IProps) => {
-  const { nft, onChangeNFT, onChangeAmount } = props;
+  const { nft, amount, onChangeNFT } = props;
   const { balance } = useNFTBalance(nft?.address || NULL_ADDRESS);
   const [state, setState] = useState<IState>({ 
-    amountStr: "", 
     nftSelectVisible: false, 
     priceLeft: 60,
   });
@@ -71,7 +68,7 @@ export const NFTInput = (props: IProps) => {
             maxLength={79}
             spellCheck={false}
             className="text-primary relative font-bold outline-none border-none flex-auto overflow-hidden overflow-ellipsis placeholder-low-emphesis focus:placeholder-primary leading-[36px] focus:placeholder:text-low-emphesis flex-grow w-full text-left bg-transparent text-inherit disabled:cursor-not-allowed"
-            value={state.amountStr}
+            value={amount.toString()}
             readOnly
           />
           {!nftPrice.isZero() && nft && (
@@ -79,19 +76,12 @@ export const NFTInput = (props: IProps) => {
               className="text-xs leading-4 font-medium text-secondary absolute bottom-1.5 pointer-events-none whitespace-nowrap"
               style={{ left: state.priceLeft }}
             >
-              {nftPrice.toString()}
+              ~${nftPrice.toString()}
             </span>
           )}
         </div>
         {nft ? (
-          <div 
-            className="text-sm leading-5 font-medium cursor-pointer select-none flex text-secondary whitespace-nowrap"
-            onClick={() => {
-              if (nft) {
-                onChangeAmount(balance);
-              }
-            }}
-          >
+          <div className="text-sm leading-5 font-medium cursor-pointer select-none flex text-secondary whitespace-nowrap">
             Balance: { balance.toString() }
           </div>
         ) : null}

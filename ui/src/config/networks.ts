@@ -523,6 +523,22 @@ export const knownNFTs: { [K in KnownNFT] : IKnownNFTData } = {
     image: ["/assets/nfts/doodles.png"],
     collectionId: "doodles-official",
   },
+  zionlions: {
+    name: "Zion Lions",
+    symbol: "ZLS",
+    address: "0x3813AD59e50dC6c665951c8c84e15D08Ed68Dfac",
+    platformId: networkIds.bsct,
+    image: ["/assets/nfts/zion-lion.png"],
+    collectionId: "zion-lion",
+  },
+ marco: {
+    name: "Marco NFT",
+    symbol: "Marco",
+    address: "0x978Ad4B703624ab33835D67D63512DFA5F1554F7",
+    platformId: networkIds.bsct,
+    image: ["/assets/nfts/marco.png"],
+    collectionId: "marco",
+  },
 };
 
 export const tokenIds = Object.keys(knownTokens);

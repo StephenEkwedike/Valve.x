@@ -20,6 +20,7 @@ export const ETHER_DECIMAL = 18;
 export const NULL_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 export const ZERO = BigNumber.from(0);
+export const ONE = BigNumber.from(1);
 export const ONE_ETHER = parseEther("1");
 
 export const FEE_MULTIPLIER = 10000;

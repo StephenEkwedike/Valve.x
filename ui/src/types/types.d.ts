@@ -69,7 +69,9 @@ export type KnownNFT =
   | "cryptopunks"
   | "azuki"
   | "valhalla"
-  | "doodle";
+  | "doodle"
+  | "zionlions"
+  | "marco";
 
 export interface IKnownNFTData {
   name: string;

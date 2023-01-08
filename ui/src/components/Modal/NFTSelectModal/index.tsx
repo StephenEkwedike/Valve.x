@@ -4,7 +4,7 @@ import { getNFT, knownNFTs } from "config/networks";
 import { useConnectedWeb3Context } from "contexts";
 import { useNFTBalances } from "helpers";
 import { INFT, KnownNFT } from "types/types";
-import { ZERO } from "config/constants";
+import { DEFAULT_NETWORK_ID, ZERO } from "config/constants";
 
 interface IProps {
   nft?: INFT;
@@ -15,9 +15,10 @@ interface IProps {
 export const NFTSelectModal = (props: IProps) => {
   const { nft, onClose, onSelect } = props;
   const { networkId } = useConnectedWeb3Context();
+  const fNetworkId = networkId || DEFAULT_NETWORK_ID;
   const nfts = Object.keys(knownNFTs)
     .map((key) => getNFT(key as KnownNFT))
-    .filter((nft) => nft?.platformId === networkId);
+    .filter((nft) => nft?.platformId === fNetworkId);
   const balances = useNFTBalances(nfts);
 
   return (

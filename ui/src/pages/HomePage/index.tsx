@@ -7,9 +7,9 @@ import {
   SentSection,
   TabBar,
   TransferSection,
+  TransferTabBar,
+  ERC721Transfer,
 } from "./components";
-import { ERC721Transfer } from "./components/ERC721Transfer";
-import { TransferTabBar } from "./components/TransferTabBar";
 
 interface IState {
   tab: HomeTab;
