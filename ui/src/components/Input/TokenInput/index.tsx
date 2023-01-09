@@ -19,7 +19,6 @@ interface IProps {
 interface IState {
   amountStr: string;
   tokenSelectVisible: boolean;
-  priceLeft: number;
 }
 
 export const TokenInput = (props: IProps) => {
@@ -28,24 +27,8 @@ export const TokenInput = (props: IProps) => {
   const [state, setState] = useState<IState>({
     amountStr: "",
     tokenSelectVisible: false,
-    priceLeft: 60,
   });
   const tokenPrice = useTokenPrice(props.token);
-
-  const getWidthOfText = (text: string) => {
-    if (text === "") {
-      return 60;
-    }
-    const element = document.createElement("div");
-    element.style.fontSize = "24px";
-    element.style.display = "inline";
-    element.innerHTML = text;
-    document.body.appendChild(element);
-    const width = element.offsetWidth;
-
-    document.body.removeChild(element);
-    return width + 10;
-  };
 
   useEffect(() => {
     if (
@@ -60,7 +43,6 @@ export const TokenInput = (props: IProps) => {
       setState((prev) => ({
         ...prev,
         amountStr: newStr,
-        priceLeft: getWidthOfText(newStr),
       }));
     }
   }, [amount, state.amountStr]);
@@ -75,42 +57,16 @@ export const TokenInput = (props: IProps) => {
       );
       onChangeAmount(newValue);
     }
-    getWidthOfText(newAmountStr);
     setState((prev) => ({
       ...prev,
       amountStr: newAmountStr,
-      priceLeft: getWidthOfText(newAmountStr),
     }));
   };
 
   return (
-    <div className="border-dark-700 hover:border-dark-600 rounded-[14px] border bg-dark-900 p-3 flex flex-col gap-4 component__token_input">
-      <div className="flex items-center justify-between gap-2">
-        <div className="flex items-center">
-          <div
-            className="bg-dark-800 hover:bg-dark-700 cursor-pointer flex items-center gap-2 px-2 py-1 rounded-full shadow-md text-high-emphesis"
-            onClick={() => {
-              setState((prev) => ({ ...prev, tokenSelectVisible: true }));
-            }}
-          >
-            {token ? (
-              <img
-                src={token.image[0]}
-                alt="logo"
-                className="w-5 h-5 rounded"
-              />
-            ) : (
-              <>&nbsp;</>
-            )}
-            <div className="text-sm leading-5 font-bold !text-xl">
-              {token?.symbol || "Select a Token"}
-            </div>
-            <ChevronDownIcon className="w-4 h-4 " />
-          </div>
-        </div>
-      </div>
-      <div className="flex gap-1 justify-between items-baseline px-1.5">
-        <div className="text-2xl leading-7 tracking-[-0.01em] font-bold relative flex items-baseline flex-grow gap-3 overflow-hidden">
+    <div className="p-4 w-full flex flex-col gap-1 component__token_input">
+      <div className="flex flex-row items-center flex-row justify-between gap-2">        
+        <div className="text-4xl leading-7 tracking-[-0.01em] flex items-baseline flex-grow gap-3 overflow-hidden">
           <input
             inputMode="decimal"
             title="Token Amount"
@@ -123,24 +79,40 @@ export const TokenInput = (props: IProps) => {
             minLength={1}
             maxLength={79}
             spellCheck={false}
-            className="text-primary relative font-bold outline-none border-none flex-auto overflow-hidden overflow-ellipsis placeholder-low-emphesis focus:placeholder-primary leading-[36px] focus:placeholder:text-low-emphesis flex-grow w-full text-left bg-transparent text-inherit disabled:cursor-not-allowed"
+            className="text-white outline-none border-none placeholder-low-emphesis flex-grow w-full bg-transparent"
             value={state.amountStr}
             onChange={(e) => onChange(e.target.value)}
           />
-          {!tokenPrice.isZero() && token && (
-            <span
-              className="text-xs leading-4 font-medium text-secondary absolute bottom-1.5 pointer-events-none whitespace-nowrap"
-              style={{ left: state.priceLeft }}
-            >
-              ~$
-              {formatBigNumber(
-                tokenPrice.mul(amount.isZero() ? ONE_ETHER : amount),
-                token.decimals + ETHER_DECIMAL
-              )}
-            </span>
-          )}
         </div>
-        {token ? (
+        <div
+          className="h-full px-2 py-2 gap-1 cursor-point flex flex-row items-center rounded-full border border-gray-500 text-high-emphesis"
+          onClick={() => {
+            setState((prev) => ({ ...prev, tokenSelectVisible: true }));
+          }}
+        >
+          {token && (
+            <img
+              src={token.image[0]}
+              alt="logo"
+              className="w-5 h-5 rounded"
+            />
+          )}
+          <div className="text-xs">
+            {token?.symbol || "Select a Token"}
+          </div>
+          <ChevronDownIcon className="w-4 h-4" />
+        </div>
+      </div>
+      <div className="flex flex-row items-center justify-between">
+        {token && (
+          <div className="text-xs leading-4 font-medium text-secondary pointer-events-none whitespace-nowrap">
+            ${formatBigNumber(
+              tokenPrice.mul(amount.isZero() ? ONE_ETHER : amount),
+              token.decimals + ETHER_DECIMAL
+            )}
+          </div>
+        )}
+        {token && (
           <div
             className="text-sm leading-5 font-medium cursor-pointer select-none flex text-secondary whitespace-nowrap"
             onClick={() => {
@@ -151,7 +123,7 @@ export const TokenInput = (props: IProps) => {
           >
             Balance: {formatBigNumber(balance, token.decimals, 4)}
           </div>
-        ) : null}
+        )}
         {state.tokenSelectVisible && (
           <TokenSelectModal
             token={token}

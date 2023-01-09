@@ -17,10 +17,13 @@ export enum TransferStatus {
   Cancelled,
 }
 
+export enum TokenType {
+  Token = "ERC20",
+  NFT = "ERC721"
+}
+
 export enum HomeTab {
-  Token = "Token",
-  NFT = "NFT",
-  ERC1155 = "ERC1155",
+  Transfer = "Transfer",
   Sent = "Sent",
   Received = "Received",
 }

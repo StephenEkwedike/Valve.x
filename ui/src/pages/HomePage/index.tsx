@@ -1,22 +1,24 @@
+import React, { useState, useCallback } from "react";
+
 import { useUserReceives, useUserTransfers } from "helpers";
-import React, { useState } from "react";
-import { HomeTab } from "utils/enums";
+import { HomeTab, TokenType } from "utils/enums";
 import {
   HistoryTabBar,
   ReceivedSection,
   SentSection,
   TabBar,
-  TransferSection,
-  TransferTabBar,
   ERC721Transfer,
+  TokenTransfer,
+  TokenTypeToggle
 } from "./components";
 
 interface IState {
   tab: HomeTab;
+  tokenType: TokenType
 }
 
 const HomePage = () => {
-  const [state, setState] = useState<IState>({ tab: HomeTab.Token });
+  const [state, setState] = useState<IState>({ tab: HomeTab.Transfer, tokenType: TokenType.Token });
   const {
     transferIds,
     load: loadTransfers,
@@ -28,34 +30,18 @@ const HomePage = () => {
     loading: receivesLoading,
   } = useUserReceives();
 
+  const onClickToken = useCallback(() => {
+    setState(prev => ({ ...prev, tokenType: TokenType.Token }))
+  },[]);
+
+  const onClickNFT = useCallback(() => {
+    setState(prev => ({ ...prev, tokenType: TokenType.NFT }))
+  }, [])
+
   const renderContent = () => {
     switch (state.tab) {
-      case HomeTab.Token:
-        return (
-          <>
-            <TransferTabBar 
-              tab={state.tab}
-              onChange={(tab) => setState((prev) => ({ ...prev, tab }))}
-            />
-            <TransferSection
-              onReload={async () => {
-                await Promise.all([loadTransfers(), loadReceives()]);
-              }}
-            />
-          </>
-        );
-      case HomeTab.NFT:
-        return (
-          <>
-            <TransferTabBar 
-              tab={state.tab}
-              onChange={(tab) => setState((prev) => ({ ...prev, tab }))}
-            />
-            <ERC721Transfer
-              onReload={async () => {}}
-            />
-          </>
-        )
+      case HomeTab.Transfer:
+        return state.tokenType === TokenType.Token ? <TokenTransfer /> : <ERC721Transfer onReload={async () => {}} />;
       case HomeTab.Sent:
         return (
           <>
@@ -81,32 +67,25 @@ const HomePage = () => {
               loading={receivesLoading}
             />
           </>
-        )
-      default:
-        return (
-          <>
-            <TransferTabBar 
-              tab={state.tab}
-              onChange={(tab) => setState((prev) => ({ ...prev, tab }))}
-            />
-            <TransferSection
-              onReload={async () => {
-                await Promise.all([loadTransfers(), loadReceives()]);
-              }}
-            />
-          </>
         );
     }
   };
 
   return (
     <>
-      <TabBar
-        tab={state.tab}
-        onChange={(tab) => setState((prev) => ({ ...prev, tab }))}
+      <TokenTypeToggle 
+        tokenType={state.tokenType} 
+        onClickToken={onClickToken} 
+        onClickNFT={onClickNFT} 
       />
+      <div className="w-full flex flex-col gap-3 pt-4 rounded-[16px] shadow-md shadow-dark-1000 bg-base">
+        <TabBar
+          tab={state.tab}
+          onChange={(tab) => setState((prev) => ({ ...prev, tab }))}
+        />
 
-      {renderContent()}
+        {renderContent()}
+      </div>
     </>
   );
 };

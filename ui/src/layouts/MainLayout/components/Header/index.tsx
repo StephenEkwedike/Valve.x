@@ -50,7 +50,7 @@ export const Header = () => {
               </>
             ) : (
               <button
-                className="text-primary text-sm font-bold px-3 bg-gradient-to-r from-pink-800 to-purple-800 rounded-full gap-1 flex items-center justify-center h-9"
+                className="text-primary text-sm font-bold px-3 bg-gradient-to-r from-blue-600 to-pink-600 rounded-full gap-1 flex items-center justify-center h-9"
                 onClick={() => {
                   setWalletConnectModalOpened(true);
                 }}
