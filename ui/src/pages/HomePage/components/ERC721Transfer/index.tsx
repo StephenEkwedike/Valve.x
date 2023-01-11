@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { BigNumber } from "ethers";
+// import { BigNumber } from "ethers";
 
 import { AddressInput, NFTInput, CopyLinkButton } from "components";
-import { NULL_ADDRESS, ONE, ZERO } from "config/constants";
+// import { NULL_ADDRESS } from "config/constants";
 import { useConnectedWeb3Context } from "contexts";
-import { useNFTBalance, useServices } from "helpers";
+import { useServices } from "helpers";
 import { INFT } from "types/types";
 import { isAddress } from "utils/tools";
 import { ERC721Service } from "services";
@@ -16,8 +16,6 @@ interface IProps {
 
 interface IState {
   nft?: INFT;
-  amount: BigNumber;
-  tokenId?: BigNumber;
   recipient: string;
 }
 
@@ -25,82 +23,71 @@ interface IState {
 export const ERC721Transfer = (props: IProps) => {  
   const { networkId, setTxModalInfo, account  } = useConnectedWeb3Context();
   const { valve721 } = useServices();
-  const [state, setState] = useState<IState>({ amount: ZERO, recipient: "" });
-  const { balance } = useNFTBalance(state.nft?.address || NULL_ADDRESS);
+  const [state, setState] = useState<IState>({ recipient: "" });
 
   useEffect(() => {
     setState((prev) => ({ ...prev, nft: undefined }));
   }, []);
 
-  // const onTransfer = async () => {
-  //   if (!state.nft || !networkId || !account) {
-  //     return;
-  //   }
-  //   try {
-  //     if (state.nft.address === NULL_ADDRESS) {
-  //       // bnb
-  //     } else {
-  //       setTxModalInfo(true, "Checking allowance");
-  //       const nft = new ERC721Service(
-  //         valve721.provider,
-  //         account,
-  //         state.nft.address
-  //       );
-  //       const hasEnoughAllowance = await nft.ownerOf(
-  //         account,
-  //         valve721.address,
-  //         state.amount
-  //       );
-  //       if (!hasEnoughAllowance) {
-  //         setTxModalInfo(true, "Approving");
-  //         const hash = await nft.approveUnlimited(valve721.address);
-  //         setTxModalInfo(
-  //           true,
-  //           "Approving",
-  //           "Please wait until transaction is confirmed",
-  //           hash
-  //         );
-  //         await nft.provider.waitForTransaction(hash);
-  //       }
-  //     }
-  //     setTxModalInfo(true, "Doing Transfer");
-  //     const hash = await valve721.createTransfer(
-  //       state.nft.address,
-  //       state.recipient,
-  //       state.amount
-  //     );
-  //     setTxModalInfo(
-  //       true,
-  //       "Doing Transfer",
-  //       "Please wait until transaction is confirmed",
-  //       hash
-  //     );
-  //     await valve.provider.waitForTransaction(hash);
+  const onTransfer = async () => {
+    if (!state.nft || !networkId || !account) {
+      return;
+    }
+    try {
+      setTxModalInfo(true, "Checking allowance");
+      const nft = new ERC721Service(
+        valve721.provider,
+        account,
+        state.nft.address
+      );
+      const approvalAddr = await nft.getApproved(parseInt(state.nft.tokenId || ""));
+      if (approvalAddr !== state.recipient) {
+        setTxModalInfo(true, "Approving");
+        const hash = await nft.approve(valve721.address, parseInt(state.nft.tokenId || ""));
+        setTxModalInfo(
+          true,
+          "Approving",
+          "Please wait until transaction is confirmed",
+          hash
+        );
+        await nft.provider.waitForTransaction(hash);
+      }
+      setTxModalInfo(true, "Doing Transfer");
+      const hash = await valve721.createTransfer(
+        state.nft.address,
+        state.recipient,
+        parseInt(state.nft.tokenId || "")
+      );
+      setTxModalInfo(
+        true,
+        "Doing Transfer",
+        "Please wait until transaction is confirmed",
+        hash
+      );
+      await valve721.provider.waitForTransaction(hash);
 
-  //     await props.onReload();
+      await props.onReload();
 
-  //     setTxModalInfo(false);
-  //     toast.success("Transfer is created successfully!");
-  //   } catch (error) {
-  //     setTxModalInfo(false);
-  //     toast.error("Something went wrong!");
-  //   }
-  // };
+      setTxModalInfo(false);
+      toast.success("Transfer is created successfully!");
+    } catch (error) {
+      console.log({ error });
+      setTxModalInfo(false);
+      toast.error("Something went wrong!");
+    }
+  };
 
   const getMessage = () => {
+    if(!networkId || !account) {
+      return "Error: Connect your wallet first!"
+    }
     if (!state.nft) {
-      return "Select a NFT";
-    }
-    if (state.amount.isZero()) {
-      return "Input amount";
-    }
-    if (state.amount.gt(balance)) {
-      return "Insufficient balance";
+      return "Error: Select a NFT";
     }
     if (!isAddress(state.recipient)) {
-      return "Invalid recipient";
+      return "Error: Invalid recipient";
     }
-    return "Transfer";
+    return "";
   };
 
   return (
@@ -108,7 +95,6 @@ export const ERC721Transfer = (props: IProps) => {
       <div className="flex flex-col items-center py-5">
         <NFTInput
           nft={state.nft}
-          amount={state.amount}
           onChangeNFT={(nft) => {
             setState((prev) => ({ ...prev, nft }));
           }}
@@ -122,9 +108,9 @@ export const ERC721Transfer = (props: IProps) => {
           }}
           label="Enter Recipient Address"
         />
-        <CopyLinkButton disabled={true} onClick={() => {}} />
+        <CopyLinkButton disabled={state.nft?.tokenId === undefined} onClick={onTransfer} />
         <div className="text-red-600">
-          Error: Connect your wallet first!
+          {getMessage()}
         </div>
       </div>
     </div>

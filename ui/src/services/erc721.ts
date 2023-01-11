@@ -1,5 +1,4 @@
 import {BigNumber, Contract, ethers, Wallet} from "ethers";
-import { hexlify } from "ethers/lib/utils";
 
 import abis from "abis";
 import {Maybe} from "types/types";
@@ -32,13 +31,16 @@ class ERC721Service {
     return this.contract.address;
   }
 
-  getBalanceOf = async (address: string): Promise<BigNumber> => {
+  getBalanceOf = (address: string): Promise<BigNumber> => {
     return this.contract.balanceOf(address);
   }
 
-  ownerOf = async (tokenId: number) => {
-    const transactionObject = await this.contract.ownerOf(tokenId);
-    return transactionObject.hash;
+  ownerOf = (tokenId: number): Promise<string> => {
+    return this.contract.ownerOf(tokenId);
+  }
+
+  getApproved = (tokenId: number): Promise<string> => {
+    return this.contract.getApproved(tokenId);
   }
 
   approve = async (to: string, tokenId: number): Promise<string> => {

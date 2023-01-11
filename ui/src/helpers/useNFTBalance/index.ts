@@ -4,14 +4,14 @@ import { BigNumber } from "ethers";
 import { useConnectedWeb3Context } from "contexts";
 import { FetchStatus } from "utils/enums";
 import { ERC721Service } from "services";
-import { NULL_ADDRESS, ZERO } from "config/constants";
+import { ZERO } from "config/constants";
 
 type UseNFTBalanceState = {
   balance: BigNumber;
   fetchStatus: FetchStatus;
 };
 
-export const useNFTBalance = (tokenAddress: string, address?: string) => {
+export const useNFTBalance = (tokenAddress?: string, address?: string) => {
   const { NOT_FETCHED, SUCCESS, FAILED } = FetchStatus;
   const [balanceState, setBalanceState] = useState<UseNFTBalanceState>({
     balance: ZERO,
@@ -20,7 +20,7 @@ export const useNFTBalance = (tokenAddress: string, address?: string) => {
   const { account, library: provider } = useConnectedWeb3Context();
 
   const fetchBalance = useCallback(async () => {
-    if (!provider || tokenAddress === NULL_ADDRESS) return;
+    if (!provider || !tokenAddress) return;
     try {
       const contract = new ERC721Service(provider, account, tokenAddress);
       const res = await contract.getBalanceOf(address || account || "");

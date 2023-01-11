@@ -87,8 +87,9 @@ export interface INFT {
   symbol: string;
   name: string;
   image: string[];
-  collectionId: string;
-  platformId: number;
+  tokenId?: string;
+  collectionId?: string;
+  platformId?: number;
 }
 
 export interface Call {

@@ -2,30 +2,21 @@ import { useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { BigNumber } from "ethers";
 
-import { NULL_ADDRESS } from "config/constants";
-import { useNFTBalance, useNFTPrice } from "helpers";
 import { INFT } from "types/types";
 import { NFTSelectModal } from "components/Modal";
 
 interface IProps {
   nft?: INFT;
-  amount: BigNumber;
   onChangeNFT: (_: INFT) => void;
 }
 
 interface IState {
   nftSelectVisible: boolean;
-  priceLeft: number;
 }
 
 export const NFTInput = (props: IProps) => {
-  const { nft, amount, onChangeNFT } = props;
-  const { balance } = useNFTBalance(nft?.address || NULL_ADDRESS);
-  const [state, setState] = useState<IState>({ 
-    nftSelectVisible: false, 
-    priceLeft: 60,
-  });
-  const nftPrice = useNFTPrice(props.nft);
+  const { nft, onChangeNFT } = props;
+  const [state, setState] = useState<IState>({ nftSelectVisible: false });
 
   return (  
     <div className="p-3 w-full component__nft_input">
@@ -43,7 +34,7 @@ export const NFTInput = (props: IProps) => {
               className="w-5 h-5 rounded flex-none"
             />
             <div className="flex-auto flex-grow overflow-hidden overflow-ellipsis whitespace-nowrap">
-              {`${nft.symbol} | ${nft.address}`}
+              {`${nft.symbol} #${nft.tokenId} | ${nft.address}`}
             </div>
           </div>
         ): (
