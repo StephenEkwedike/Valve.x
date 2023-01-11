@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { BigNumber } from "ethers";
 
-import { AddressInput, NFTInput } from "components/Input";
+import { AddressInput, NFTInput, CopyLinkButton } from "components";
 import { NULL_ADDRESS, ONE, ZERO } from "config/constants";
 import { useConnectedWeb3Context } from "contexts";
 import { useNFTBalance, useServices } from "helpers";
@@ -104,32 +104,29 @@ export const ERC721Transfer = (props: IProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-3">
-      <NFTInput
-        amount={state.amount}
-        nft={state.nft}
-        onChangeNFT={(nft) => {
-          let amount = ZERO;
-          console.log("balance", balance.gte(ONE));
-          if (balance.gte(ONE)) amount = ONE;
-          setState((prev) => ({ ...prev, amount, nft }));
-          console.log(state.amount);
-        }}
-      />
-      <AddressInput
-        value={state.recipient}
-        onChange={(recipient) => {
-          setState((prev) => ({ ...prev, recipient }));
-        }}
-        label="Recipient Address"
-      />
-      <button
-        className="text-higher-emphesis hover:bg-gradient-to-b   hover:to-black/20  disabled:pointer-events-none disabled:opacity-40 !bg-gradient-to-r from-blue to-pink-600 hover:from-blue/80 hover:to-pink-600/80 focus:from-blue/80 focus:to-pink-600/80 active:from-blue/70 active:to-pink-600/70 focus:border-blue-700  px-4 h-[52px] w-full font-bold flex items-center justify-center gap-1 rounded-2xl "
-        disabled={getMessage() !== "Transfer"}
-        // onClick={onTransfer}
-      >
-        {getMessage()}
-      </button>
+    <div>
+      <div className="flex flex-col items-center py-5">
+        <NFTInput
+          nft={state.nft}
+          amount={state.amount}
+          onChangeNFT={(nft) => {
+            setState((prev) => ({ ...prev, nft }));
+          }}
+        />
+      </div>
+      <div className="bg-dark-900 p-4 pt-12 rounded-b-[16px] flex flex-col gap-4">
+        <AddressInput 
+          value={state.recipient}
+          onChange={(recipient) => {
+            setState((prev) => ({ ...prev, recipient }));
+          }}
+          label="Enter Recipient Address"
+        />
+        <CopyLinkButton disabled={true} onClick={() => {}} />
+        <div className="text-red-600">
+          Error: Connect your wallet first!
+        </div>
+      </div>
     </div>
   );
 }

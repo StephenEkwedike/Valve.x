@@ -1,6 +1,4 @@
-import { useState } from "react";
-
-import { HomeTab, TokenType } from "utils/enums";
+import { TokenType } from "utils/enums";
 
 interface IProps {
   tokenType: TokenType;

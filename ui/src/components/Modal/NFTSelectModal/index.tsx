@@ -1,8 +1,9 @@
+import { useState } from "react";
 import { XIcon } from "@heroicons/react/solid";
 
 import { getNFT, knownNFTs } from "config/networks";
 import { useConnectedWeb3Context } from "contexts";
-import { useNFTBalances } from "helpers";
+import { useNFTBalances, useNFTItems } from "helpers";
 import { INFT, KnownNFT } from "types/types";
 import { DEFAULT_NETWORK_ID, ZERO } from "config/constants";
 
@@ -14,6 +15,7 @@ interface IProps {
 
 export const NFTSelectModal = (props: IProps) => {
   const { nft, onClose, onSelect } = props;
+  const [nftCollection, setNftCollection] = useState<INFT>()
   const { networkId } = useConnectedWeb3Context();
   const fNetworkId = networkId || DEFAULT_NETWORK_ID;
   const nfts = Object.keys(knownNFTs)
@@ -42,7 +44,9 @@ export const NFTSelectModal = (props: IProps) => {
           </div>
           <div className="h-full overflow-hidden overflow-y-auto border rounded border-dark-800 bg-[rgba(0,0,0,0.2)]">
             <div className="flex flex-col flex-1 flex-grow min-h-[50vh] lg:min-h-fit overflow-hidden h-full divide-y divide-dark-800">
-              {nfts.map((nftItem) => {
+              {nftCollection ? (
+                <>test</>
+              ) : nfts.map((nftItem) => {
                 const isSelected = (nft?.address.toLowerCase() || "") === nftItem.address.toLowerCase();
                 return (
                   <div
@@ -54,8 +58,9 @@ export const NFTSelectModal = (props: IProps) => {
                     }
                     onClick={() => {
                       if (!isSelected) {
-                        onSelect(nftItem);
-                        onClose();
+                        // onSelect(nftItem);
+                        // onClose();
+                        setNftCollection(nftItem);
                       }
                     }}
                   >

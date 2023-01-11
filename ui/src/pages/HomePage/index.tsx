@@ -41,7 +41,15 @@ const HomePage = () => {
   const renderContent = () => {
     switch (state.tab) {
       case HomeTab.Transfer:
-        return state.tokenType === TokenType.Token ? <TokenTransfer /> : <ERC721Transfer onReload={async () => {}} />;
+        return state.tokenType === TokenType.Token ? (
+          <TokenTransfer 
+            onReload={async () => {
+              await Promise.all([loadTransfers(), loadReceives()]);
+            }} 
+          />
+        ) : (
+          <ERC721Transfer onReload={async () => {}} />
+        );
       case HomeTab.Sent:
         return (
           <>
@@ -73,6 +81,7 @@ const HomePage = () => {
 
   return (
     <>
+      <div className="text-white text-6xl font-bold text-center mb-8">Transfer to other wallet</div>
       <TokenTypeToggle 
         tokenType={state.tokenType} 
         onClickToken={onClickToken} 

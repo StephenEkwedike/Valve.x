@@ -1,5 +1,3 @@
-import { ClipboardCheckIcon } from "@heroicons/react/solid";
-
 interface IProps {
   disabled: boolean;
   onClick: () => void;

@@ -1,13 +1,12 @@
-import { ETHER_DECIMAL, NULL_ADDRESS, ONE_ETHER, ZERO } from "config/constants";
-import { useConnectedWeb3Context } from "contexts";
-import { BigNumber, utils } from "ethers";
-import { useTokenBalance, useTokenPrice } from "helpers";
 import { useEffect, useState } from "react";
-import { IToken } from "types/types";
+import { BigNumber, utils } from "ethers";
 import { ChevronDownIcon } from "@heroicons/react/solid";
+
+import { ETHER_DECIMAL, NULL_ADDRESS, ONE_ETHER, ZERO } from "config/constants";
+import { useTokenBalance, useTokenPrice } from "helpers";
+import { IToken } from "types/types";
 import { formatBigNumber } from "utils";
 import { TokenSelectModal } from "components/Modal";
-import { formatEther } from "ethers/lib/utils";
 
 interface IProps {
   token?: IToken;
@@ -45,7 +44,7 @@ export const TokenInput = (props: IProps) => {
         amountStr: newStr,
       }));
     }
-  }, [amount, state.amountStr]);
+  }, [amount, state.amountStr, token?.decimals]);
 
   const onChange = (newAmountStr: string) => {
     if (!newAmountStr) {
