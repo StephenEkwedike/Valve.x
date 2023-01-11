@@ -1,27 +1,27 @@
-import { Logo } from "components";
+// import { Logo } from "components";
 
-const socials = [
-  // {
-  //   id: "instagram",
-  //   icon: "/assets/icons/instagram.svg",
-  //   link: "https://instagram.com/",
-  // },
-  // {
-  //   id: "telegram",
-  //   icon: "/assets/icons/telegram.svg",
-  //   link: "https://instagram.com/",
-  // },
-  {
-    id: "twitter",
-    icon: "/assets/icons/twitter.svg",
-    link: "/",
-  },
-  // {
-  //   id: "youtube",
-  //   icon: "/assets/icons/youtube.svg",
-  //   link: "https://instagram.com/",
-  // },
-];
+// const socials = [
+//   // {
+//   //   id: "instagram",
+//   //   icon: "/assets/icons/instagram.svg",
+//   //   link: "https://instagram.com/",
+//   // },
+//   // {
+//   //   id: "telegram",
+//   //   icon: "/assets/icons/telegram.svg",
+//   //   link: "https://instagram.com/",
+//   // },
+//   {
+//     id: "twitter",
+//     icon: "/assets/icons/twitter.svg",
+//     link: "/",
+//   },
+//   // {
+//   //   id: "youtube",
+//   //   icon: "/assets/icons/youtube.svg",
+//   //   link: "https://instagram.com/",
+//   // },
+// ];
 
 export const Footer = () => {
   return (

@@ -1,7 +1,6 @@
 import { setupNetwork, supportedNetworkIds } from "config/networks";
 import { useConnectedWeb3Context } from "contexts";
-import { BigNumber, utils } from "ethers";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { NetworkId } from "types/types";
 import { TransferPageContent } from "./TransferPageContent";
@@ -29,7 +28,7 @@ const TransferPage = () => {
       }
     };
     check();
-  }, [params]);
+  }, [isInvalid, navigate, params]);
 
   const renderContent = () => {
     if (!networkId) {

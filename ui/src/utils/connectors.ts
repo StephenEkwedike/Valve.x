@@ -1,7 +1,7 @@
+/* eslint-disable import/no-anonymous-default-export */
 import { InjectedConnector } from "@web3-react/injected-connector";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import { FortmaticConnector } from "@web3-react/fortmatic-connector";
-import { DEFAULT_NETWORK_ID } from "../config/constants";
 import { supportedNetworkIds, supportedNetworkURLs } from "../config/networks";
 
 const injected = new InjectedConnector({

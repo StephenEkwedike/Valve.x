@@ -1,6 +1,5 @@
 import abis from "abis";
 import { useConnectedWeb3Context } from "contexts";
-import { BigNumber } from "ethers";
 import { useServices } from "helpers/useServices";
 import { useEffect, useState } from "react";
 

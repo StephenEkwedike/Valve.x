@@ -30,7 +30,7 @@ export const TransferPageContent = (props: IProps) => {
     };
 
     load();
-  }, [exId, networkId]);
+  }, [exId, networkId, valve]);
 
   return (
     <div>

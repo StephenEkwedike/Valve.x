@@ -7,36 +7,36 @@ import { TransferStatus } from "utils/enums";
 import copy from "copy-to-clipboard";
 import { toast } from "react-toastify";
 import { DocumentDuplicateIcon } from "@heroicons/react/solid";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 
 interface IProps {
   transferId: number;
 }
 
-interface IState {
-  timestamp: number;
-}
+// interface IState {
+//   timestamp: number;
+// }
 
 export const TransferItem = (props: IProps) => {
   const { account, networkId, setTxModalInfo } = useConnectedWeb3Context();
   const { loading, data, load } = useTransfer(props.transferId);
   const { valve } = useServices();
-  const [state, setState] = useState<IState>({
-    timestamp: getCurrentTimestamp(),
-  });
+  // const [state, setState] = useState<IState>({
+  //   timestamp: getCurrentTimestamp(),
+  // });
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      const timestamp = getCurrentTimestamp();
-      if (data && timestamp < data.expireAt) {
-        setState((prev) => ({ ...prev, timestamp: getCurrentTimestamp() }));
-      }
-    }, 1000);
+  // useEffect(() => {
+  //   const timer = setInterval(() => {
+  //     const timestamp = getCurrentTimestamp();
+  //     if (data && timestamp < data.expireAt) {
+  //       setState((prev) => ({ ...prev, timestamp: getCurrentTimestamp() }));
+  //     }
+  //   }, 1000);
 
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
+  //   return () => {
+  //     clearInterval(timer);
+  //   };
+  // }, [data]);
 
   const onCancel = async () => {
     if (!data) return;
