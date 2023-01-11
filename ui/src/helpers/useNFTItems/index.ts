@@ -28,7 +28,6 @@ export const useNFTItems = (propsNFTAddr?: string) => {
           }))
         )
       } catch (error) {
-        console.log(error);
         setNFTs(undefined);
       }
     };

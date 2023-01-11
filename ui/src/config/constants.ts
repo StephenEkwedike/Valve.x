@@ -24,3 +24,5 @@ export const ONE = BigNumber.from(1);
 export const ONE_ETHER = parseEther("1");
 
 export const FEE_MULTIPLIER = 10000;
+
+export const MORALIS_API_KEY = process.env.MORALIS_API_KEY;

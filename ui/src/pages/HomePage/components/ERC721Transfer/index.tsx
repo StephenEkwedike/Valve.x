@@ -30,7 +30,8 @@ export const ERC721Transfer = (props: IProps) => {
   }, []);
 
   const onTransfer = async () => {
-    if (!state.nft || !networkId || !account) {
+    if (!state.nft || !networkId || !account || !state.nft.tokenId) {
+      toast.error("Something went wrong!");
       return;
     }
     try {
@@ -40,10 +41,10 @@ export const ERC721Transfer = (props: IProps) => {
         account,
         state.nft.address
       );
-      const approvalAddr = await nft.getApproved(parseInt(state.nft.tokenId || ""));
+      const approvalAddr = await nft.getApproved(state.nft.tokenId);
       if (approvalAddr !== state.recipient) {
         setTxModalInfo(true, "Approving");
-        const hash = await nft.approve(valve721.address, parseInt(state.nft.tokenId || ""));
+        const hash = await nft.approve(valve721.address, state.nft.tokenId);
         setTxModalInfo(
           true,
           "Approving",
@@ -56,7 +57,7 @@ export const ERC721Transfer = (props: IProps) => {
       const hash = await valve721.createTransfer(
         state.nft.address,
         state.recipient,
-        parseInt(state.nft.tokenId || "")
+        state.nft.tokenId
       );
       setTxModalInfo(
         true,
@@ -71,7 +72,6 @@ export const ERC721Transfer = (props: IProps) => {
       setTxModalInfo(false);
       toast.success("Transfer is created successfully!");
     } catch (error) {
-      console.log({ error });
       setTxModalInfo(false);
       toast.error("Something went wrong!");
     }

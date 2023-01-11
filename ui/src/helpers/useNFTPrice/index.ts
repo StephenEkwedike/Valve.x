@@ -19,7 +19,6 @@ export const useNFTPrice = (nft?: INFT) => {
         const price = response.floor_price.usd;
         setPrice(parseEther(String(price)));
       } catch (error) {
-        console.log(error);
         setPrice(ZERO);
       }
     }
