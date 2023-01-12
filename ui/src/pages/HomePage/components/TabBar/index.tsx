@@ -7,13 +7,27 @@ interface IProps {
 
 export const TabBar = (props: IProps) => {
   return (
-    <div className="px-2">
+    <div className="px-4 flex flex-row items-center justify-between">
       <div className="flex gap-4">
         {["Transfer", "History"].map((tab) => {
-          const isSelected =
-            tab === "Transfer"
-              ? props.tab === HomeTab.Transfer
-              : props.tab !== HomeTab.Transfer;
+          let isSelected = true;
+          
+          switch (props.tab) {
+            case HomeTab.Transfer:
+              isSelected = tab === "Transfer";
+              break;
+
+            case HomeTab.Sent:
+              isSelected = tab === "History";
+              break;
+
+            case HomeTab.Received:
+              isSelected = tab === "History";
+              break;
+              
+            default:
+              isSelected = true;
+          }
 
           return (
             <div
@@ -23,8 +37,8 @@ export const TabBar = (props: IProps) => {
                   tab === "Transfer" ? HomeTab.Transfer : HomeTab.Sent
                 );
               }}
-              className={`leading-5 font-bold cursor-pointer select-none text-secondary hover:text-white ${
-                isSelected && "text-high-emphesis"
+              className={`leading-5 px-3 py-2 rounded-full cursor-pointer select-none text-white ${
+                isSelected && "bg-blue-600"
               }`}
             >
               {tab}

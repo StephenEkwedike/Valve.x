@@ -15,8 +15,6 @@ export const useFeeInfo = () => {
   const [state, setState] = useState<IState>({ loading: true });
 
   useEffect(() => {
-    let isMounted = true;
-
     const loadData = async () => {
       setState(() => ({ loading: true }));
       try {
@@ -43,11 +41,7 @@ export const useFeeInfo = () => {
     };
 
     loadData();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [networkId]);
+  }, [multicall, networkId, valve.address]);
 
   return state;
 };

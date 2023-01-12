@@ -1,60 +1,87 @@
-import { useConnectedWeb3Context } from "contexts";
+import React, { useState, useCallback } from "react";
+
 import { useUserReceives, useUserTransfers } from "helpers";
-import React, { useEffect, useState } from "react";
-import { HomeTab } from "utils/enums";
+import { HomeTab, TokenType } from "utils/enums";
 import {
   HistoryTabBar,
   ReceivedSection,
   SentSection,
   TabBar,
-  TransferSection,
+  NFTTransfer,
+  TokenTransfer,
+  TokenTypeToggle
 } from "./components";
 
 interface IState {
   tab: HomeTab;
+  tokenType: TokenType
 }
 
 const HomePage = () => {
-  const [state, setState] = useState<IState>({ tab: HomeTab.Transfer });
+  const [state, setState] = useState<IState>({ tab: HomeTab.Transfer, tokenType: TokenType.Token });
   const {
     transferIds,
-    load: loadTransfers,
+    loadToken: loadTokenTransfers,
+    loadNFT: loadNFTTransfers,
     loading: transferLoading,
-  } = useUserTransfers();
+  } = useUserTransfers(state.tokenType);
   const {
     transferIds: receiveIds,
-    load: loadReceives,
+    loadToken: loadTokenReceives,
+    loadNFT: loadNFTReceives,
     loading: receivesLoading,
-  } = useUserReceives();
+  } = useUserReceives(state.tokenType);
+
+  const onClickToken = useCallback(() => {
+    setState(prev => ({ ...prev, tokenType: TokenType.Token }))
+  },[]);
+
+  const onClickNFT = useCallback(() => {
+    setState(prev => ({ ...prev, tokenType: TokenType.NFT }))
+  }, [])
 
   const renderContent = () => {
     switch (state.tab) {
       case HomeTab.Transfer:
-        return (
-          <TransferSection
+        return state.tokenType === TokenType.Token ? (
+          <TokenTransfer 
             onReload={async () => {
-              await Promise.all([loadTransfers(), loadReceives()]);
+              await Promise.all([loadTokenTransfers(), loadTokenReceives()]);
+            }} 
+          />
+        ) : (
+          <NFTTransfer 
+            onReload={async () => {
+              await Promise.all([loadNFTTransfers(), loadNFTReceives()]);
             }}
           />
         );
-      default:
+      case HomeTab.Sent:
         return (
           <>
             <HistoryTabBar
               tab={state.tab}
               onChange={(tab) => setState((prev) => ({ ...prev, tab }))}
             />
-            {state.tab === HomeTab.Sent ? (
-              <SentSection
-                transferIds={transferIds}
-                loading={transferLoading}
-              />
-            ) : (
-              <ReceivedSection
-                transferIds={receiveIds}
-                loading={receivesLoading}
-              />
-            )}
+            <SentSection
+              tokenType={state.tokenType}
+              transferIds={transferIds}
+              loading={transferLoading}
+            />
+          </>
+        );
+      case HomeTab.Received:
+        return (
+          <>
+            <HistoryTabBar
+              tab={state.tab}
+              onChange={(tab) => setState((prev) => ({ ...prev, tab }))}
+            />
+            <ReceivedSection
+              tokenType={state.tokenType}
+              transferIds={receiveIds}
+              loading={receivesLoading}
+            />
           </>
         );
     }
@@ -62,12 +89,20 @@ const HomePage = () => {
 
   return (
     <>
-      <TabBar
-        tab={state.tab}
-        onChange={(tab) => setState((prev) => ({ ...prev, tab }))}
+      <div className="text-white text-6xl font-bold text-center mb-8">Transfer to other wallet</div>
+      <TokenTypeToggle 
+        tokenType={state.tokenType} 
+        onClickToken={onClickToken} 
+        onClickNFT={onClickNFT} 
       />
+      <div className="w-full flex flex-col gap-3 pt-4 rounded-[16px] shadow-md shadow-dark-1000 bg-base">
+        <TabBar
+          tab={state.tab}
+          onChange={(tab) => setState((prev) => ({ ...prev, tab }))}
+        />
 
-      {renderContent()}
+        {renderContent()}
+      </div>
     </>
   );
 };

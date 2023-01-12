@@ -102,12 +102,12 @@ export const ConnectWalletModal = (props: IProps) => {
   }, [onClose, resetEverything]);
 
   const isConnectingToWallet = !!activatingConnector;
-  let connectingText = `Connecting to wallet`;
-  const connectingToMetamask = activatingConnector === connectors.injected;
+  // let connectingText = `Connecting to wallet`;
+  // const connectingToMetamask = activatingConnector === connectors.injected;
 
-  if (connectingToMetamask) {
-    connectingText = "Waiting for Approval on Metamask";
-  }
+  // if (connectingToMetamask) {
+  //   connectingText = "Waiting for Approval on Metamask";
+  // }
 
   const disableMetamask: boolean = !isMetamaskEnabled || false;
 

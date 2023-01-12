@@ -1,7 +1,7 @@
 import { DefaultReadonlyProvider, getContractAddress } from "config/networks";
 import { useConnectedWeb3Context } from "contexts";
 import { useMemo } from "react";
-import { ValveService, MulticallService } from "services";
+import { ValveService, MulticallService, Valve721Service } from "services";
 
 export const useServices = () => {
   const { account, library: provider, networkId } = useConnectedWeb3Context();
@@ -12,6 +12,11 @@ export const useServices = () => {
       account,
       getContractAddress("valve", networkId)
     );
+    const valve721 = new Valve721Service(
+      provider || DefaultReadonlyProvider,
+      account,
+      getContractAddress("valve721", networkId)
+    );
     const multicall = new MulticallService(
       provider || DefaultReadonlyProvider,
       account,
@@ -20,7 +25,8 @@ export const useServices = () => {
 
     return {
       valve,
+      valve721,
       multicall,
     };
-  }, [provider]);
+  }, [account, networkId, provider]);
 };

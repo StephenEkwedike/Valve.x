@@ -1,13 +1,14 @@
-import { TokenInput } from "components";
-import { AddressInput } from "components/Input/AddressInput";
-import { NULL_ADDRESS, ZERO } from "config/constants";
-import { useConnectedWeb3Context } from "contexts";
+import React, { useState } from "react";
 import { BigNumber } from "ethers";
-import { useServices, useTokenBalance } from "helpers";
-import { useEffect, useState } from "react";
+import { ArrowDownIcon } from "@heroicons/react/solid";
 import { toast } from "react-toastify";
-import { ERC20Service } from "services";
+
+import { AddressInput, CopyLinkButton, TokenInput } from "components";
 import { IToken } from "types/types";
+import { ZERO, NULL_ADDRESS } from "config/constants";
+import { useConnectedWeb3Context } from "contexts";
+import { useServices, useTokenBalance } from "helpers";
+import { ERC20Service } from "services";
 import { isAddress } from "utils/tools";
 
 interface IProps {
@@ -20,15 +21,11 @@ interface IState {
   recipient: string;
 }
 
-export const TransferSection = (props: IProps) => {
+export const TokenTransfer = (props: IProps) => {
+  const [state, setState] = useState<IState>({ amount: ZERO, recipient: "" });  
   const { networkId, setTxModalInfo, account } = useConnectedWeb3Context();
   const { valve } = useServices();
-  const [state, setState] = useState<IState>({ amount: ZERO, recipient: "" });
   const { balance } = useTokenBalance(state.token?.address || NULL_ADDRESS);
-
-  useEffect(() => {
-    setState((prev) => ({ ...prev, token: undefined }));
-  }, [networkId]);
 
   const onTransfer = async () => {
     if (!state.token || !networkId || !account) {
@@ -86,47 +83,52 @@ export const TransferSection = (props: IProps) => {
   };
 
   const getMessage = () => {
+    if(!networkId || !account) {
+      return "Error: Connect your wallet first!"
+    }
     if (!state.token) {
-      return "Select a token";
+      return "Error: Select a token";
     }
     if (state.amount.isZero()) {
-      return "Input amount";
+      return "Error: Input amount";
     }
     if (state.amount.gt(balance)) {
-      return "Insufficient balance";
+      return "Error: Insufficient balance";
     }
     if (!isAddress(state.recipient)) {
-      return "Invalid recipient";
+      return "Error: Invalid recipient";
     }
-    return "Transfer";
+    return "";
   };
 
   return (
-    <div className="flex flex-col gap-3">
-      <TokenInput
-        amount={state.amount}
-        token={state.token}
-        onChangeAmount={(amount) => {
-          setState((prev) => ({ ...prev, amount }));
-        }}
-        onChangeToken={(token) => {
-          setState((prev) => ({ ...prev, token }));
-        }}
-      />
-      <AddressInput
-        value={state.recipient}
-        onChange={(recipient) => {
-          setState((prev) => ({ ...prev, recipient }));
-        }}
-        label="Recipient Address"
-      />
-      <button
-        className="text-higher-emphesis hover:bg-gradient-to-b   hover:to-black/20  disabled:pointer-events-none disabled:opacity-40 !bg-gradient-to-r from-blue to-pink-600 hover:from-blue/80 hover:to-pink-600/80 focus:from-blue/80 focus:to-pink-600/80 active:from-blue/70 active:to-pink-600/70 focus:border-blue-700  px-4 h-[52px] w-full font-bold flex items-center justify-center gap-1 rounded-2xl "
-        disabled={getMessage() !== "Transfer"}
-        onClick={onTransfer}
-      >
-        {getMessage()}
-      </button>
+    <div>
+      <div className="relative flex flex-col items-center py-5">
+        <TokenInput
+          amount={state.amount}
+          token={state.token}
+          onChangeAmount={(amount) => {
+            setState((prev) => ({ ...prev, amount }));
+          }}
+          onChangeToken={(token) => {
+            setState((prev) => ({ ...prev, token }));
+          }}
+        />
+        <ArrowDownIcon className="absolute -bottom-5 bg-blue-600 rounded-full w-9 h-9 p-1 text-white" />
+      </div>
+      <div className="bg-dark-900 p-4 pt-12 rounded-b-[16px] flex flex-col gap-4">
+        <AddressInput 
+          value={state.recipient}
+          onChange={(recipient) => {
+            setState((prev) => ({ ...prev, recipient }));
+          }}
+          label="Enter Recipient Address"
+        />
+        <CopyLinkButton disabled={getMessage() !== ""} onClick={onTransfer} />
+        <div className="text-red-600">
+          {getMessage()}
+        </div>
+      </div>
     </div>
-  );
-};
+  )
+}

@@ -1,5 +1,4 @@
 import { XIcon } from "@heroicons/react/solid";
-import React, { useEffect, useCallback } from "react";
 import { knownTokens, getToken } from "config/networks";
 import { useConnectedWeb3Context } from "contexts";
 import { IToken, KnownToken } from "types/types";

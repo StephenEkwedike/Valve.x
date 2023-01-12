@@ -1,20 +1,12 @@
 import { XIcon } from "@heroicons/react/solid";
-import { useWeb3React } from "@web3-react/core";
-import React, { useEffect, useCallback } from "react";
-import { ConnectorNames } from "utils/enums";
-import connectors from "utils/connectors";
 import {
   DEFAULT_NETWORK_ID,
-  STORAGE_KEY_CONNECTOR,
-  WALLET_ICONS,
 } from "config/constants";
 import {
-  supportedNetworkIds,
   setupNetwork,
   networkIds,
   networks,
 } from "config/networks";
-import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import { useConnectedWeb3Context } from "contexts";
 import { NetworkId } from "types/types";
 
