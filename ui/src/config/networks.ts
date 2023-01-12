@@ -632,6 +632,40 @@ export const getNFT = (nftId: KnownNFT): INFT => {
   };
 };
 
+export const getNFTFromAddress = (
+  address: string,
+  chianId?: number
+): INFT => {
+  const networkId = chianId || DEFAULT_NETWORK_ID;
+
+  if (!validNetworkId(networkId)) {
+    throw new Error(`Unsupported network id: '${networkId}'`);
+  }
+
+  for (const nft of Object.values(knownNFTs)) {
+    const nftAddress = nft.address;
+
+    // token might not be supported in the current network
+    if (!nftAddress) {
+      continue;
+    }
+
+    if (nftAddress.toLowerCase() === address.toLowerCase()) {
+      return {
+        name: nft.name,
+        symbol: nft.symbol,
+        address: nftAddress,
+        image: nft.image,
+        collectionId: nft.collectionId,
+      };
+    }
+  }
+
+  throw new Error(
+    `Couldn't find token with address '${address}' in network '${networkId}'`
+  );
+};
+
 export const getEtherscanUri = (networkId?: number): string => {
   const fNetworkId = networkId || DEFAULT_NETWORK_ID;
   if (!validNetworkId(fNetworkId)) {

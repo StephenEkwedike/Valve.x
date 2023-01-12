@@ -1,11 +1,13 @@
 import { Spinner } from "components";
 import { useConnectedWeb3Context } from "contexts";
 import { useServices } from "helpers";
-import { TransferItem } from "pages/HomePage/components";
+import { NFTTransferItem, TokenTransferItem } from "pages/HomePage/components";
 import { useEffect, useState } from "react";
+import { TokenType } from "utils/enums";
 
 interface IProps {
   exId: string;
+  tokenType?: TokenType;
 }
 
 interface IState {
@@ -14,15 +16,15 @@ interface IState {
 }
 
 export const TransferPageContent = (props: IProps) => {
-  const { exId } = props;
+  const { exId, tokenType } = props;
   const [state, setState] = useState<IState>({ loading: true, transferId: -1 });
-  const { valve } = useServices();
+  const { valve, valve721 } = useServices();
   const { networkId } = useConnectedWeb3Context();
 
   useEffect(() => {
     const load = async () => {
       try {
-        const transferId = await valve.getTransferId(exId);
+        const transferId = tokenType === TokenType.Token ? await valve.getTransferId(exId) : await valve721.getTransferId(exId);
         setState({ loading: false, transferId });
       } catch (error) {
         setState({ loading: false, transferId: -1 });
@@ -30,7 +32,7 @@ export const TransferPageContent = (props: IProps) => {
     };
 
     load();
-  }, [exId, networkId, valve]);
+  }, [exId, networkId, tokenType, valve, valve721]);
 
   return (
     <div>
@@ -42,9 +44,12 @@ export const TransferPageContent = (props: IProps) => {
         <div className="my-4">
           <p className="text-primary">Invalid Link.</p>
         </div>
+      ) : tokenType === TokenType.Token ? (
+        <TokenTransferItem transferId={state.transferId} />
       ) : (
-        <TransferItem transferId={state.transferId} />
-      )}
+        <NFTTransferItem transferId={state.transferId} />
+      )
+      }
     </div>
   );
 };

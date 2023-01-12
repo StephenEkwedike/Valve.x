@@ -118,7 +118,7 @@ export const getCurrentTimestamp = () => Math.floor(Date.now() / 1000);
 
 export const isValidUrl = (url: string) => {
   const expression =
-    /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
+    /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/;
   return url.match(expression);
 };
 

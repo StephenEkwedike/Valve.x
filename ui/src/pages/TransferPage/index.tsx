@@ -3,14 +3,15 @@ import { useConnectedWeb3Context } from "contexts";
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { NetworkId } from "types/types";
+import { TokenType } from "utils/enums";
 import { TransferPageContent } from "./TransferPageContent";
 
 const TransferPage = () => {
-  const params = useParams<{ exId: string; networkId: string }>();
+  const params = useParams<{ tokenType: TokenType, exId: string; networkId: string }>();
   const navigate = useNavigate();
   const { networkId } = useConnectedWeb3Context();
 
-  const isInvalid = !params.exId || !params.networkId;
+  const isInvalid = !params.tokenType || !params.exId || !params.networkId;
 
   useEffect(() => {
     const check = async () => {
@@ -59,14 +60,14 @@ const TransferPage = () => {
     }
     return (
       <div>
-        <TransferPageContent exId={params.exId || ""} />
+        <TransferPageContent tokenType={params.tokenType} exId={params.exId || ""} />
       </div>
     );
   };
 
   return (
     <div className="page__home">
-      <div className="text-white font-bold text-lg mb-2">Token Transfer</div>
+      <div className="text-white text-6xl font-bold text-center mb-8">Transfer Confirmation</div>
 
       {isInvalid ? null : renderContent()}
     </div>

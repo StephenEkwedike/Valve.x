@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
-import { BigNumber } from "ethers";
 
 import { INFT } from "types/types";
 import { NFTSelectModal } from "components/Modal";

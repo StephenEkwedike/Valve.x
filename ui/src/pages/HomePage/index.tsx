@@ -7,7 +7,7 @@ import {
   ReceivedSection,
   SentSection,
   TabBar,
-  ERC721Transfer,
+  NFTTransfer,
   TokenTransfer,
   TokenTypeToggle
 } from "./components";
@@ -21,14 +21,16 @@ const HomePage = () => {
   const [state, setState] = useState<IState>({ tab: HomeTab.Transfer, tokenType: TokenType.Token });
   const {
     transferIds,
-    load: loadTransfers,
+    loadToken: loadTokenTransfers,
+    loadNFT: loadNFTTransfers,
     loading: transferLoading,
-  } = useUserTransfers();
+  } = useUserTransfers(state.tokenType);
   const {
     transferIds: receiveIds,
-    load: loadReceives,
+    loadToken: loadTokenReceives,
+    loadNFT: loadNFTReceives,
     loading: receivesLoading,
-  } = useUserReceives();
+  } = useUserReceives(state.tokenType);
 
   const onClickToken = useCallback(() => {
     setState(prev => ({ ...prev, tokenType: TokenType.Token }))
@@ -44,11 +46,15 @@ const HomePage = () => {
         return state.tokenType === TokenType.Token ? (
           <TokenTransfer 
             onReload={async () => {
-              await Promise.all([loadTransfers(), loadReceives()]);
+              await Promise.all([loadTokenTransfers(), loadTokenReceives()]);
             }} 
           />
         ) : (
-          <ERC721Transfer onReload={async () => {}} />
+          <NFTTransfer 
+            onReload={async () => {
+              await Promise.all([loadNFTTransfers(), loadNFTReceives()]);
+            }}
+          />
         );
       case HomeTab.Sent:
         return (
@@ -58,6 +64,7 @@ const HomePage = () => {
               onChange={(tab) => setState((prev) => ({ ...prev, tab }))}
             />
             <SentSection
+              tokenType={state.tokenType}
               transferIds={transferIds}
               loading={transferLoading}
             />
@@ -71,6 +78,7 @@ const HomePage = () => {
               onChange={(tab) => setState((prev) => ({ ...prev, tab }))}
             />
             <ReceivedSection
+              tokenType={state.tokenType}
               transferIds={receiveIds}
               loading={receivesLoading}
             />

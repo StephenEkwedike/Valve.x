@@ -1,15 +1,18 @@
 import { Spinner } from "components";
 import { useConnectedWeb3Context } from "contexts";
-import { TransferItem } from "../TransferItem";
+import { TokenType } from "utils/enums";
+import { NFTTransferItem } from "../NFTTransferItem";
+import { TokenTransferItem } from "../TokenTransferItem";
 
 interface IProps {
   transferIds: number[];
+  tokenType: TokenType;
   loading: boolean;
 }
 
 export const SentSection = (props: IProps) => {
   const { account } = useConnectedWeb3Context();
-  const { transferIds, loading } = props;
+  const { transferIds, tokenType, loading } = props;
 
   if (!account) {
     return (
@@ -22,7 +25,7 @@ export const SentSection = (props: IProps) => {
   }
 
   return (
-    <div className="py-2">
+    <div className="pb-4 px-8">
       {loading && transferIds.length === 0 ? (
         <div className="flex items-center my-4 justify-center">
           <Spinner />
@@ -33,10 +36,16 @@ export const SentSection = (props: IProps) => {
         </div>
       ) : (
         <div className="overflow-hidden overflow-y-auto max-h-80">
-          <div className="flex flex-col flex-1 flex-grow min-h-[50vh] lg:min-h-fit overflow-hidden h-full divide-y divide-dark-800">
-            {transferIds.reverse().map((id) => (
-              <TransferItem transferId={id} key={`${id}`} />
-            ))}
+          <div className="flex flex-col flex-1 flex-grow min-h-[50vh] lg:min-h-fit overflow-hidden gap-4">
+            {tokenType === TokenType.Token ? (
+              transferIds.reverse().map((id) => (
+                <TokenTransferItem transferId={id} key={`${id}`} />
+              ))
+            ) : (
+              transferIds.reverse().map((id) => (
+                <NFTTransferItem transferId={id} key={`${id}`} />
+              ))
+            )}
           </div>
         </div>
       )}

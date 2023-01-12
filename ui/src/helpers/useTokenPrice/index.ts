@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ZERO } from "config/constants";
 import { parseEther } from "ethers/lib/utils";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { IToken } from "types/types";
 
 export const useTokenPrice = (token?: IToken) => {

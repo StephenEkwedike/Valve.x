@@ -1,7 +1,7 @@
 import { BigNumber, Contract, ethers, Wallet } from "ethers";
 
 import abis from "abis";
-import { Maybe } from "types/types";
+import { INFTTransfer, Maybe } from "types/types";
 
 const valve721Abi = abis.Valve721;
 
@@ -25,6 +25,33 @@ class Valve721Service {
 
   async getFee(): Promise<BigNumber> {
     return this.contract.fee();
+  }
+
+  async getUserTransferCount(account: string): Promise<number> {
+    const count = await this.contract.getUserTransferCount(account);
+
+    return count.toNumber();
+  }
+
+  async getTransferId(exId: string): Promise<number> {
+    const count = await this.contract.transferInfo(exId);
+
+    return count.toNumber();
+  }
+
+  async getUserReceiveCount(account: string): Promise<number> {
+    const count = await this.contract.getUserReceiveCount(account);
+
+    return count.toNumber();
+  }
+
+  async getTransfer(id: any): Promise<INFTTransfer> {
+    const transfer = await this.contract.transfers(id);
+
+    return {
+      ...transfer,
+      expireAt: transfer.expireAt.toNumber(),
+    } as INFTTransfer;
   }
 
   async createTransfer(

@@ -87,9 +87,21 @@ export interface INFT {
   symbol: string;
   name: string;
   image: string[];
-  tokenId?: string;
+  tokenId?: number;
   collectionId?: string;
   platformId?: number;
+}
+
+export interface INFTTransfer {
+  id: BigNumber;
+  token: string;
+  from: string;
+  to: string;
+  tokenId: BigNumber;
+  data: string;
+  expireAt: number;
+  status: TransferStatus;
+  exId: string;
 }
 
 export interface Call {

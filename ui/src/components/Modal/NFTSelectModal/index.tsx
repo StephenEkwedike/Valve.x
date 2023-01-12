@@ -43,8 +43,8 @@ export const NFTSelectModal = (props: IProps) => {
               >
                 <img
                   className="w-20 h-20 rounded-[8px]" 
-                  src={"/assets/nfts/shonen 1619.png"}
-                  // src={nftItem.image[0]}
+                  // src={"/assets/nfts/shonen 1619.png"}
+                  src={nftItem.image[0]}
                   alt={nftItem.name}
                 />
                 <div>#{nftItem.tokenId}</div>

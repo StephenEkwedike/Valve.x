@@ -20,7 +20,7 @@ interface IState {
 }
 
 
-export const ERC721Transfer = (props: IProps) => {  
+export const NFTTransfer = (props: IProps) => {  
   const { networkId, setTxModalInfo, account  } = useConnectedWeb3Context();
   const { valve721 } = useServices();
   const [state, setState] = useState<IState>({ recipient: "" });
