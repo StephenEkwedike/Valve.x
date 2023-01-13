@@ -7,7 +7,7 @@ interface IProps {
 
 export const TabBar = (props: IProps) => {
   return (
-    <div className="px-4 flex flex-row items-center justify-between">
+    <div className="px-1 md:px-4 flex flex-row items-center justify-between">
       <div className="flex gap-4">
         {["Transfer", "History"].map((tab) => {
           let isSelected = true;

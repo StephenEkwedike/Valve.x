@@ -65,7 +65,7 @@ export const TokenInput = (props: IProps) => {
   return (
     <div className="p-4 w-full flex flex-col gap-1 component__token_input">
       <div className="flex flex-row items-center flex-row justify-between gap-2">        
-        <div className="text-4xl leading-7 tracking-[-0.01em] flex items-baseline flex-grow gap-3 overflow-hidden">
+        <div className="md:text-4xl text-3xl leading-7 tracking-[-0.01em] flex items-baseline flex-grow gap-3 overflow-hidden">
           <input
             inputMode="decimal"
             title="Token Amount"

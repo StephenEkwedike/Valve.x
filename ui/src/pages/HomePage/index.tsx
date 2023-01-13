@@ -89,7 +89,7 @@ const HomePage = () => {
 
   return (
     <>
-      <div className="text-white text-6xl font-bold text-center mb-8">Transfer to other wallet</div>
+      <div className="text-white md:text-6xl text-4xl font-bold text-center mb-8">Transfer to other wallet</div>
       <TokenTypeToggle 
         tokenType={state.tokenType} 
         onClickToken={onClickToken} 

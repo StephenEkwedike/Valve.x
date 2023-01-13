@@ -93,33 +93,36 @@ export const TokenTransferItem = (props: IProps) => {
 
     return (
       <div className="flex gap-4">
-        <div className="flex-1 items__column">
-          <div className="text-primary flex items-center">
-            <img src={token.image[0]} alt="img" className="rounded w-6 h-6" />
-            &nbsp;
-            <span>
-              {formatBigNumber(tokenData.amount, token.decimals, 4)} {token.symbol}
-            </span>
-          </div>
-          <div className="text-primary">
-            From: <AddressItem address={tokenData.from} />
-          </div>
-          <div className="text-primary">
-            To: <AddressItem address={tokenData.to} />
-          </div>
-          <div className="text-primary">
-            {timestamp < tokenData.expireAt ? (
-              <>Expire In {formatSeconds(tokenData.expireAt - timestamp)}</>
-            ) : null}
+        <div className="flex-1">
+          <div className="flex flex-col justify-between">
+            <div className="text-primary flex items-center">
+              <img src={token.image[0]} alt="img" className="rounded w-6 h-6" />
+              &nbsp;
+              <span>
+                {formatBigNumber(tokenData.amount, token.decimals, 4)} {token.symbol}
+              </span>
+            </div>
+            <div className="text-primary">
+              From: <AddressItem address={tokenData.from} />
+            </div>
+            <div className="text-primary">
+              To: <AddressItem address={tokenData.to} />
+            </div>
+            <div className="text-primary">
+              Exprire
+              {timestamp < tokenData.expireAt ? (
+                <>Expire In {formatSeconds(tokenData.expireAt - timestamp)}</>
+              ) : null}
+            </div>
           </div>
         </div>
 
-        <div className="flex flex-col items-end">
+        <div className="flex flex-col items-end justify-between">
           {tokenData.status === TransferStatus.Init &&
           timestamp < tokenData.expireAt &&
           isReceiver ? (
             <button
-              className="text-higher-emphesis hover:bg-gradient-to-b hover:to-black/20 disabled:pointer-events-none disabled:opacity-40 !bg-gradient-to-r from-blue to-pink-600 hover:from-blue/80 hover:to-pink-600/80 focus:from-blue/80 focus:to-pink-600/80 active:from-blue/70 active:to-pink-600/70 focus:border-blue-700  px-4 h-[36px] flex items-center justify-center gap-1 rounded-full mb-1"
+              className="text-higher-emphesis hover:bg-gradient-to-b hover:to-black/20 disabled:pointer-events-none disabled:opacity-40 !bg-gradient-to-r from-blue to-pink-600 hover:from-blue/80 hover:to-pink-600/80 focus:from-blue/80 focus:to-pink-600/80 active:from-blue/70 active:to-pink-600/70 focus:border-blue-700 px-4 sm:px-2 py-1 sm:text-base text-sm rounded-full"
               onClick={onAccept}
             >
               Accept
@@ -127,7 +130,7 @@ export const TokenTransferItem = (props: IProps) => {
           ) : null}
           {tokenData.status === TransferStatus.Init && isSender ? (
             <button
-              className="text-higher-emphesis hover:bg-gradient-to-b hover:to-black/20 disabled:pointer-events-none disabled:opacity-40 !bg-gradient-to-r from-blue to-pink-600 hover:from-blue/80 hover:to-pink-600/80 focus:from-blue/80 focus:to-pink-600/80 active:from-blue/70 active:to-pink-600/70 focus:border-blue-700  px-4 h-[36px] flex items-center justify-center gap-1 rounded-full mb-1"
+              className="text-higher-emphesis hover:bg-gradient-to-b hover:to-black/20 disabled:pointer-events-none disabled:opacity-40 !bg-gradient-to-r from-blue to-pink-600 hover:from-blue/80 hover:to-pink-600/80 focus:from-blue/80 focus:to-pink-600/80 active:from-blue/70 active:to-pink-600/70 focus:border-blue-700 px-4 sm:px-2 py-1 sm:text-base text-sm rounded-full"
               onClick={onCancel}
             >
               Cancel
@@ -136,7 +139,7 @@ export const TokenTransferItem = (props: IProps) => {
           {tokenData.status === TransferStatus.Sent ||
           tokenData.status === TransferStatus.Cancelled ||
           (tokenData.status === TransferStatus.Init && timestamp > tokenData.expireAt) ? (
-            <p className="text-primary">
+            <p className="text-primary sm:text-base text-sm">
               {tokenData.status === TransferStatus.Sent
                 ? "Sent"
                 : tokenData.status === TransferStatus.Cancelled
@@ -144,10 +147,9 @@ export const TokenTransferItem = (props: IProps) => {
                 : "Expired"}
             </p>
           ) : null}
-          <br />
           <div className="text-right">
             <span
-              className="inline-flex items-center text-white cursor-pointer rounded-full bg-blue-600 py-1 px-8"
+              className="inline-flex items-center text-white text-center sm:text-base text-sm cursor-pointer rounded-full bg-blue-600 py-1 sm:px-8 px-2"
               onClick={() => {
                 const link = `${window.location.origin}/transfer/${TokenType.Token}/${tokenData.exId}/${networkId}`;
                 copy(link);

@@ -26,7 +26,7 @@ export const NFTSelectModal = (props: IProps) => {
 
   const renderNFTItems = () => {
     return (
-      <div className="flex flex-row flex-1 flex-grow divide-dark-800 text-white text-center">
+      <div className="flex flex-row flex-1 flex-grow min-h-[50vh] lg:min-h-fit divide-dark-800 text-white text-center">
         {nftItems?.length ? (
           nftItems.map((nftItem) => {
             const isSelected = (nft?.tokenId || "") === nftItem.tokenId;
@@ -113,7 +113,7 @@ export const NFTSelectModal = (props: IProps) => {
         onClick={onClose}
       />
       <div
-        className="bg-dark-900 border border-dark-800 lg:max-w-lg w-full inline-block align-bottom rounded-xl text-left overflow-hidden transform p-4"
+        className="bg-dark-900 border border-dark-800 lg:max-w-lg md:max-w-md w-full inline-block align-bottom rounded-xl text-left overflow-hidden transform p-4"
         onClick={(e) => e.preventDefault()}
       >
         <div className="lg:max-h-[92vh] lg:h-[40rem] h-full flex flex-col gap-4">

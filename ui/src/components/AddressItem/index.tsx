@@ -1,7 +1,6 @@
 import { useConnectedWeb3Context } from "contexts";
 import copy from "copy-to-clipboard";
 import { shortenAddress } from "utils";
-import { DocumentDuplicateIcon } from "@heroicons/react/solid";
 import { toast } from "react-toastify";
 
 interface IProps {
@@ -16,9 +15,9 @@ export const AddressItem = (props: IProps) => {
 
   return (
     <div
-      className={`inline-flex items-center justify-center text-primary ${className}`}
+      className={`inline-flex items-center justify-center lg:text-base text-sm text-primary ${className}`}
     >
-      <p>{shortenAddress(address)} {isYou && "(You)" }</p>
+      <p>{isYou ? "Your wallet" : shortenAddress(address)}</p>
       &nbsp;
       <div 
         className="cursor-pointer" 
