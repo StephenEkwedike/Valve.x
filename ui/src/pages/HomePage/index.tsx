@@ -9,7 +9,8 @@ import {
   TabBar,
   NFTTransfer,
   TokenTransfer,
-  TokenTypeToggle
+  TokenTypeToggle,
+  ContactSection
 } from "./components";
 
 interface IState {
@@ -84,6 +85,10 @@ const HomePage = () => {
             />
           </>
         );
+      case HomeTab.Contact:
+        return (
+          <ContactSection />
+        )
     }
   };
 

@@ -126,3 +126,12 @@ export interface ITokenTransfer {
   status: TransferStatus;
   exId: string;
 }
+
+export interface IContact {
+  id?: string;
+  user: string;
+  wallet: string;
+  name: string;
+  timestamp: number;
+  signature: string;
+}

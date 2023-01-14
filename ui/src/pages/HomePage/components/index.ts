@@ -7,3 +7,4 @@ export * from "./HistoryTabBar";
 export * from "./NFTTransfer";
 export * from "./TokenTrasnfer";
 export * from "./TokenTypeToggle";
+export * from "./ContactSection";
