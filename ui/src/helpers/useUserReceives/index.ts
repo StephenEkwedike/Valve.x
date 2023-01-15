@@ -1,9 +1,10 @@
 import { useEffect, useState, useCallback } from "react";
+import { toast } from "react-toastify";
+import axios from "axios";
 
-import abis from "abis";
 import { useConnectedWeb3Context } from "contexts";
-import { useServices } from "helpers/useServices";
 import { TokenType } from "utils/enums";
+import { getSubgraph } from "config/networks";
 
 interface IState {
   transferIds: number[];
@@ -12,57 +13,87 @@ interface IState {
 
 export const useUserReceives = (tokenType: TokenType) => {
   const { account, networkId } = useConnectedWeb3Context();
-  const { multicall, valve, valve721 } = useServices();
   const [state, setState] = useState<IState>({
     transferIds: [],
     loading: false,
   });
 
   const loadToken = useCallback(async () => {
-    if (!account) {
+    if (!account || !networkId) {
+      toast.error("Something went wrong!");
       return;
     }
     setState((prev) => ({ ...prev, loading: true }));
     try {
-      const count = await valve.getUserReceiveCount(account);
-      const calls = [];
-      for (let index = 0; index < count; index++) {
-        calls.push({
-          name: "transferReceivers",
-          address: valve.address,
-          params: [account, index],
-        });
+      const response = (await axios.post(
+          getSubgraph(networkId),
+          {
+            query: `
+            {
+              transfers(
+                orderBy: createTimestamp, 
+                orderDirection: desc, 
+                where: {token_: {type: ${TokenType.Token}}, to_: {id: "${account.toLowerCase()}"}}
+              ) {
+                tId
+              }
+            }
+            `
+          }
+        )
+      ).data
+
+      if(!response.data.transfers) {
+        toast.error("Something went wrong!");
+        setState((prev) => ({ ...prev, transferIds: [], loading: false }));
+        return;
       }
-      const response = await multicall.multicallv2(abis.Valve, calls);
-      const ids = response.map((e: any) => e[0].toNumber());
-      setState((prev) => ({ ...prev, transferIds: ids, loading: false }));
+
+      setState((prev) => ({
+        ...prev, 
+        loading: false,
+        transferIds: response.data.transfers.map((transfer: any) => ~~transfer.tId)
+      }));
     } catch (error) {
       setState((prev) => ({ ...prev, transferIds: [], loading: false }));
     }
-  }, [account, multicall, valve]);
+  }, [account, networkId]);
 
   const loadNFT = useCallback(async () => {
-    if (!account) {
+    if (!account || !networkId) {
+      toast.error("Something went wrong!");
       return;
     }
     setState((prev) => ({ ...prev, loading: true }));
     try {
-      const count = await valve721.getUserReceiveCount(account);
-      const calls = [];
-      for (let index = 0; index < count; index++) {
-        calls.push({
-          name: "transferReceivers",
-          address: valve721.address,
-          params: [account, index],
-        });
+      const response = (await axios.post(
+          getSubgraph(networkId),
+        {
+          query: `
+          {
+            transfers(where: {token_: {type: ${TokenType.NFT}}, to_: {id: "${account.toLowerCase()}"}}) {
+              tId
+            }
+          }
+          `
+        }
+      )).data
+
+      if(!response.data.transfers) {
+        toast.error("Something went wrong!");
+        setState((prev) => ({ ...prev, transferIds: [], loading: false }));
+        return;
       }
-      const response = await multicall.multicallv2(abis.Valve, calls);
-      const ids = response.map((e: any) => e[0].toNumber());
-      setState((prev) => ({ ...prev, transferIds: ids, loading: false }));
+
+      setState((prev) => ({
+        ...prev, 
+        loading: false,
+        transferIds: response.data.transfers.map((transfer: any) => ~~transfer.tId)
+      }));
     } catch (error) {
       setState((prev) => ({ ...prev, transferIds: [], loading: false }));
     }
-  }, [account, multicall, valve721]);
+  }, [account, networkId]);
 
   useEffect(() => {
     setState(() => ({

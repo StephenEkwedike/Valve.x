@@ -7,9 +7,9 @@ interface IProps {
 
 export const TabBar = (props: IProps) => {
   return (
-    <div className="px-4 flex flex-row items-center justify-between">
+    <div className="px-1 md:px-4 flex flex-row items-center justify-between">
       <div className="flex gap-4">
-        {["Transfer", "History"].map((tab) => {
+        {["Transfer", "History", "Contact"].map((tab) => {
           let isSelected = true;
           
           switch (props.tab) {
@@ -24,6 +24,10 @@ export const TabBar = (props: IProps) => {
             case HomeTab.Received:
               isSelected = tab === "History";
               break;
+            
+            case HomeTab.Contact:
+              isSelected = tab === "Contact";
+              break;
               
             default:
               isSelected = true;
@@ -33,9 +37,21 @@ export const TabBar = (props: IProps) => {
             <div
               key={tab}
               onClick={() => {
-                props.onChange(
-                  tab === "Transfer" ? HomeTab.Transfer : HomeTab.Sent
-                );
+                let hometab: HomeTab = HomeTab.Transfer;
+                switch (tab) {
+                  case "Transfer":
+                    hometab = HomeTab.Transfer;
+                    break;
+
+                  case "History":
+                    hometab = HomeTab.Sent;
+                    break;
+
+                  case "Contact":
+                    hometab = HomeTab.Contact;
+                    break;
+                }
+                props.onChange(hometab);
               }}
               className={`leading-5 px-3 py-2 rounded-full cursor-pointer select-none text-white ${
                 isSelected && "bg-blue-600"

@@ -26,4 +26,5 @@ export enum HomeTab {
   Transfer = "Transfer",
   Sent = "Sent",
   Received = "Received",
+  Contact = "Contact",
 }

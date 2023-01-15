@@ -8,7 +8,7 @@ export const CopyLinkButton = (props: IProps) => {
 
   return (
     <button
-      className="text-white bg-blue-600 leading-[48px] rounded-[20px] w-full flex flex-col items-center disabled:bg-[#4F4E57] disabled:text-[#A5A1A1]"
+      className="text-white bg-blue-600 rounded-2xl p-4 w-full flex flex-col items-center disabled:bg-[#4F4E57] disabled:text-[#A5A1A1]"
       disabled={disabled}
       onClick={onClick}
     >

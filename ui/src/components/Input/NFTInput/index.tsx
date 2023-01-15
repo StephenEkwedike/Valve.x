@@ -18,9 +18,9 @@ export const NFTInput = (props: IProps) => {
   const [state, setState] = useState<IState>({ nftSelectVisible: false });
 
   return (  
-    <div className="p-3 w-full component__nft_input">
+    <div className="p-4 w-full component__nft_input">
       <div
-        className="border border-gray-500 leading-[64px] cursor-pointer flex items-center justify-between px-4 py-1 rounded-[20px] shadow-md text-high-emphesis"
+        className="border border-gray-500 cursor-pointer flex items-center justify-between px-4 py-4 rounded-2xl shadow-md text-high-emphesis"
         onClick={() => {
           setState((prev) => ({ ...prev, nftSelectVisible: true }));
         }}

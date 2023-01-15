@@ -1,6 +1,7 @@
 import { BigNumber, utils } from "ethers";
 import { ZERO } from "config/constants";
 import moment from "moment";
+import { TransferStatus } from "./enums";
 
 const { formatUnits } = utils;
 
@@ -126,3 +127,16 @@ export const getTimeStr = (timestamp: number) => {
   const obj = moment.unix(timestamp);
   return obj.format("MM/DD/YYYY HH:mm:ss");
 };
+
+export const getTransferStatus = (status: string) => {
+  switch (status) {
+    case "Init":
+      return TransferStatus.Init;
+    case "Sent":
+      return TransferStatus.Sent;
+    case "Cancelled":
+      return TransferStatus.Cancelled;
+  }
+
+  return TransferStatus.Init;
+}

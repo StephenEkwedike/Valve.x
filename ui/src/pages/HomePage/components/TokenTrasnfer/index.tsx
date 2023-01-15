@@ -12,6 +12,7 @@ import { ERC20Service } from "services";
 import { isAddress } from "utils/tools";
 
 interface IProps {
+  recipient: string;
   onReload: () => Promise<void>;
 }
 
@@ -22,7 +23,7 @@ interface IState {
 }
 
 export const TokenTransfer = (props: IProps) => {
-  const [state, setState] = useState<IState>({ amount: ZERO, recipient: "" });  
+  const [state, setState] = useState<IState>({ amount: ZERO, recipient: props.recipient });  
   const { networkId, setTxModalInfo, account } = useConnectedWeb3Context();
   const { valve } = useServices();
   const { balance } = useTokenBalance(state.token?.address || NULL_ADDRESS);

@@ -67,7 +67,7 @@ const TransferPage = () => {
 
   return (
     <div className="page__home">
-      <div className="text-white text-6xl font-bold text-center mb-8">Transfer Confirmation</div>
+      <div className="text-white md:text-6xl text-4xl font-bold text-center mb-8">Transfer Confirmation</div>
 
       {isInvalid ? null : renderContent()}
     </div>

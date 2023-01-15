@@ -21,7 +21,7 @@ export interface INetwork {
     multicall: string;
   };
   etherscanUri: string;
-  subgraph: {};
+  subgraph: string;
 }
 
 export type NetworkId = 1 | 137 | 43114 | 250 | 10 | 56 | 97;
@@ -98,7 +98,7 @@ export interface INFTTransfer {
   from: string;
   to: string;
   tokenId: BigNumber;
-  data: string;
+  data?: string;
   expireAt: number;
   status: TransferStatus;
   exId: string;
@@ -125,4 +125,13 @@ export interface ITokenTransfer {
   expireAt: number;
   status: TransferStatus;
   exId: string;
+}
+
+export interface IContact {
+  id?: string;
+  user: string;
+  wallet: string;
+  name: string;
+  timestamp: number;
+  signature: string;
 }

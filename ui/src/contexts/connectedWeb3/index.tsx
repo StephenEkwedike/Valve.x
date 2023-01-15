@@ -9,7 +9,7 @@ import {
 import { STORAGE_KEY_CONNECTOR } from "config/constants";
 import { setupNetwork } from "config/networks";
 import connectors from "utils/connectors";
-import { ConnectorNames, TokenType } from "utils/enums";
+import { ConnectorNames } from "utils/enums";
 import { Maybe } from "types/types";
 
 export interface ConnectedWeb3Context {
@@ -39,8 +39,6 @@ export interface ConnectedWeb3Context {
 
 const ConnectedWeb3Context =
   React.createContext<Maybe<ConnectedWeb3Context>>(null);
-
-const TokenTypeContext = React.createContext<TokenType>(TokenType.Token);
 
 /**
  * This hook can only be used by components under the `ConnectedWeb3` component. Otherwise it will throw.
