@@ -46,6 +46,7 @@ export const useTransfer = (id: any, tokenType: TokenType) => {
                   }
                   amount
                   status
+                  expireAt
                   exId
                 }
               }
@@ -53,6 +54,12 @@ export const useTransfer = (id: any, tokenType: TokenType) => {
           }
         )
       ).data
+
+      if(!response.data.transfer) {
+        toast.error("Something went wrong!");
+        setState(() => ({ loading: false }));
+        return;
+      }
 
       setState((prev) => ({ 
         ...prev, 
@@ -64,7 +71,7 @@ export const useTransfer = (id: any, tokenType: TokenType) => {
           to: response.data.transfer.to.id,
           amount: BigNumber.from(response.data.transfer.amount),
           status: getTransferStatus(response.data.transfer.status),
-          expireAt: 0,
+          expireAt: response.data.transfer.expireAt,
           exId: response.data.transfer.exId
         }
       }));
@@ -106,6 +113,12 @@ export const useTransfer = (id: any, tokenType: TokenType) => {
           }
         )
       ).data
+
+      if(!response.data.transfer) {
+        toast.error("Something went wrong!");
+        setState(() => ({ loading: false }));
+        return;
+      }
 
       setState((prev) => ({ 
         ...prev, 

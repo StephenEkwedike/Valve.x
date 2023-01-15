@@ -38,11 +38,11 @@ export const SentSection = (props: IProps) => {
         <div className="overflow-hidden overflow-y-auto max-h-80">
           <div className="flex flex-col flex-1 flex-grow min-h-[50vh] lg:min-h-fit overflow-hidden gap-4">
             {tokenType === TokenType.Token ? (
-              transferIds.reverse().map((id) => (
+              transferIds.map((id) => (
                 <TokenTransferItem transferId={id} key={`${id}`} />
               ))
             ) : (
-              transferIds.reverse().map((id) => (
+              transferIds.map((id) => (
                 <NFTTransferItem transferId={id} key={`${id}`} />
               ))
             )}

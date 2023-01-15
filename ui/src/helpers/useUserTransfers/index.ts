@@ -30,7 +30,11 @@ export const useUserTransfers = (tokenType: TokenType) => {
           {
             query: `
             {
-              transfers(where: {token_: {type: ERC20}, from_: {id: "${account.toLowerCase()}"}}) {
+              transfers(
+                orderBy: createTimestamp, 
+                orderDirection: desc, 
+                where: {token_: {type: ERC20}, from_: {id: "${account.toLowerCase()}"}}
+              ) {
                 tId
               }
             }
@@ -38,6 +42,13 @@ export const useUserTransfers = (tokenType: TokenType) => {
           }
         )
       ).data
+
+      if(!response.data.transfers) {
+        toast.error("Something went wrong!");
+        setState((prev) => ({ ...prev, transferIds: [], loading: false }));
+        return;
+      }
+
       setState((prev) => ({
         ...prev, 
         loading: false,
@@ -68,6 +79,13 @@ export const useUserTransfers = (tokenType: TokenType) => {
           `
         }
       )).data
+
+      if(!response.data.transfers) {
+        toast.error("Something went wrong!");
+        setState((prev) => ({ ...prev, transferIds: [], loading: false }));
+        return;
+      }
+
       setState((prev) => ({
         ...prev, 
         loading: false,

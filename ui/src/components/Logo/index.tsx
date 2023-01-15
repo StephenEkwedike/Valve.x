@@ -11,24 +11,24 @@ export const Logo = () => {
         <ellipse cx="57.8459" cy="76.6509" rx="7.15409" ry="16.5566" fill="url(#paint4_linear_223_251)"/>
         <defs>
         <linearGradient id="paint0_linear_223_251" x1="28" y1="20.5" x2="18.8992" y2="88.0538" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#0975F9"/>
-        <stop offset="1" stop-color="#9F1A92"/>
+        <stop stopColor="#0975F9"/>
+        <stop offset="1" stopColor="#9F1A92"/>
         </linearGradient>
         <linearGradient id="paint1_linear_223_251" x1="11.5774" y1="-3.17505" x2="17.5606" y2="26.8092" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#1A6BED"/>
-        <stop offset="1" stop-color="#9E1B93"/>
+        <stop stopColor="#1A6BED"/>
+        <stop offset="1" stopColor="#9E1B93"/>
         </linearGradient>
         <linearGradient id="paint2_linear_223_251" x1="53" y1="58" x2="46.0973" y2="86.024" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#9E1B93"/>
-        <stop offset="1" stop-color="#1A6BED"/>
+        <stop stopColor="#9E1B93"/>
+        <stop offset="1" stopColor="#1A6BED"/>
         </linearGradient>
         <linearGradient id="paint3_linear_223_251" x1="16.761" y1="4.56665" x2="16.3719" y2="36.8725" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#3C57D6"/>
-        <stop offset="1" stop-color="#991E97"/>
+        <stop stopColor="#3C57D6"/>
+        <stop offset="1" stopColor="#991E97"/>
         </linearGradient>
         <linearGradient id="paint4_linear_223_251" x1="56.6535" y1="73.8242" x2="56.2432" y2="106.533" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#3C57D6"/>
-        <stop offset="1" stop-color="#991E97"/>
+        <stop stopColor="#3C57D6"/>
+        <stop offset="1" stopColor="#991E97"/>
         </linearGradient>
         </defs>
       </svg>

@@ -30,7 +30,11 @@ export const useUserReceives = (tokenType: TokenType) => {
           {
             query: `
             {
-              transfers(where: {token_: {type: ${TokenType.Token}}, to_: {id: "${account.toLowerCase()}"}}) {
+              transfers(
+                orderBy: createTimestamp, 
+                orderDirection: desc, 
+                where: {token_: {type: ${TokenType.Token}}, to_: {id: "${account.toLowerCase()}"}}
+              ) {
                 tId
               }
             }
@@ -38,6 +42,13 @@ export const useUserReceives = (tokenType: TokenType) => {
           }
         )
       ).data
+
+      if(!response.data.transfers) {
+        toast.error("Something went wrong!");
+        setState((prev) => ({ ...prev, transferIds: [], loading: false }));
+        return;
+      }
+
       setState((prev) => ({
         ...prev, 
         loading: false,
@@ -67,6 +78,13 @@ export const useUserReceives = (tokenType: TokenType) => {
           `
         }
       )).data
+
+      if(!response.data.transfers) {
+        toast.error("Something went wrong!");
+        setState((prev) => ({ ...prev, transferIds: [], loading: false }));
+        return;
+      }
+
       setState((prev) => ({
         ...prev, 
         loading: false,
