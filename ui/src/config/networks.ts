@@ -8,7 +8,6 @@ import {
   IToken,
   KnownContracts,
   KnownNFT,
-  KnownSubgraph,
   KnownToken,
   NetworkId,
 } from "types/types";
@@ -37,7 +36,7 @@ export const networks: { [K in NetworkId]: INetwork } = {
       multicall: "0x62dDb8449123CF925137632ca214E8Be6Ec92b5e",
     },
     etherscanUri: "https://testnet.bscscan.com/",
-    subgraph: {},
+    subgraph: "https://api.thegraph.com/subgraphs/name/nevermind0825/valve-subgraph",
   },
   [networkIds.bsc]: {
     label: "Binance ",
@@ -51,7 +50,7 @@ export const networks: { [K in NetworkId]: INetwork } = {
       multicall: "0x87B45489F1cC9Cc8DB1D75AaaF094da1a6C433de",
     },
     etherscanUri: "https://bscscan.com/",
-    subgraph: {},
+    subgraph: "",
   },
   [networkIds.mainnet]: {
     label: "Ethereum ",
@@ -65,7 +64,7 @@ export const networks: { [K in NetworkId]: INetwork } = {
       multicall: "0x87B45489F1cC9Cc8DB1D75AaaF094da1a6C433de",
     },
     etherscanUri: "https://etherscan.io/",
-    subgraph: {},
+    subgraph: "",
   },
   [networkIds.matic]: {
     label: "Polygon ",
@@ -79,7 +78,7 @@ export const networks: { [K in NetworkId]: INetwork } = {
       multicall: "0x87B45489F1cC9Cc8DB1D75AaaF094da1a6C433de",
     },
     etherscanUri: "https://polygonscan.com/",
-    subgraph: {},
+    subgraph: "",
   },
   [networkIds.avax]: {
     label: "Avalanche ",
@@ -93,7 +92,7 @@ export const networks: { [K in NetworkId]: INetwork } = {
       multicall: "0x87B45489F1cC9Cc8DB1D75AaaF094da1a6C433de",
     },
     etherscanUri: "https://snowtrace.io/",
-    subgraph: {},
+    subgraph: "",
   },
   [networkIds.optimism]: {
     label: "Optimism ",
@@ -107,7 +106,7 @@ export const networks: { [K in NetworkId]: INetwork } = {
       multicall: "0x87B45489F1cC9Cc8DB1D75AaaF094da1a6C433de",
     },
     etherscanUri: "https://optimistic.etherscan.io/",
-    subgraph: {},
+    subgraph: "",
   },
   [networkIds.ftm]: {
     label: "Fantom ",
@@ -121,7 +120,7 @@ export const networks: { [K in NetworkId]: INetwork } = {
       multicall: "0x87B45489F1cC9Cc8DB1D75AaaF094da1a6C433de",
     },
     etherscanUri: "https://ftmscan.com/",
-    subgraph: {},
+    subgraph: "",
   },
 };
 
@@ -687,14 +686,14 @@ export const getContractAddress = (
 };
 
 export const getSubgraph = (
-  graph: KnownSubgraph,
-  networkId?: number
+  // graph: KnownSubgraph,
+  networkId: number
 ): string => {
   const fNetworkId = networkId || DEFAULT_NETWORK_ID;
   if (!validNetworkId(fNetworkId)) {
     throw new Error(`Unsupported network id: '${fNetworkId}'`);
   }
-  return networks[fNetworkId].subgraph[graph];
+  return networks[fNetworkId].subgraph;
 };
 
 export const DefaultReadonlyProvider = new providers.JsonRpcProvider(
