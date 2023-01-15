@@ -7,9 +7,9 @@ import {
   afterAll
 } from "matchstick-as/assembly/index"
 import { Address, BigInt, Bytes } from "@graphprotocol/graph-ts"
-import { NewTransfer } from "../generated/schema"
+import { Transfer } from "../generated/schema"
 import { NewTransfer as NewTransferEvent } from "../generated/Valve/Valve"
-import { handleNewTransfer } from "../src/valve"
+import { handleNewTransfer } from "../src/mappings/valve"
 import { createNewTransferEvent } from "./valve-utils"
 
 // Tests structure (matchstick-as >=0.5.0)
