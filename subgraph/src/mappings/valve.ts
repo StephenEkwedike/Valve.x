@@ -26,6 +26,7 @@ export function handleNewTransfer(event: NewTransferEvent): void {
   transfer.to = increaseToCount(event.params.to).id
   transfer.exId = event.params.exId
   transfer.amount = event.params.amount
+  transfer.expireAt = event.params.expireAt
   transfer.createTimestamp = event.block.timestamp
   transfer.createHash = event.transaction.hash
 

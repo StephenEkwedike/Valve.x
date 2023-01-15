@@ -1,9 +1,9 @@
 import { newMockEvent } from "matchstick-as"
 import { ethereum, Address, BigInt, Bytes } from "@graphprotocol/graph-ts"
 import {
-  Valve1155NewTransfer,
-  Valve1155TransferAccepted,
-  Valve1155TransferCancelled,
+  NewTransfer,
+  TransferAccepted,
+  TransferCancelled,
 } from "../generated/Valve1155/Valve1155"
 
 export function createValve1155NewTransferEvent(
@@ -16,8 +16,8 @@ export function createValve1155NewTransferEvent(
   data: Bytes,
   expireAt: BigInt,
   exId: Bytes
-): Valve1155NewTransfer {
-  let valve1155NewTransferEvent = <Valve1155NewTransfer>(
+): NewTransfer {
+  let valve1155NewTransferEvent = <NewTransfer>(
     newMockEvent()
   )
 
@@ -66,8 +66,8 @@ export function createValve1155NewTransferEvent(
 export function createValve1155TransferAcceptedEvent(
   tid: BigInt,
   exId: Bytes
-): Valve1155TransferAccepted {
-  let valve1155TransferAcceptedEvent = <Valve1155TransferAccepted>(
+): TransferAccepted {
+  let valve1155TransferAcceptedEvent = <TransferAccepted>(
     newMockEvent()
   )
 
@@ -86,8 +86,8 @@ export function createValve1155TransferAcceptedEvent(
 export function createValve1155TransferCancelledEvent(
   tid: BigInt,
   exId: Bytes
-): Valve1155TransferCancelled {
-  let valve1155TransferCancelledEvent = <Valve1155TransferCancelled>(
+): TransferCancelled {
+  let valve1155TransferCancelledEvent = <TransferCancelled>(
     newMockEvent()
   )
 

@@ -7,3 +7,6 @@ generated/
 
 # Generated files
 subgraph.yaml
+
+package-lock.json
+yarn.lock

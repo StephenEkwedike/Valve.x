@@ -28,6 +28,7 @@ export function handleValve721NewTransfer(
   transfer.to = increaseToCount(event.params.to).id
   transfer.exId = event.params.exId
   transfer.tokenId = event.params.tokenId
+  transfer.expireAt = event.params.expireAt
   transfer.createTimestamp = event.block.timestamp
   transfer.createHash = event.transaction.hash
 
