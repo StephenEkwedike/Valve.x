@@ -15,11 +15,12 @@ import {
 
 interface IState {
   tab: HomeTab;
-  tokenType: TokenType
+  tokenType: TokenType;
+  recipient: string;
 }
 
 const HomePage = () => {
-  const [state, setState] = useState<IState>({ tab: HomeTab.Transfer, tokenType: TokenType.Token });
+  const [state, setState] = useState<IState>({ tab: HomeTab.Transfer, tokenType: TokenType.Token, recipient: "" });
   const {
     transferIds,
     loadToken: loadTokenTransfers,
@@ -46,12 +47,14 @@ const HomePage = () => {
       case HomeTab.Transfer:
         return state.tokenType === TokenType.Token ? (
           <TokenTransfer 
+            recipient={state.recipient}
             onReload={async () => {
               await Promise.all([loadTokenTransfers(), loadTokenReceives()]);
-            }} 
+            }}
           />
         ) : (
           <NFTTransfer 
+            recipient={state.recipient}
             onReload={async () => {
               await Promise.all([loadNFTTransfers(), loadNFTReceives()]);
             }}
@@ -87,7 +90,11 @@ const HomePage = () => {
         );
       case HomeTab.Contact:
         return (
-          <ContactSection />
+          <ContactSection
+            onTransfer={(tokenType: TokenType, recipient: string) => 
+              setState((prev) => ({ ...prev, tokenType, recipient, tab: HomeTab.Transfer }))
+            }
+          />
         )
     }
   };
@@ -103,7 +110,7 @@ const HomePage = () => {
       <div className="w-full flex flex-col gap-3 pt-4 rounded-2xl shadow-md shadow-dark-1000 bg-base">
         <TabBar
           tab={state.tab}
-          onChange={(tab) => setState((prev) => ({ ...prev, tab }))}
+          onChange={(tab) => setState((prev) => ({ ...prev, tab, recipient: "" }))}
         />
 
         {renderContent()}

@@ -11,6 +11,7 @@ import { isAddress } from "utils/tools";
 import { ERC721Service } from "services";
 
 interface IProps {
+  recipient: string;
   onReload: () => Promise<void>;
 }
 
@@ -23,7 +24,7 @@ interface IState {
 export const NFTTransfer = (props: IProps) => {  
   const { networkId, setTxModalInfo, account  } = useConnectedWeb3Context();
   const { valve721 } = useServices();
-  const [state, setState] = useState<IState>({ recipient: "" });
+  const [state, setState] = useState<IState>({ recipient: props.recipient });
 
   useEffect(() => {
     setState((prev) => ({ ...prev, nft: undefined }));

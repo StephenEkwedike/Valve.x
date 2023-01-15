@@ -3,13 +3,19 @@ import { useState } from "react";
 import { ContactModal, SearchInput } from "components";
 import { useContacts } from "helpers";
 import { ContactItem } from "../ContactItem";
+import { HomeTab, TokenType } from "utils/enums";
 
 interface IState {
   contactModalVisible: boolean;
   search: string;
 }
 
-export const ContactSection = () => {
+interface IProps {
+  onTransfer: (_: TokenType, recipient: string) => void;
+}
+
+export const ContactSection = (props: IProps) => {
+  const { onTransfer } = props;
   const [state, setState] = useState<IState>({ search: "", contactModalVisible: false });
 
   const { contacts, loadContact } = useContacts();
@@ -37,7 +43,11 @@ export const ContactSection = () => {
       />
       <div className="divide-y divide-white">
         {contacts?.map((contact) => (
-          <ContactItem key={contact.id} contact={contact} />
+          <ContactItem 
+            key={contact.id} 
+            contact={contact} 
+            onTransfer={onTransfer} 
+          />
         ))}
       </div>
       {state.contactModalVisible && (
