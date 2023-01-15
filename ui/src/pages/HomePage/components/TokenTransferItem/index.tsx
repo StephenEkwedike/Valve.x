@@ -93,28 +93,25 @@ export const TokenTransferItem = (props: IProps) => {
 
     return (
       <div className="flex gap-4">
-        <div className="flex-1">
-          <div className="flex flex-col justify-between">
-            <div className="text-primary flex items-center">
-              <img src={token.image[0]} alt="img" className="rounded w-6 h-6" />
-              &nbsp;
-              <span>
-                {formatBigNumber(tokenData.amount, token.decimals, 4)} {token.symbol}
-              </span>
-            </div>
-            <div className="text-primary">
-              From: <AddressItem address={tokenData.from} />
-            </div>
-            <div className="text-primary">
-              To: <AddressItem address={tokenData.to} />
-            </div>
-            <div className="text-primary">
-              Exprire
-              {timestamp < tokenData.expireAt ? (
-                <>Expire In {formatSeconds(tokenData.expireAt - timestamp)}</>
-              ) : null}
-            </div>
+        <div className="flex-1 flex flex-col justify-between">
+          <div className="text-primary flex items-center">
+            <img src={token.image[0]} alt="img" className="rounded w-6 h-6" />
+            &nbsp;
+            <span>
+              {formatBigNumber(tokenData.amount, token.decimals, 4)} {token.symbol}
+            </span>
           </div>
+          <div className="text-primary">
+            From: <AddressItem address={tokenData.from} />
+          </div>
+          <div className="text-primary">
+            To: <AddressItem address={tokenData.to} />
+          </div>
+          {timestamp < tokenData.expireAt && (
+            <div className="text-primary">
+              Expire In {formatSeconds(tokenData.expireAt - timestamp)}
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col items-end justify-between">

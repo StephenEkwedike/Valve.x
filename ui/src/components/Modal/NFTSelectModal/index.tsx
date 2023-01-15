@@ -26,34 +26,36 @@ export const NFTSelectModal = (props: IProps) => {
 
   const renderNFTItems = () => {
     return (
-      <div className="flex flex-row flex-1 flex-grow min-h-[50vh] lg:min-h-fit divide-dark-800 text-white text-center">
-        {nftItems?.length ? (
-          nftItems.map((nftItem) => {
-            const isSelected = (nft?.tokenId || "") === nftItem.tokenId;
-            return (
-              <div 
-                key={nftItem.tokenId} 
-                className={ `p-2 cursor-pointer ${isSelected && "opacity-20"}`}
-                onClick={() => {
-                  if (!isSelected) {
-                    onSelect(nftItem);
-                    onClose();
-                  }
-                }}
-              >
-                <img
-                  className="w-20 h-20 rounded-[8px]" 
-                  // src={"/assets/nfts/shonen 1619.png"}
-                  src={nftItem.image[0]}
-                  alt={nftItem.name}
-                />
-                <div>#{nftItem.tokenId}</div>
-              </div>
-            )
-          })
-        ) : (
-          <div className="w-full">No items</div>
-        )}
+      <div className="flex-1 min-h-[50vh] lg:min-h-fit divide-dark-800 text-white text-center">
+        <div className="flex flex-wrap gap-2">
+          {nftItems?.length ? (
+            nftItems.map((nftItem) => {
+              const isSelected = (nft?.tokenId || "") === nftItem.tokenId;
+              return (
+                <div 
+                  key={nftItem.tokenId} 
+                  className={`p-2 cursor-pointer ${isSelected && "opacity-20"}`}
+                  onClick={() => {
+                    if (!isSelected) {
+                      onSelect(nftItem);
+                      onClose();
+                    }
+                  }}
+                >
+                  <img
+                    className="w-24 h-24 rounded-[8px]" 
+                    // src={"/assets/nfts/shonen 1619.png"}
+                    src={nftItem.image[0]}
+                    alt={nftItem.name}
+                  />
+                  <div>#{nftItem.tokenId}</div>
+                </div>
+              )
+            })
+          ) : (
+            <div className="w-full">No items</div>
+          )}
+        </div>
       </div>
     );
   }

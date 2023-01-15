@@ -100,7 +100,7 @@ const HomePage = () => {
         onClickToken={onClickToken} 
         onClickNFT={onClickNFT} 
       />
-      <div className="w-full flex flex-col gap-3 pt-4 rounded-[16px] shadow-md shadow-dark-1000 bg-base">
+      <div className="w-full flex flex-col gap-3 pt-4 rounded-2xl shadow-md shadow-dark-1000 bg-base">
         <TabBar
           tab={state.tab}
           onChange={(tab) => setState((prev) => ({ ...prev, tab }))}

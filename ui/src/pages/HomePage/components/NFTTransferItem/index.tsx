@@ -97,9 +97,9 @@ export const NFTTransferItem = (props: IProps) => {
           src={nft.image[0]} 
           // src={"/assets/nfts/shonen 1619.png"} 
           alt="img" 
-          className="rounded-xl w-16 sm:w-24 h-16 sm:h-24 m-auto" 
+          className="rounded-xl w-20 sm:w-24 h-20 sm:h-24 m-auto" 
         />
-        <div className="flex-1 flex-col gap-3">
+        <div className="flex-1 flex flex-col justify-between">
           <div className="text-primary flex items-center text-sm sm:text-base">
             {nft.symbol} # {nftData.tokenId.toString()}
           </div>
@@ -109,11 +109,11 @@ export const NFTTransferItem = (props: IProps) => {
           <div className="text-primary text-sm sm:text-base">
             To: <AddressItem address={nftData.to} />
           </div>
-          <div className="text-primary text-sm sm:text-base">
-            {timestamp < nftData.expireAt ? (
-              <>Expire In {formatSeconds(nftData.expireAt - timestamp)}</>
-            ) : null}
-          </div>
+          {timestamp < nftData.expireAt && (
+            <div className="text-primary text-sm sm:text-base">
+              Expire In {formatSeconds(nftData.expireAt - timestamp)}
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col items-end justify-between">
@@ -121,7 +121,7 @@ export const NFTTransferItem = (props: IProps) => {
           timestamp < nftData.expireAt &&
           isReceiver ? (
             <button
-              className="text-higher-emphesis hover:bg-gradient-to-b hover:to-black/20 disabled:pointer-events-none disabled:opacity-40 !bg-gradient-to-r from-blue to-pink-600 hover:from-blue/80 hover:to-pink-600/80 focus:from-blue/80 focus:to-pink-600/80 active:from-blue/70 active:to-pink-600/70 focus:border-blue-700 px-4 sm:px-2 py-1 sm:text-base text-sm rounded-full"
+              className="text-higher-emphesis hover:bg-gradient-to-b hover:to-black/20 disabled:pointer-events-none disabled:opacity-40 !bg-gradient-to-r from-blue to-pink-600 hover:from-blue/80 hover:to-pink-600/80 focus:from-blue/80 focus:to-pink-600/80 active:from-blue/70 active:to-pink-600/70 focus:border-blue-700 px-2 sm:px-4 py-1 sm:text-base text-sm rounded-full"
               onClick={onAccept}
             >
               Accept
@@ -129,7 +129,7 @@ export const NFTTransferItem = (props: IProps) => {
           ) : null}
           {nftData.status === TransferStatus.Init && isSender ? (
             <button
-              className="text-higher-emphesis hover:bg-gradient-to-b hover:to-black/20 disabled:pointer-events-none disabled:opacity-40 !bg-gradient-to-r from-blue to-pink-600 hover:from-blue/80 hover:to-pink-600/80 focus:from-blue/80 focus:to-pink-600/80 active:from-blue/70 active:to-pink-600/70 focus:border-blue-700 px-4 sm:px-2 py-1 sm:text-base text-sm rounded-full"
+              className="text-higher-emphesis hover:bg-gradient-to-b hover:to-black/20 disabled:pointer-events-none disabled:opacity-40 !bg-gradient-to-r from-blue to-pink-600 hover:from-blue/80 hover:to-pink-600/80 focus:from-blue/80 focus:to-pink-600/80 active:from-blue/70 active:to-pink-600/70 focus:border-blue-700 px-2 sm:px-4 py-1 sm:text-base text-sm rounded-full"
               onClick={onCancel}
             >
               Cancel
