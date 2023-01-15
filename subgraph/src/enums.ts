@@ -26,12 +26,12 @@ export function mapTokenType(type: TokenType): string {
 export function mapTransferStatus(type: TransferStatus): string {
   switch (type) {
     case TransferStatus.Init:
-      return "Init"
+      return "Init";
     case TransferStatus.Sent:
-      return "Sent"
+      return "Sent";
     case TransferStatus.Cancelled:
-      return "Cancelled"
+      return "Cancelled";
     default:
-      return ""
+      return "Init";
   }
 }

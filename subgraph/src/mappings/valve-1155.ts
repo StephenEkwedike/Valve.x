@@ -29,6 +29,7 @@ export function handleValve1155NewTransfer(
   transfer.exId = event.params.exId
   transfer.amounts = event.params.amounts
   transfer.tokenIds = event.params.tokenIds
+  transfer.expireAt = event.params.expireAt
   transfer.createTimestamp = event.block.timestamp
   transfer.createHash = event.transaction.hash
 
