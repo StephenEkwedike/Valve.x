@@ -21,7 +21,8 @@ export const AddressItem = (props: IProps) => {
       &nbsp;
       <div 
         className="cursor-pointer" 
-        onClick={() => {
+        onClick={(event) => {
+          event.stopPropagation();
           copy(address);
           toast.info("Copied");
         }}

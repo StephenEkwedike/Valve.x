@@ -3,7 +3,7 @@ import { useState } from "react";
 import { ContactModal, SearchInput } from "components";
 import { useContacts } from "helpers";
 import { ContactItem } from "../ContactItem";
-import { HomeTab, TokenType } from "utils/enums";
+import { TokenType } from "utils/enums";
 
 interface IState {
   contactModalVisible: boolean;

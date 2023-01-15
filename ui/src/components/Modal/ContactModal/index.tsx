@@ -9,7 +9,7 @@ import { useContacts } from "helpers";
 import { useConnectedWeb3Context } from "contexts";
 
 interface IProps {
-  contact?: IContact;
+  wallet?: string;
   onClose: () => void;
 }
 
@@ -19,7 +19,7 @@ interface IFormData {
 }
 
 export const ContactModal = (props: IProps) => {
-  const { onClose } = props;
+  const { wallet, onClose } = props;
   
   const { account, setTxModalInfo, library: provider } = useConnectedWeb3Context();
   const { postContact } = useContacts();
@@ -60,8 +60,8 @@ export const ContactModal = (props: IProps) => {
         className="fixed inset-0 modal-drop modal-drop--visible"
         onClick={onClose}
       />
-      <div className="bg-dark-900 border border-dark-800 lg:max-w-lg md:max-w-md w-full inline-block align-bottom rounded-xl text-left overflow-hidden transform p-4">
-        <div className="lg:max-h-[92vh] lg:h-[40rem] h-full flex flex-col gap-4">
+      <div className="bg-dark-900 border border-dark-800 md:max-w-2xl w-full inline-block align-bottom rounded-xl text-left overflow-hidden transform p-4">
+        <div className="lg:max-h-[92vh] h-full flex flex-col gap-4">
           <div className="flex justify-between items-center w-full">
             <p className="text-base md:text-lg font-medium text-white">
               Contact
@@ -73,13 +73,13 @@ export const ContactModal = (props: IProps) => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col text-white text-lg items-center md:p-4 p-2 gap-4 h-full border rounded border-dark-800 bg-[rgba(0,0,0,0.2)]">
               <input
-                className="w-full bg-transparent border border-gray-500 rounded p-2 placeholder-low-emphesis focus:placeholder-primary focus:placeholder:text-low-emphesis"  
+                className="w-full bg-transparent border border-gray-500 rounded-2xl px-4 py-3 placeholder-low-emphesis focus:placeholder-primary focus:placeholder:text-low-emphesis"  
                 type="text" 
                 placeholder="Enter friend address"
-                {...register("wallet", {required: true})}
+                {...register("wallet", {required: true, value: wallet})}
               />
               <input
-                className="w-full bg-transparent border border-gray-500 rounded p-2 placeholder-low-emphesis focus:placeholder-primary focus:placeholder:text-low-emphesis" 
+                className="w-full bg-transparent border border-gray-500 rounded-2xl px-4 py-3 placeholder-low-emphesis focus:placeholder-primary focus:placeholder:text-low-emphesis" 
                 type="text" 
                 placeholder="Enter friend name" 
                 {...register("name", {required: true})}
