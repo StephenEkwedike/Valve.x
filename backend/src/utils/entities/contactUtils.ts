@@ -1,4 +1,4 @@
-import { ContactEntity } from "../../typeorms/entities/contacts/contacts";
+import { ContactEntity } from "../../cusTypeorm/entities/contacts/contacts";
 import { IContact } from "types/types";
 
 export const contactUtils = {
