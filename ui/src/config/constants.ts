@@ -25,4 +25,4 @@ export const ONE_ETHER = parseEther("1");
 
 export const FEE_MULTIPLIER = 10000;
 
-export const API_URL = process.env.API_URL;
+export const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";

@@ -3,6 +3,7 @@ import axios from "axios";
 
 import { useConnectedWeb3Context } from "contexts";
 import { IContact } from "types/types";
+import { API_URL } from "config/constants";
 
 interface IState {
   contacts?: IContact[];
@@ -18,7 +19,7 @@ export const useContacts = () => {
       setState((prev) => ({ ...prev, loading: true }));
       const response = (
         await axios.post(
-          `http://localhost:5000/api/contacts/`, 
+          `${API_URL}/contacts/`, 
           { contact: newContact }
         )
       ).data;
@@ -38,7 +39,7 @@ export const useContacts = () => {
       setState((prev) => ({ ...prev, loading: true }));
       const reponse = (
         await axios.get(
-          `http://localhost:5000/api/contacts/${account}`, 
+          `${API_URL}/contacts/${account}`, 
           { 
             params: { 
               search: search 

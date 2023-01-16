@@ -3,7 +3,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { XIcon } from "@heroicons/react/solid";
 
-import { IContact } from "types/types"
 import { isAddress } from "utils/tools";
 import { useContacts } from "helpers";
 import { useConnectedWeb3Context } from "contexts";
