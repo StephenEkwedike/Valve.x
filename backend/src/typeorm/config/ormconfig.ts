@@ -1,5 +1,8 @@
+import path from 'path';
 import { ConnectionOptions } from 'typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+
+const basePath = path.resolve(__dirname, "../");
 
 const config: ConnectionOptions = {
   type: 'postgres',
@@ -10,13 +13,13 @@ const config: ConnectionOptions = {
   database: process.env.POSTGRES_DB,
   synchronize: false,
   logging: false,
-  entities: ['src/typeorms/entities/**/*.ts'],
-  migrations: ['src/typeorms/migrations/**/*.ts'],
+  entities: [`${basePath}/entities/**/*{.ts,.js}`],
+  migrations: [`${basePath}/migrations/**/*{.ts,.js}`],
   cli: {
-    entitiesDir: 'src/typeorms/entities',
-    migrationsDir: 'src/typeorms/migrations',
+    entitiesDir: `${basePath}/entities`,
+    migrationsDir: `${basePath}/migrations`,
   },
   namingStrategy: new SnakeNamingStrategy(),
 };
 
-export default config;
+export = config;
