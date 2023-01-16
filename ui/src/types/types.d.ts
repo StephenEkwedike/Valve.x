@@ -1,5 +1,5 @@
 import { BigNumber } from "ethers";
-import { LockType, TokenType, TransferStatus } from "utils/enums";
+import { TransferStatus } from "utils/enums";
 
 declare global {
   interface Window {
