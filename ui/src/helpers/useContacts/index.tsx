@@ -23,6 +23,7 @@ export const useContacts = () => {
           { contact: newContact }
         )
       ).data;
+      loadContact("");
       if (response) return true;
       else return false;
     } catch (error) {

@@ -21,7 +21,7 @@ interface IState {
 
 const HomePage = () => {
   const [state, setState] = useState<IState>({ tab: HomeTab.Transfer, recipient: "" });
-  const { tokenType } = useSelectedTokenTypeContext();
+  const { tokenType, setTokenType } = useSelectedTokenTypeContext();
   const {
     transferIds,
     load: loadTransfers,
@@ -80,9 +80,10 @@ const HomePage = () => {
       case HomeTab.Contact:
         return (
           <ContactSection
-            onTransfer={(tokenType: TokenType, recipient: string) => 
-              setState((prev) => ({ ...prev, tokenType, recipient, tab: HomeTab.Transfer }))
-            }
+            onTransfer={(tokenType: TokenType, recipient: string) => {
+              setTokenType(tokenType);
+              setState((prev) => ({ ...prev, recipient, tab: HomeTab.Transfer }))
+            }}
           />
         )
     }

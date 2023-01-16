@@ -14,6 +14,7 @@ interface IProps {
 
 interface IFormData {
   wallet: string;
+  email: string;
   name: string;
 }
 
@@ -40,6 +41,7 @@ export const ContactModal = (props: IProps) => {
     const msg = [
       account,
       data.wallet,
+      data.email,
       data.name,
       timestamp.toString(),
     ].join("-");
@@ -49,7 +51,7 @@ export const ContactModal = (props: IProps) => {
     const isSuccess = await postContact({ ...data, user: account, signature: signatureHash, timestamp });
 
     setTxModalInfo(false);
-    if (isSuccess) toast.success("Success!")
+    if (isSuccess) toast.success("Success!");
     else toast.error("Something went wrong!");
   };
 
@@ -76,6 +78,12 @@ export const ContactModal = (props: IProps) => {
                 type="text" 
                 placeholder="Enter friend address"
                 {...register("wallet", {required: true, value: wallet})}
+              />
+              <input
+                className="w-full bg-transparent border border-gray-500 rounded-2xl px-4 py-3 placeholder-low-emphesis focus:placeholder-primary focus:placeholder:text-low-emphesis" 
+                type="email" 
+                placeholder="Enter friend email" 
+                {...register("email", {required: true})}
               />
               <input
                 className="w-full bg-transparent border border-gray-500 rounded-2xl px-4 py-3 placeholder-low-emphesis focus:placeholder-primary focus:placeholder:text-low-emphesis" 
