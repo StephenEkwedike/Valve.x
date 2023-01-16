@@ -3,17 +3,16 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "type": "commonjs",
   "scripts": {
     "build": "rimraf ./build && tsc",
     "dev": "nodemon",
     "start": "npm run build && node build/index.js",
     "lint": "eslint . --ext .ts",
-    "migration:run": "NODE_PATH=./src ts-node ./node_modules/typeorm/cli.js migration:run --config ./src/typeorms/config/ormconfig.ts",
-    "migration:run:dev": "PG_HOST=localhost NODE_PATH=./src ts-node ./node_modules/typeorm/cli.js migration:run --config ./src/typeorms/configs/ormconfig.ts",
-    "migration:revert": "PG_HOST=localhost NODE_PATH=./src ts-node ./node_modules/typeorm/cli.js migration:revert --config ./src/typeorms/configs/ormconfig.ts",
-    "migration:generate": "PG_HOST=localhost NODE_PATH=./src ts-node ./node_modules/.bin/typeorm migration:generate --pretty --config ./src/typeorms/config/ormconfig.ts -n ",
-    "migration:create": "PG_HOST=localhost NODE_PATH=./src ts-node ./node_modules/.bin/typeorm migration:create --config ./src/typeorms/config/ormconfig.ts -n "
+    "migration:run": "cross-env NODE_PATH=./src ts-node ./node_modules/typeorm/cli.js migration:run --config ./src/cusTypeorm/config/ormconfig.ts",
+    "migration:run:dev": "cross-env PG_HOST=localhost NODE_PATH=./src ts-node ./node_modules/typeorm/cli.js migration:run --config ./src/cusTypeorm/configs/ormconfig.ts",
+    "migration:revert": "cross-env PG_HOST=localhost NODE_PATH=./src ts-node ./node_modules/typeorm/cli.js migration:revert --config ./src/cusTypeorm/configs/ormconfig.ts",
+    "migration:generate": "cross-env PG_HOST=localhost NODE_PATH=./src ts-node ./node_modules/.bin/typeorm migration:generate --pretty --config ./src/cusTypeorm/config/ormconfig.ts -n ",
+    "migration:create": "cross-env PG_HOST=localhost NODE_PATH=./src ts-node ./node_modules/.bin/typeorm migration:create --config ./src/cusTypeorm/config/ormconfig.ts -n "
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.2",
@@ -35,13 +34,14 @@
     "@moralisweb3/common-evm-utils": "^2.11.0",
     "axios": "^0.27.2",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "ethers": "^5.7.1",
     "express": "^4.18.1",
     "helmet": "^6.0.0",
     "moralis": "^2.11.0",
     "morgan": "^1.10.0",
     "pg": "^8.8.0",
-    "typeorm": "0.2.34",
+    "typeorm": "^0.2.34",
     "typeorm-naming-strategies": "^4.1.0"
   }
 }

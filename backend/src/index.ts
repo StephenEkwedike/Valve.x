@@ -10,7 +10,7 @@ import { rootHandler } from "./handlers/rootHandler";
 import { getUserContacts, postContact } from "./handlers/contactHandler";
 import { getNFTsbyWallet } from "./handlers/nftHandler";
 
-import { dbCreateConnection } from "./typeorms/dbCreateConnection";
+import { dbCreateConnection } from "./cusTypeorm/dbCreateConnection";
 
 (async () => {
   await Moralis.start({
