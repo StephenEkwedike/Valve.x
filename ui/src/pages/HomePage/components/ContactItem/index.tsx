@@ -1,39 +1,77 @@
+import { useState } from "react";
+// import { TrashIcon } from "@heroicons/react/solid";
+// import AlertConfirm from "react-alert-confirm";
+
+import { ContactModal } from "components";
 import { IContact } from "types/types"
 import { getTimeStr, shortenAddress } from "utils";
 import { TokenType } from "utils/enums";
 
+interface IState {
+  contactModalVisible: boolean;
+}
+
 interface IProps {
   contact: IContact;
+  loadContact: (_: string) => Promise<void>;
   onTransfer: (_: TokenType, recipient: string) => void;
 }
 
 export const ContactItem = (props: IProps) => {
-  const { contact, onTransfer } = props;
+  const { contact, loadContact, onTransfer } = props;
+
+  const [state, setState] = useState<IState>({ contactModalVisible: false });
 
   return (
-    <div className="py-4 gap-2 flex flex-col">
-      <div className="flex flex-row justify-between">
-        <div className="text-white">
-          {contact.name} | {shortenAddress(contact.wallet)}
+    <>
+      <div 
+        className="py-4 gap-2 flex flex-col"
+        onClick={() => setState(() => ({ contactModalVisible: true }))}
+      >
+        <div className="flex flex-row justify-between">
+          <div className="text-white">
+            {contact.name} | {shortenAddress(contact.wallet)}
+          </div>
+          <div className="text-secondary">
+            at {getTimeStr(contact.timestamp / 1000)}
+          </div>
         </div>
-        <div className="text-secondary">
-          at {getTimeStr(contact.timestamp / 1000)}
+        <div className="flex flex-row items-center justify-between">
+          <div className="text-blue-600 underline flex flex-row gap-2">
+            <div 
+              className="select-none cursor-pointer"
+              onClick={() => onTransfer(TokenType.Token, contact.wallet)}
+            >
+              Send Token
+            </div>
+            <div 
+              className="select-none cursor-pointer"
+              onClick={() => onTransfer(TokenType.NFT, contact.wallet)}
+            >
+              Send NFT
+            </div>
+          </div>
+          {/* <TrashIcon 
+            className="w-6 h-6 text-blue-600 cursor-pointer" 
+            onClick={async (event) => {
+              event.stopPropagation();
+              const [isOK] = await AlertConfirm("Are you sure?");
+              if (isOK) alert("Yes");
+            }}
+          /> */}
         </div>
       </div>
-      <div className="text-blue-600 underline flex flex-row gap-2">
-        <div 
-          className="select-none cursor-pointer"
-          onClick={() => onTransfer(TokenType.Token, contact.wallet)}
-        >
-          Send Token
-        </div>
-        <div 
-          className="select-none cursor-pointer"
-          onClick={() => onTransfer(TokenType.NFT, contact.wallet)}
-        >
-          Send NFT
-        </div>
-      </div>
-    </div>
+      {state.contactModalVisible && (
+        <ContactModal 
+          wallet={contact.wallet}
+          email={contact.email}
+          name={contact.name}
+          onClose={async () => {
+            await loadContact("");
+            setState((prev) => ({ ...prev, contactModalVisible: false }));
+          }} 
+        />
+      )}
+    </>
   )
 }

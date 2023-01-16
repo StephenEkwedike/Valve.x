@@ -9,6 +9,8 @@ import { useConnectedWeb3Context } from "contexts";
 
 interface IProps {
   wallet?: string;
+  email?: string;
+  name?: string;
   onClose: () => void;
 }
 
@@ -19,40 +21,46 @@ interface IFormData {
 }
 
 export const ContactModal = (props: IProps) => {
-  const { wallet, onClose } = props;
+  const { wallet, email, name, onClose } = props;
   
   const { account, setTxModalInfo, library: provider } = useConnectedWeb3Context();
-  const { postContact } = useContacts();
+  const { postContact, loadContact } = useContacts();
   const { register, handleSubmit } = useForm<IFormData>();
 
   const onSubmit: SubmitHandler<IFormData> = async (data) => {
-    if (!isAddress(data.wallet)) {
-      toast.error("Wrong address!");
-      return;
-    }
-    if (!provider || !account) {
+    try {
+      if (!isAddress(data.wallet)) {
+        toast.error("Wrong address!");
+        return;
+      }
+      if (!provider || !account) {
+        toast.error("Something went wrong!");
+        return;
+      }
+  
+      setTxModalInfo(true, "Signaturing");
+      const signer = provider.getSigner();
+      const timestamp = Date.now();
+      const msg = [
+        account,
+        data.wallet,
+        data.email,
+        data.name,
+        timestamp.toString(),
+      ].join("-");
+      const signatureHash = await signer.signMessage(msg);
+  
+      setTxModalInfo(true, "Submitting");
+      const isSuccess = await postContact({ ...data, user: account, signature: signatureHash, timestamp });
+      await loadContact("");
+  
+      setTxModalInfo(false);
+      if (isSuccess) toast.success("Success!");
+      else toast.error("Something went wrong!");
+    } catch (error) {
+      setTxModalInfo(false);
       toast.error("Something went wrong!");
-      return;
     }
-
-    setTxModalInfo(true, "Signaturing");
-    const signer = provider.getSigner();
-    const timestamp = Date.now();
-    const msg = [
-      account,
-      data.wallet,
-      data.email,
-      data.name,
-      timestamp.toString(),
-    ].join("-");
-    const signatureHash = await signer.signMessage(msg);
-
-    setTxModalInfo(true, "Submitting");
-    const isSuccess = await postContact({ ...data, user: account, signature: signatureHash, timestamp });
-
-    setTxModalInfo(false);
-    if (isSuccess) toast.success("Success!");
-    else toast.error("Something went wrong!");
   };
 
   return (
@@ -83,13 +91,13 @@ export const ContactModal = (props: IProps) => {
                 className="w-full bg-transparent border border-gray-500 rounded-2xl px-4 py-3 placeholder-low-emphesis focus:placeholder-primary focus:placeholder:text-low-emphesis" 
                 type="email" 
                 placeholder="Enter friend email" 
-                {...register("email", {required: true})}
+                {...register("email", {required: true, value: email})}
               />
               <input
                 className="w-full bg-transparent border border-gray-500 rounded-2xl px-4 py-3 placeholder-low-emphesis focus:placeholder-primary focus:placeholder:text-low-emphesis" 
                 type="text" 
                 placeholder="Enter friend name" 
-                {...register("name", {required: true})}
+                {...register("name", {required: true, value: name})}
               />
               <input
                 className="text-white bg-blue-600 rounded-full px-6 py-2 disabled:bg-[#4F4E57] disabled:text-[#A5A1A1]" 

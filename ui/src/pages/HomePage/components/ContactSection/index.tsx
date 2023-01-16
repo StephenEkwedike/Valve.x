@@ -1,13 +1,13 @@
 import { useState } from "react";
 
-import { ContactModal, SearchInput } from "components";
+import { ContactModal, SearchInput, Spinner } from "components";
 import { useContacts } from "helpers";
 import { ContactItem } from "../ContactItem";
 import { TokenType } from "utils/enums";
 
 interface IState {
-  contactModalVisible: boolean;
   search: string;
+  contactModalVisible: boolean;
 }
 
 interface IProps {
@@ -16,10 +16,10 @@ interface IProps {
 
 export const ContactSection = (props: IProps) => {
   const { onTransfer } = props;
+  const { contacts, loading, loadContact } = useContacts();
+
   const [state, setState] = useState<IState>({ search: "", contactModalVisible: false });
 
-  const { contacts, loadContact } = useContacts();
-    
   return (
     <div className="md:p-4 p-2 flex flex-col gap-4">
       <div className="flex flex-row items-center justify-between">
@@ -42,18 +42,30 @@ export const ContactSection = (props: IProps) => {
         }
       />
       <div className="divide-y divide-white">
-        {contacts?.map((contact) => (
-          <ContactItem 
-            key={contact.id} 
-            contact={contact} 
-            onTransfer={onTransfer} 
-          />
-        ))}
+        {loading && contacts.length === 0 ? (
+          <div className="flex items-center my-4 justify-center">
+            <Spinner />
+          </div>
+        ): contacts.length === 0 ? (
+          <div className="my-2">
+            <p className="text-primary text-2xl text-center">No contacts</p>
+          </div>
+        ) : (
+          contacts.map((contact) => (
+            <ContactItem 
+              key={contact.id} 
+              contact={contact} 
+              loadContact={loadContact}
+              onTransfer={onTransfer} 
+            />
+          ))
+        )}
       </div>
       {state.contactModalVisible && (
         <ContactModal 
-          onClose={() => {
-            setState((prev) => ({ ...prev, contactModalVisible: false }))
+          onClose={async () => {
+            await loadContact("");
+            setState((prev) => ({ ...prev, contactModalVisible: false }));
           }} 
         />
       )}

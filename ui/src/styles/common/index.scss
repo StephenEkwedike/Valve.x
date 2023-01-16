@@ -210,3 +210,12 @@
     transform: rotate(360deg);
   }
 }
+
+.react-alert-confirm {
+  background: linear-gradient(to right, #0993ec, #e50eae) !important;
+  .alert-confirm-body {
+    div {
+      color: $white-color;
+    }
+  }
+}

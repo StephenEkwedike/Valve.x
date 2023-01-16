@@ -4,6 +4,7 @@ import { ConnectedWeb3 } from "contexts";
 import { BrowserRouter } from "react-router-dom";
 import { renderRoutes } from "routes";
 import "react-toastify/dist/ReactToastify.css";
+import 'react-alert-confirm/lib/style.css';
 import { ToastContainer } from "react-toastify";
 import { LifiWidget } from "components";
 
