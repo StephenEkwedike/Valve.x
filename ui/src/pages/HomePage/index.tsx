@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 
 import { useUserReceives, useUserTransfers } from "helpers";
 import { HomeTab, TokenType } from "utils/enums";
@@ -12,51 +12,42 @@ import {
   TokenTypeToggle,
   ContactSection
 } from "./components";
+import { useSelectedTokenTypeContext } from "contexts";
 
 interface IState {
   tab: HomeTab;
-  tokenType: TokenType;
   recipient: string;
 }
 
 const HomePage = () => {
-  const [state, setState] = useState<IState>({ tab: HomeTab.Transfer, tokenType: TokenType.Token, recipient: "" });
+  const [state, setState] = useState<IState>({ tab: HomeTab.Transfer, recipient: "" });
+  const { tokenType } = useSelectedTokenTypeContext();
   const {
     transferIds,
-    loadToken: loadTokenTransfers,
-    loadNFT: loadNFTTransfers,
+    load: loadTransfers,
     loading: transferLoading,
-  } = useUserTransfers(state.tokenType);
+  } = useUserTransfers();
   const {
     transferIds: receiveIds,
-    loadToken: loadTokenReceives,
-    loadNFT: loadNFTReceives,
+    load: loadReceives,
     loading: receivesLoading,
-  } = useUserReceives(state.tokenType);
-
-  const onClickToken = useCallback(() => {
-    setState(prev => ({ ...prev, tokenType: TokenType.Token }))
-  },[]);
-
-  const onClickNFT = useCallback(() => {
-    setState(prev => ({ ...prev, tokenType: TokenType.NFT }))
-  }, [])
+  } = useUserReceives();
 
   const renderContent = () => {
     switch (state.tab) {
       case HomeTab.Transfer:
-        return state.tokenType === TokenType.Token ? (
+        return tokenType === TokenType.Token ? (
           <TokenTransfer 
             recipient={state.recipient}
             onReload={async () => {
-              await Promise.all([loadTokenTransfers(), loadTokenReceives()]);
+              await Promise.all([loadTransfers(), loadReceives()]);
             }}
           />
         ) : (
           <NFTTransfer 
             recipient={state.recipient}
             onReload={async () => {
-              await Promise.all([loadNFTTransfers(), loadNFTReceives()]);
+              await Promise.all([loadTransfers(), loadReceives()]);
             }}
           />
         );
@@ -68,7 +59,6 @@ const HomePage = () => {
               onChange={(tab) => setState((prev) => ({ ...prev, tab }))}
             />
             <SentSection
-              tokenType={state.tokenType}
               transferIds={transferIds}
               loading={transferLoading}
             />
@@ -82,7 +72,6 @@ const HomePage = () => {
               onChange={(tab) => setState((prev) => ({ ...prev, tab }))}
             />
             <ReceivedSection
-              tokenType={state.tokenType}
               transferIds={receiveIds}
               loading={receivesLoading}
             />
@@ -102,11 +91,7 @@ const HomePage = () => {
   return (
     <>
       <div className="text-white md:text-6xl text-4xl font-bold text-center mb-8">Transfer to other wallet</div>
-      <TokenTypeToggle 
-        tokenType={state.tokenType} 
-        onClickToken={onClickToken} 
-        onClickNFT={onClickNFT} 
-      />
+      <TokenTypeToggle />
       <div className="w-full flex flex-col gap-3 pt-4 rounded-2xl shadow-md shadow-dark-1000 bg-base">
         <TabBar
           tab={state.tab}

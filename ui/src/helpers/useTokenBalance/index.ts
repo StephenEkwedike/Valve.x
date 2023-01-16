@@ -1,9 +1,9 @@
+import { useEffect, useState, useCallback } from "react";
+import { BigNumber } from "ethers";
+
 import { useConnectedWeb3Context } from "contexts";
 import { FetchStatus } from "utils/enums";
-import { useEffect, useState } from "react";
 import { ERC20Service } from "services";
-
-import { BigNumber } from "ethers";
 import { NULL_ADDRESS, ZERO } from "config/constants";
 
 type UseTokenBalanceState = {
@@ -19,8 +19,8 @@ export const useTokenBalance = (tokenAddress: string, address?: string) => {
   });
   const { account, library: provider } = useConnectedWeb3Context();
 
-  const fetchBalance = async () => {
-    if (!provider) return;
+  const fetchBalance = useCallback(async () => {
+    if (!account || !provider) return;
     try {
       if (tokenAddress === NULL_ADDRESS) {
         const res = await provider.getBalance(address || account || "");
@@ -43,7 +43,7 @@ export const useTokenBalance = (tokenAddress: string, address?: string) => {
         fetchStatus: FAILED,
       }));
     }
-  };
+  }, [FAILED, SUCCESS, account, address, provider, tokenAddress]);
 
   useEffect(() => {
     const interval = setInterval(fetchBalance, 4000);
@@ -55,7 +55,7 @@ export const useTokenBalance = (tokenAddress: string, address?: string) => {
     return () => {
       clearInterval(interval);
     };
-  }, [account, address, tokenAddress, SUCCESS, FAILED]);
+  }, [account, address, fetchBalance]);
 
   return { ...balanceState, reload: fetchBalance };
 };

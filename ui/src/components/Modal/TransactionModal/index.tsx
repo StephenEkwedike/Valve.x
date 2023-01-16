@@ -10,7 +10,7 @@ interface IProps {
 }
 
 export const TransactionModal = (props: IProps) => {
-  const { onClose, title, description, txId } = props;
+  const { title, description, txId } = props;
   const { networkId } = useConnectedWeb3Context();
   const explorerUri = getEtherscanUri(networkId);
 

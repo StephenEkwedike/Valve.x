@@ -8,6 +8,7 @@ import { BigNumber } from "ethers";
 import { getTransferStatus } from "utils";
 import { getSubgraph } from "config/networks";
 import { useConnectedWeb3Context } from "contexts";
+import { useServices } from "helpers/useServices";
 
 interface IState {
   loading: boolean;
@@ -19,6 +20,7 @@ export const useTransfer = (id: any, tokenType: TokenType) => {
   const [state, setState] = useState<IState>({ loading: false });
 
   const { networkId } = useConnectedWeb3Context();
+  const { valve, valve721 } = useServices();
 
   const loadToken = useCallback(async () => {
     try {
@@ -27,9 +29,11 @@ export const useTransfer = (id: any, tokenType: TokenType) => {
         return;
       }
       setState((prev) => ({ ...prev, loading: true }));
-      const response = (
-        await axois.post(
-          getSubgraph(networkId),
+      const subgraph = getSubgraph(networkId);
+      let result: ITokenTransfer;
+      if (subgraph) {
+        const response = (await axois.post(
+          subgraph,
           {
             query: `
               {
@@ -52,19 +56,13 @@ export const useTransfer = (id: any, tokenType: TokenType) => {
               }
             `
           }
-        )
-      ).data
+        )).data
 
-      if(!response.data.transfer) {
-        toast.error("Something went wrong!");
-        setState(() => ({ loading: false }));
-        return;
-      }
-
-      setState((prev) => ({ 
-        ...prev, 
-        loading: false, 
-        tokenData:  {
+        if(!response.data.transfer) {
+          setState(() => ({ loading: false }));
+          return;
+        }
+        result = {
           id: BigNumber.from(response.data.transfer.tId),
           token: response.data.transfer.token.id,
           from: response.data.transfer.from.id,
@@ -74,11 +72,19 @@ export const useTransfer = (id: any, tokenType: TokenType) => {
           expireAt: response.data.transfer.expireAt,
           exId: response.data.transfer.exId
         }
+      } else {
+        result = await valve.getTransfer(id);
+      }
+
+      setState((prev) => ({ 
+        ...prev, 
+        loading: false, 
+        tokenData: result
       }));
     } catch (error) {
       setState(() => ({ loading: false }));
     }
-  }, [id, networkId]);
+  }, [id, networkId, valve]);
 
   const loadNFT = useCallback(async () => {
     try {
@@ -87,9 +93,11 @@ export const useTransfer = (id: any, tokenType: TokenType) => {
         return;
       }
       setState((prev) => ({ ...prev, loading: true }));
-      const response = (
-        await axois.post(
-          getSubgraph(networkId),
+      const subgraph = getSubgraph(networkId);
+      let result: INFTTransfer;
+      if (subgraph) {
+        const response = (await axois.post(
+          subgraph,
           {
             query: `
               {
@@ -105,39 +113,41 @@ export const useTransfer = (id: any, tokenType: TokenType) => {
                     id
                   }
                   tokenId
+                  expireAt
                   status
                   exId
                 }
               }
             `
           }
-        )
-      ).data
-
-      if(!response.data.transfer) {
-        toast.error("Something went wrong!");
-        setState(() => ({ loading: false }));
-        return;
-      }
-
-      setState((prev) => ({ 
-        ...prev, 
-        loading: false, 
-        nftData: {
+        )).data
+        
+        if(!response.data.transfer) {
+          setState(() => ({ loading: false }));
+          return;
+        }
+        result = {
           id: BigNumber.from(response.data.transfer.tId),
           token: response.data.transfer.token.id,
           from: response.data.transfer.from.id,
           to: response.data.transfer.to.id,
           tokenId: BigNumber.from(response.data.transfer.tokenId),
           status: getTransferStatus(response.data.transfer.status),
-          expireAt: 0,
+          expireAt: response.data.transfer.expireAt,
           exId: response.data.transfer.exId
         }
+      } else {
+        result = await valve721.getTransfer(id);
+      }
+      setState((prev) => ({ 
+        ...prev, 
+        loading: false, 
+        nftData: result
       }));
     } catch (error) {
       setState(() => ({ loading: false }));
     }
-  }, [id, networkId]);
+  }, [id, networkId, valve721]);
 
   useEffect(() => {
     setState(() => ({ loading: false }));

@@ -12,7 +12,7 @@ import connectors from "utils/connectors";
 import { ConnectorNames } from "utils/enums";
 import { Maybe } from "types/types";
 
-export interface ConnectedWeb3Context {
+export interface IConnectedWeb3Context {
   account: Maybe<string> | null;
   library: Web3Provider | undefined;
   networkId: number | undefined;
@@ -38,7 +38,7 @@ export interface ConnectedWeb3Context {
 }
 
 const ConnectedWeb3Context =
-  React.createContext<Maybe<ConnectedWeb3Context>>(null);
+  React.createContext<Maybe<IConnectedWeb3Context>>(null);
 
 /**
  * This hook can only be used by components under the `ConnectedWeb3` component. Otherwise it will throw.

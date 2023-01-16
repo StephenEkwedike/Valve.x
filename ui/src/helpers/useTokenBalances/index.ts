@@ -1,9 +1,10 @@
+import { useEffect, useState, useCallback } from "react";
+import { BigNumber } from "ethers";
+
 import abis from "abis";
 import { NULL_ADDRESS } from "config/constants";
 import { useConnectedWeb3Context } from "contexts";
-import { BigNumber } from "ethers";
 import { useServices } from "helpers/useServices";
-import { useEffect, useState } from "react";
 import { IToken } from "types/types";
 
 export const useTokenBalances = (tokens: IToken[]) => {
@@ -11,8 +12,8 @@ export const useTokenBalances = (tokens: IToken[]) => {
   const [balances, setBalances] = useState<{ [key: string]: BigNumber }>({});
   const { multicall } = useServices();
 
-  const load = async () => {
-    if (!account || !provider) {
+  const load = useCallback(async () => {
+    if (!account || !provider || !networkId) {
       setBalances({});
       return;
     }
@@ -36,11 +37,11 @@ export const useTokenBalances = (tokens: IToken[]) => {
       }
       setBalances(() => balances);
     } catch (error) {}
-  };
+  }, [account, multicall, networkId, provider, tokens]);
 
   useEffect(() => {
     load();
-  }, [networkId, account, tokens]);
+  }, [load]);
 
   return balances;
 };

@@ -1,3 +1,4 @@
+import { SelectedTokenType } from "contexts";
 import React from "react";
 
 import { Footer, Header } from "./components";
@@ -11,7 +12,9 @@ export const MainLayout = (props: {
       <Header />
       <div className="py-4 md:py-12 lg:py-[80px] px-2 mx-auto max-w-2xl w-full">
         <main>
-          {props.children}
+          <SelectedTokenType>
+            {props.children}
+          </SelectedTokenType>
         </main>
       </div>
       <Footer />

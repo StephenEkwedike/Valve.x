@@ -1,18 +1,19 @@
 import { Spinner } from "components";
-import { useConnectedWeb3Context } from "contexts";
+import { useConnectedWeb3Context, useSelectedTokenTypeContext } from "contexts";
 import { TokenType } from "utils/enums";
 import { NFTTransferItem } from "../NFTTransferItem";
 import { TokenTransferItem } from "../TokenTransferItem";
 
 interface IProps {
   transferIds: number[];
-  tokenType: TokenType;
   loading: boolean;
 }
 
 export const SentSection = (props: IProps) => {
+  const { transferIds, loading } = props;
+
   const { account } = useConnectedWeb3Context();
-  const { transferIds, tokenType, loading } = props;
+  const { tokenType } = useSelectedTokenTypeContext();
 
   if (!account) {
     return (
