@@ -8,11 +8,11 @@
     "dev": "nodemon",
     "start": "npm run build && node build/index.js",
     "lint": "eslint . --ext .ts",
-    "migration:run": "cross-env NODE_PATH=./src ts-node ./node_modules/typeorm/cli.js migration:run --config ./src/cusTypeorm/config/ormconfig.ts",
-    "migration:run:dev": "cross-env PG_HOST=localhost NODE_PATH=./src ts-node ./node_modules/typeorm/cli.js migration:run --config ./src/cusTypeorm/configs/ormconfig.ts",
-    "migration:revert": "cross-env PG_HOST=localhost NODE_PATH=./src ts-node ./node_modules/typeorm/cli.js migration:revert --config ./src/cusTypeorm/configs/ormconfig.ts",
-    "migration:generate": "cross-env PG_HOST=localhost NODE_PATH=./src ts-node ./node_modules/.bin/typeorm migration:generate --pretty --config ./src/cusTypeorm/config/ormconfig.ts -n ",
-    "migration:create": "cross-env PG_HOST=localhost NODE_PATH=./src ts-node ./node_modules/.bin/typeorm migration:create --config ./src/cusTypeorm/config/ormconfig.ts -n "
+    "migration:run": "cross-env NODE_PATH=./src ts-node ./node_modules/typeorm/cli.js migration:run --config ./src/typeorm/config/ormconfig.ts",
+    "migration:run:dev": "cross-env PG_HOST=localhost NODE_PATH=./src ts-node ./node_modules/typeorm/cli.js migration:run --config ./src/typeorm/configs/ormconfig.ts",
+    "migration:revert": "cross-env PG_HOST=localhost NODE_PATH=./src ts-node ./node_modules/typeorm/cli.js migration:revert --config ./src/typeorm/configs/ormconfig.ts",
+    "migration:generate": "cross-env PG_HOST=localhost NODE_PATH=./src ts-node ./node_modules/.bin/typeorm migration:generate --pretty --config ./src/typeorm/config/ormconfig.ts -n ",
+    "migration:create": "cross-env PG_HOST=localhost NODE_PATH=./src ts-node ./node_modules/.bin/typeorm migration:create --config ./src/typeorm/config/ormconfig.ts -n "
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.2",

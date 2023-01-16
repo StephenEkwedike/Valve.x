@@ -1,5 +1,5 @@
 import { getRepository, Like } from "typeorm";
-import { ContactEntity } from "../cusTypeorm/entities/contacts/contacts";
+import { ContactEntity } from "../typeorm/entities/contacts/contacts";
 import { contactUtils } from "../utils/entities/contactUtils";
 import { IContact } from "types/types";
 
