@@ -1,6 +1,5 @@
 import * as express from "express";
 import Moralis from "moralis";
-import { EvmChain } from "@moralisweb3/common-evm-utils";
 
 export const getNFTsbyWallet = async (
   req: express.Request,

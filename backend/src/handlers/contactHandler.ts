@@ -1,10 +1,10 @@
 import * as express from "express";
 import { utils } from "ethers";
-// import { oracleContract } from "config";
-import { ContactService } from "../services/contact";
-
-import { IContact } from "types/types";
 import { isAddress } from "ethers/lib/utils";
+import validator from "validator";
+
+import { ContactService } from "../services/contact";
+import { IContact } from "types/types";
 import { CONTACT_CREATE_VALID_TIME } from "../config/constants";
 
 export const getUserContacts = async (
@@ -34,6 +34,7 @@ export const postContact = async (
   if (
     isAddress(contact.user) === false ||
     isAddress(contact.wallet) === false ||
+    validator.isEmail(contact.email) === false ||
     !contact.name ||
     Date.now() - contact.timestamp > CONTACT_CREATE_VALID_TIME
   ) {
@@ -44,6 +45,7 @@ export const postContact = async (
     const message = [
       contact.user,
       contact.wallet,
+      contact.email,
       contact.name,
       contact.timestamp.toString(),
     ].join("-");

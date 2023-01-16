@@ -15,6 +15,9 @@ export class ContactEntity {
   @ViewColumn({ name: "wallet" })
   public wallet?: string;
 
+  @ViewColumn({ name: "email" })
+  public email?: string;
+
   @ViewColumn({ name: "name" })
   public name?: string;
 

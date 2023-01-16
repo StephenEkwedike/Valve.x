@@ -1,4 +1,4 @@
-import { getRepository, Like } from "typeorm";
+import { getRepository, Like, Raw } from "typeorm";
 import { ContactEntity } from "../typeorm/entities/contacts/contacts";
 import { contactUtils } from "../utils/entities/contactUtils";
 import { IContact } from "types/types";
@@ -7,16 +7,20 @@ export class ContactService {
   async listByUser(user: string, search: string): Promise<IContact[]> {
     const contactRepository = getRepository(ContactEntity);
 
-    const entities = await contactRepository.find({
+    const entities = await contactRepository.find({ 
       where: [
-        { 
-          user: user.toLowerCase(), 
-          name: Like(`%${search}%`)
+        {
+          user: Raw(alias => `LOWER(${alias}) Like '%${user.toLowerCase()}%'`),
+          wallet: Raw(alias => `LOWER(${alias}) Like '%${search.toLowerCase()}%'`),
         },
-        { 
-          user: user.toLowerCase(), 
-          wallet: Like(`%${search}%`)
+        {
+          user: Raw(alias => `LOWER(${alias}) Like '%${user.toLowerCase()}%'`),
+          email: Raw(alias => `LOWER(${alias}) Like '%${search.toLowerCase()}%'`),
         },
+        {
+          user: Raw(alias => `LOWER(${alias}) Like '%${user.toLowerCase()}%'`),
+          name: Raw(alias => `LOWER(${alias}) Like '%${search.toLowerCase()}%'`),
+        }
       ],
       order: {
         name: "ASC",
