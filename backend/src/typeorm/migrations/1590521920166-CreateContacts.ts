@@ -11,6 +11,7 @@ export class CreateContacts1590521920166 implements MigrationInterface {
         "user" character varying NOT NULL, 
         "wallet" character varying NOT NULL, 
         "name" character varying NOT NULL, 
+        "email" character varying NOT NULL,
         "timestamp" character varying NOT NULL, 
         "signature" character varying NOT NULL,
         PRIMARY KEY ("id"))`,
