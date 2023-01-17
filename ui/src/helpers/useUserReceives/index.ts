@@ -37,7 +37,7 @@ export const useUserReceives = () => {
           query: `
           {
             transfers(
-              orderBy: createTimestamp, 
+              orderBy: tId, 
               orderDirection: desc, 
               where: {token_: {type: ${tokenType}}, to_: {id: "${account.toLowerCase()}"}}
             ) {
@@ -73,7 +73,7 @@ export const useUserReceives = () => {
           });
         }
         const response = await multicall.multicallv2(instanceAbi, calls);
-        results = response.map((e: any) => e[0].toNumber());
+        results = response.reverse().map((e: any) => e[0].toNumber());
       }
 
       setState((prev) => ({
@@ -103,7 +103,7 @@ export const useUserReceives = () => {
   //           query: `
   //           {
   //             transfers(
-  //               orderBy: createTimestamp, 
+  //               orderBy: tId, 
   //               orderDirection: desc, 
   //               where: {token_: {type: ${TokenType.NFT}}, to_: {id: "${account.toLowerCase()}"}}
   //             ) {

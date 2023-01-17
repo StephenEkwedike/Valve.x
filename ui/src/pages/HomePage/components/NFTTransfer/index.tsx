@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 // import { BigNumber } from "ethers";
 
-import { AddressInput, NFTInput, CopyLinkButton } from "components";
+import { AddressInput, NFTInput, TransferButton } from "components";
 // import { NULL_ADDRESS } from "config/constants";
 import { useConnectedWeb3Context } from "contexts";
 import { useServices } from "helpers";
@@ -109,7 +109,7 @@ export const NFTTransfer = (props: IProps) => {
           }}
           label="Enter Recipient Address"
         />
-        <CopyLinkButton disabled={state.nft?.tokenId === undefined} onClick={onTransfer} />
+        <TransferButton disabled={state.nft?.tokenId === undefined} onClick={onTransfer} />
         <div className="text-red-600">
           {getMessage()}
         </div>

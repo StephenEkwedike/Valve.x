@@ -37,7 +37,7 @@ export const useUserTransfers = () => {
           query: `
           {
             transfers(
-              orderBy: createTimestamp, 
+              orderBy: tId, 
               orderDirection: desc, 
               where: {token_: {type: ${tokenType}}, from_: {id: "${account.toLowerCase()}"}}
             ) {
@@ -75,7 +75,7 @@ export const useUserTransfers = () => {
 
         const response = await multicall.multicallv2(instanceAbi, calls);
 
-        results = response.map((e: any) => e[0].toNumber());
+        results = response.reverse().map((e: any) => e[0].toNumber());
       }
 
       setState((prev) => ({
@@ -105,7 +105,7 @@ export const useUserTransfers = () => {
   //           query: `
   //           {
   //             transfers(
-  //               orderBy: createTimestamp, 
+  //               orderBy: tId, 
   //               orderDirection: desc, 
   //               where: {token_: {type: ${TokenType.NFT}}, from_: {id: "${account.toLowerCase()}"}}
   //             ) {

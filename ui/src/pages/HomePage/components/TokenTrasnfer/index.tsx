@@ -3,7 +3,7 @@ import { BigNumber } from "ethers";
 import { ArrowDownIcon } from "@heroicons/react/solid";
 import { toast } from "react-toastify";
 
-import { AddressInput, CopyLinkButton, TokenInput } from "components";
+import { AddressInput, TransferButton, TokenInput } from "components";
 import { IToken } from "types/types";
 import { ZERO, NULL_ADDRESS } from "config/constants";
 import { useConnectedWeb3Context } from "contexts";
@@ -71,7 +71,8 @@ export const TokenTransfer = (props: IProps) => {
         "Please wait until transaction is confirmed",
         hash
       );
-      await valve.provider.waitForTransaction(hash);
+      const waitResp = await valve.provider.waitForTransaction(hash).on("NewTransfer");
+      console.log({ waitResp });
 
       await props.onReload();
 
@@ -125,7 +126,7 @@ export const TokenTransfer = (props: IProps) => {
           }}
           label="Enter Recipient Address"
         />
-        <CopyLinkButton disabled={getMessage() !== ""} onClick={onTransfer} />
+        <TransferButton disabled={getMessage() !== ""} onClick={onTransfer} />
         <div className="text-red-600">
           {getMessage()}
         </div>
