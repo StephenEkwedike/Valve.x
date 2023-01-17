@@ -52,6 +52,7 @@ contract Valve1155 is
         uint256[] amounts,
         bytes data,
         uint256 expireAt,
+        TransferStatus status,
         bytes32 exId
     );
     event TransferAccepted(uint256 id, bytes32 exId);
@@ -158,12 +159,22 @@ contract Valve1155 is
         address to,
         uint256[] memory tokenIds,
         uint256[] memory amounts,
-        bytes memory data
+        bytes memory data,
+        bool isDirect
     ) external payable nonReentrant whenNotPaused {
         require(address(token) != address(0), "Invalid token address");
         require(msg.value == fee, "Invalid fee");
+        TransferStatus status;
 
-        token.safeBatchTransferFrom(msg.sender, address(this), tokenIds, amounts, data);
+        if (isDirect) {
+            status = TransferStatus.Sent;
+            token.safeBatchTransferFrom(msg.sender, to, tokenIds, amounts, data);
+            // send fee to fee recipient
+            payable(feeRecipient).transfer(fee);
+        } else {
+            status = TransferStatus.Init;
+            token.safeBatchTransferFrom(msg.sender, address(this), tokenIds, amounts, data);
+        }
 
         uint256 id = transfers.length;
         bytes32 exId = keccak256(abi.encodePacked(msg.sender, id));
@@ -178,7 +189,7 @@ contract Valve1155 is
                 amounts,
                 data,
                 block.timestamp + validDuration,
-                TransferStatus.Init,
+                status,
                 exId
             )
         );
@@ -186,7 +197,7 @@ contract Valve1155 is
         transferReceivers[to].push(id);
         transferInfo[exId] = id;
 
-        emit NewTransfer(msg.sender, id, token, to, tokenIds, amounts, data, block.timestamp + validDuration, exId);
+        emit NewTransfer(msg.sender, id, token, to, tokenIds, amounts, data, block.timestamp + validDuration, status, exId);
     }
 
     /**

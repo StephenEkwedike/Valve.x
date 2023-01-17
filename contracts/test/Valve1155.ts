@@ -11,6 +11,7 @@ import {
   getLatestBlockTimestamp,
   getSnapShot,
   revertEvm,
+  TranferStatus,
   wei,
   ZERO_ADDRESS,
 } from "./utils";
@@ -28,7 +29,7 @@ describe("Valve1155", function () {
   let feeRecipient: SignerWithAddress;
   let valve: Valve1155;
   let token: Test1155Token;
-  const fee = wei(10**16); // 0.01 eth
+  const fee = wei(10 ** 16); // 0.01 eth
   const validDuration = wei(3600); // 1 hour
   let timestamp: number;
   const tokenData = "0x00";
@@ -44,10 +45,10 @@ describe("Valve1155", function () {
     tester5 = signers[6];
 
     const TestTokenArtifact: Artifact = await hre.artifacts.readArtifact("Test1155Token");
-    token = <Test1155Token><unknown>await deployContract(tester1, TestTokenArtifact, []);
+    token = <Test1155Token>(<unknown>await deployContract(tester1, TestTokenArtifact, []));
 
     const VestingArtifact = await ethers.getContractFactory("Valve1155");
-    valve = <Valve1155><unknown>await upgrades.deployProxy(VestingArtifact, [], { initializer: "initialize" });
+    valve = <Valve1155>(<unknown>await upgrades.deployProxy(VestingArtifact, [], { initializer: "initialize" }));
 
     await token.connect(tester1).setApprovalForAll(valve.address, true);
   });
@@ -75,7 +76,7 @@ describe("Valve1155", function () {
     });
   });
 
-  describe("check for eth", () => {
+  describe("check for transfer", () => {
     let snapshotID: any;
     before(async () => {
       snapshotID = await getSnapShot();
@@ -84,11 +85,18 @@ describe("Valve1155", function () {
       await revertEvm(snapshotID);
     });
 
-    it("create", async function () {
-      await valve.connect(tester1).createTransfer(token.address, tester2.address, [0], [wei(10**4)], tokenData, { value: fee });
+    it("create with confirmation", async function () {
+      await expect(
+        valve
+          .connect(tester1)
+          .createTransfer(token.address, tester2.address, [0], [wei(10 ** 4)], tokenData, false, { value: 0 }),
+      ).to.be.revertedWith("Invalid fee");
+      await valve
+        .connect(tester1)
+        .createTransfer(token.address, tester2.address, [0], [wei(10 ** 4)], tokenData, false, { value: fee });
       timestamp = await getLatestBlockTimestamp();
 
-      expect(await token.balanceOf(valve.address, 0)).to.equal(wei(10**4));
+      expect(await token.balanceOf(valve.address, 0)).to.equal(wei(10 ** 4));
 
       const transfer = await valve.getTransfer(0);
       const exId = keccak256(solidityPack(["address", "uint256"], [tester1.address, wei(0)]));
@@ -97,9 +105,9 @@ describe("Valve1155", function () {
       expect(transfer.from).to.equal(tester1.address);
       expect(transfer.to).to.equal(tester2.address);
       expect(transfer.tokenIds[0]).to.equal(wei(0));
-      expect(transfer.amounts[0]).to.equal(wei(10**4));
+      expect(transfer.amounts[0]).to.equal(wei(10 ** 4));
       expect(transfer.expireAt).to.equal(wei(validDuration.toNumber() + timestamp));
-      expect(transfer.status).to.equal(wei(0));
+      expect(transfer.status).to.equal(TranferStatus.Init);
       expect(transfer.exId).to.equal(exId);
 
       expect(await valve.transferCreators(tester1.address, 0)).to.equal(wei(0));
@@ -107,15 +115,23 @@ describe("Valve1155", function () {
       expect(await ethers.provider.getBalance(valve.address)).to.equal(fee);
     });
 
-    it("create more", async function () {
-      await valve.connect(tester1).createTransfer(token.address, tester3.address, [1], [wei(10**4)], tokenData, { value: fee });
-      await valve.connect(tester1).createTransfer(token.address, tester4.address, [2, 3], [wei(1), wei(10**4)], tokenData, { value: fee });
-      await valve.connect(tester1).createTransfer(token.address, tester5.address, [4], [wei(10**4)], tokenData, { value: fee });
+    it("create more with confirmation", async function () {
+      await valve
+        .connect(tester1)
+        .createTransfer(token.address, tester3.address, [1], [wei(10 ** 4)], tokenData, false, { value: fee });
+      await valve
+        .connect(tester1)
+        .createTransfer(token.address, tester4.address, [2, 3], [wei(1), wei(10 ** 4)], tokenData, false, {
+          value: fee,
+        });
+      await valve
+        .connect(tester1)
+        .createTransfer(token.address, tester5.address, [4], [wei(10 ** 4)], tokenData, false, { value: fee });
 
-      expect(await token.balanceOf(valve.address, 1)).to.equal(wei(10**4));
+      expect(await token.balanceOf(valve.address, 1)).to.equal(wei(10 ** 4));
       expect(await token.balanceOf(valve.address, 2)).to.equal(wei(1));
-      expect(await token.balanceOf(valve.address, 3)).to.equal(wei(10**4));
-      expect(await token.balanceOf(valve.address, 4)).to.equal(wei(10**4));
+      expect(await token.balanceOf(valve.address, 3)).to.equal(wei(10 ** 4));
+      expect(await token.balanceOf(valve.address, 4)).to.equal(wei(10 ** 4));
       expect(await ethers.provider.getBalance(valve.address)).to.equal(fee.mul(4));
     });
 
@@ -128,11 +144,11 @@ describe("Valve1155", function () {
       await valve.connect(tester1).cancelTransfer(exId);
 
       const transfer = await valve.transfers(0);
-      expect(transfer.status).to.equal(wei(2));
+      expect(transfer.status).to.equal(TranferStatus.Cancelled);
       expect(await token.balanceOf(valve.address, 0)).to.equal(wei(0));
-      expect(await token.balanceOf(tester1.address, 0)).to.equal(wei(10**18));
+      expect(await token.balanceOf(tester1.address, 0)).to.equal(wei(10 ** 18));
       expect(await ethers.provider.getBalance(valve.address)).to.equal(fee.mul(3));
-      expect((await tester1.getBalance()).gt(beforeBalance.add(wei(9*10**15)))).to.be.true; // receive fee but consumed by gas fee
+      expect((await tester1.getBalance()).gt(beforeBalance.add(wei(9 * 10 ** 15)))).to.be.true; // receive fee but consumed by gas fee
 
       await expect(valve.connect(tester1).cancelTransfer(exId)).to.be.revertedWith("Invalid");
     });
@@ -146,9 +162,9 @@ describe("Valve1155", function () {
       await valve.connect(tester3).acceptTransfer(exId);
 
       const transfer = await valve.transfers(1);
-      expect(transfer.status).to.equal(wei(1));
+      expect(transfer.status).to.equal(TranferStatus.Sent);
       expect(await token.balanceOf(valve.address, 1)).to.equal(wei(0));
-      expect(await token.balanceOf(tester3.address, 1)).to.equal(wei(10**4));
+      expect(await token.balanceOf(tester3.address, 1)).to.equal(wei(10 ** 4));
       expect(await ethers.provider.getBalance(valve.address)).to.equal(fee.mul(2));
       expect(await feeRecipient.getBalance()).to.equal(beforeBalance.add(fee));
 
@@ -164,11 +180,11 @@ describe("Valve1155", function () {
       await valve.connect(tester4).acceptTransfer(exId);
 
       const transfer = await valve.transfers(2);
-      expect(transfer.status).to.equal(wei(1));
+      expect(transfer.status).to.equal(TranferStatus.Sent);
       expect(await token.balanceOf(valve.address, 2)).to.equal(wei(0));
       expect(await token.balanceOf(valve.address, 3)).to.equal(wei(0));
       expect(await token.balanceOf(tester4.address, 2)).to.equal(wei(1));
-      expect(await token.balanceOf(tester4.address, 3)).to.equal(wei(10**4));
+      expect(await token.balanceOf(tester4.address, 3)).to.equal(wei(10 ** 4));
       expect(await ethers.provider.getBalance(valve.address)).to.equal(fee.mul(1));
       expect(await feeRecipient.getBalance()).to.equal(beforeBalance.add(fee));
 
@@ -185,10 +201,38 @@ describe("Valve1155", function () {
       await expect(valve.connect(tester5).acceptTransfer(exId)).to.be.revertedWith("Invalid");
 
       const transfer = await valve.transfers(3);
-      expect(transfer.status).to.equal(wei(0));
+      expect(transfer.status).to.equal(TranferStatus.Init);
       expect(await ethers.provider.getBalance(valve.address)).to.equal(fee.mul(1));
 
       await valve.connect(tester1).cancelTransfer(exId);
+    });
+
+    it("create directly", async () => {
+      const beforeBalance = await feeRecipient.getBalance();
+      await valve
+        .connect(tester1)
+        .createTransfer(token.address, tester2.address, [0], [wei(10 ** 4)], tokenData, true, { value: fee });
+      timestamp = await getLatestBlockTimestamp();
+
+      expect(await token.balanceOf(valve.address, 0)).to.equal(0);
+      expect(await token.balanceOf(tester2.address, 0)).to.equal(wei(10 ** 4));
+
+      const transfer = await valve.getTransfer(4);
+      const exId = keccak256(solidityPack(["address", "uint256"], [tester1.address, wei(4)]));
+      expect(transfer.id).to.equal(wei(4));
+      expect(transfer.token).to.equal(token.address);
+      expect(transfer.from).to.equal(tester1.address);
+      expect(transfer.to).to.equal(tester2.address);
+      expect(transfer.tokenIds[0]).to.equal(wei(0));
+      expect(transfer.amounts[0]).to.equal(wei(10 ** 4));
+      expect(transfer.expireAt).to.equal(wei(validDuration.toNumber() + timestamp));
+      expect(transfer.status).to.equal(TranferStatus.Sent);
+      expect(transfer.exId).to.equal(exId);
+
+      expect(await valve.transferCreators(tester1.address, 4)).to.equal(wei(4));
+      expect(await valve.transferInfo(exId)).to.equal(wei(4));
+      expect(await ethers.provider.getBalance(valve.address)).to.equal(0);
+      expect(await feeRecipient.getBalance()).to.equal(beforeBalance.add(fee));
     });
   });
 });

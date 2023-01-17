@@ -9,6 +9,8 @@ import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
+import "hardhat/console.sol";
+
 contract Valve is Initializable, OwnableUpgradeable, ReentrancyGuardUpgradeable, PausableUpgradeable {
     using SafeERC20 for IERC20;
 
@@ -48,6 +50,7 @@ contract Valve is Initializable, OwnableUpgradeable, ReentrancyGuardUpgradeable,
         address to,
         uint256 amount,
         uint256 expireAt,
+        TransferStatus status,
         bytes32 exId
     );
     event TransferAccepted(uint256 id, bytes32 exId);
@@ -146,17 +149,49 @@ contract Valve is Initializable, OwnableUpgradeable, ReentrancyGuardUpgradeable,
     function createTransfer(
         IERC20 token,
         address to,
-        uint256 amount
+        uint256 amount,
+        bool isDirect
     ) external payable nonReentrant whenNotPaused {
         uint256 realAmount = msg.value;
-        if (address(token) == address(0)) {
-            // eth
-            require(msg.value > 0, "No eth");
+        TransferStatus status;
+        if (isDirect) {
+            if (address(token) == address(0)) {
+                // send eth
+                require(msg.value > 0, "No eth");
+                uint256 feeAmount = (msg.value * feePercent) / MULTIPLIER;
+                uint256 restAmount = msg.value - feeAmount;
+
+                to.call{ value: restAmount }("");
+
+                if (feeAmount > 0) {
+                    feeRecipient.call{ value: feeAmount }("");
+                }
+            } else {
+                // send token
+                realAmount = amount;
+                uint256 feeAmount = (amount * feePercent) / MULTIPLIER;
+                uint256 restAmount = amount - feeAmount;
+
+                token.safeTransferFrom(msg.sender, to, restAmount);
+
+                if (feeAmount > 0) {
+                    token.safeTransferFrom(msg.sender, feeRecipient, feeAmount);
+                }
+            }
+
+            status = TransferStatus.Sent;
         } else {
-            // erc20
-            uint256 prevBalance = token.balanceOf(address(this));
-            token.safeTransferFrom(msg.sender, address(this), amount);
-            realAmount = token.balanceOf(address(this)) - prevBalance;
+            if (address(token) == address(0)) {
+                // eth
+                require(msg.value > 0, "No eth");
+            } else {
+                // erc20
+                uint256 prevBalance = token.balanceOf(address(this));
+                token.safeTransferFrom(msg.sender, address(this), amount);
+                realAmount = token.balanceOf(address(this)) - prevBalance;
+            }
+
+            status = TransferStatus.Init;
         }
 
         uint256 id = transfers.length;
@@ -170,7 +205,7 @@ contract Valve is Initializable, OwnableUpgradeable, ReentrancyGuardUpgradeable,
                 to,
                 realAmount,
                 block.timestamp + validDuration,
-                TransferStatus.Init,
+                status,
                 exId
             )
         );
@@ -178,7 +213,7 @@ contract Valve is Initializable, OwnableUpgradeable, ReentrancyGuardUpgradeable,
         transferReceivers[to].push(id);
         transferInfo[exId] = id;
 
-        emit NewTransfer(msg.sender, id, token, to, realAmount, block.timestamp + validDuration, exId);
+        emit NewTransfer(msg.sender, id, token, to, realAmount, block.timestamp + validDuration, status, exId);
     }
 
     /**

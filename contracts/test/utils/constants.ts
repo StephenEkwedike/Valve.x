@@ -20,6 +20,11 @@ export const PRECISE_UNIT = constants.WeiPerEther;
 export const ETH_ADDRESS = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
 export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
+export enum TranferStatus {
+  Init,
+  Sent,
+  Cancelled
+}
 
 export const ether = (amount: number | string): BigNumber => {
   const weiString = ethers.utils.parseEther(amount.toString());
