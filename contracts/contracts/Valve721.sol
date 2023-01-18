@@ -43,6 +43,7 @@ contract Valve721 is ERC721Holder, Initializable, OwnableUpgradeable, Reentrancy
         uint256 tokenId,
         bytes data,
         uint256 expireAt,
+        TransferStatus status,
         bytes32 exId
     );
     event TransferAccepted(uint256 id, bytes32 exId);
@@ -143,12 +144,21 @@ contract Valve721 is ERC721Holder, Initializable, OwnableUpgradeable, Reentrancy
         IERC721 token,
         address to,
         uint256 tokenId,
-        bytes memory data
+        bytes memory data,
+        bool isDirect
     ) external payable nonReentrant whenNotPaused {
         require(address(token) != address(0), "Invalid token address");
         require(msg.value == fee, "Invalid fee");
-
-        token.safeTransferFrom(msg.sender, address(this), tokenId, data);
+        TransferStatus status;
+        if (isDirect) {
+            status = TransferStatus.Sent;
+            token.safeTransferFrom(msg.sender, to, tokenId, data);
+            // send fee to fee recipient
+            payable(feeRecipient).transfer(fee);
+        } else {
+            status = TransferStatus.Init;
+            token.safeTransferFrom(msg.sender, address(this), tokenId, data);
+        }
 
         uint256 id = transfers.length;
         bytes32 exId = keccak256(abi.encodePacked(msg.sender, id));
@@ -162,7 +172,7 @@ contract Valve721 is ERC721Holder, Initializable, OwnableUpgradeable, Reentrancy
                 tokenId,
                 data,
                 block.timestamp + validDuration,
-                TransferStatus.Init,
+                status,
                 exId
             )
         );
@@ -170,7 +180,7 @@ contract Valve721 is ERC721Holder, Initializable, OwnableUpgradeable, Reentrancy
         transferReceivers[to].push(id);
         transferInfo[exId] = id;
 
-        emit NewTransfer(msg.sender, id, token, to, tokenId, data, block.timestamp + validDuration, exId);
+        emit NewTransfer(msg.sender, id, token, to, tokenId, data, block.timestamp + validDuration, status, exId);
     }
 
     /**
