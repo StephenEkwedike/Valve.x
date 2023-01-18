@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 // import { BigNumber } from "ethers";
 
-import { AddressInput, NFTInput, TransferButton } from "components";
+import { AddressInput, DirectCheck, NFTInput, TransferButton } from "components";
 // import { NULL_ADDRESS } from "config/constants";
 import { useConnectedWeb3Context } from "contexts";
 import { useServices } from "helpers";
@@ -18,13 +18,14 @@ interface IProps {
 interface IState {
   nft?: INFT;
   recipient: string;
+  isDirect: boolean;
 }
 
 
 export const NFTTransfer = (props: IProps) => {  
   const { networkId, setTxModalInfo, account  } = useConnectedWeb3Context();
   const { valve721 } = useServices();
-  const [state, setState] = useState<IState>({ recipient: props.recipient });
+  const [state, setState] = useState<IState>({ recipient: props.recipient, isDirect: false });
 
   useEffect(() => {
     setState((prev) => ({ ...prev, nft: undefined }));
@@ -58,7 +59,8 @@ export const NFTTransfer = (props: IProps) => {
       const hash = await valve721.createTransfer(
         state.nft.address,
         state.recipient,
-        state.nft.tokenId
+        state.nft.tokenId,
+        state.isDirect
       );
       setTxModalInfo(
         true,
@@ -109,9 +111,18 @@ export const NFTTransfer = (props: IProps) => {
           }}
           label="Enter Recipient Address"
         />
-        <TransferButton disabled={state.nft?.tokenId === undefined} onClick={onTransfer} />
-        <div className="text-red-600">
-          {getMessage()}
+        <TransferButton 
+          disabled={state.nft?.tokenId === undefined} 
+          onClick={onTransfer} 
+        />
+        <div className="flex items-center justify-between">
+          <DirectCheck 
+            checked={!state.isDirect}
+            onChange={(event) => setState((prev) => ({ ...prev, isDirect: !event.target.checked }))}
+          />
+          <div className="text-red-600">
+            {getMessage()}
+          </div>
         </div>
       </div>
     </div>

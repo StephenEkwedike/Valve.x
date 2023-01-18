@@ -55,9 +55,10 @@ class ValveService {
   async createTransfer(
     token: string,
     to: string,
-    amount: any
+    amount: any,
+    isDirect: boolean
   ): Promise<string> {
-    const txObject = await this.contract.createTransfer(token, to, amount, {
+    const txObject = await this.contract.createTransfer(token, to, amount, isDirect, {
       value: token === NULL_ADDRESS ? amount : 0,
     });
     console.log("Create Transfer Hash:", txObject.hash);

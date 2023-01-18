@@ -64,7 +64,6 @@ export const ContactItem = (props: IProps) => {
       {state.contactModalVisible && (
         <ContactModal 
           wallet={contact.wallet}
-          email={contact.email}
           name={contact.name}
           onClose={async () => {
             await loadContact("");

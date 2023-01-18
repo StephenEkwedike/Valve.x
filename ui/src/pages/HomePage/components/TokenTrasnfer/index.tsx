@@ -3,7 +3,7 @@ import { BigNumber } from "ethers";
 import { ArrowDownIcon } from "@heroicons/react/solid";
 import { toast } from "react-toastify";
 
-import { AddressInput, TransferButton, TokenInput } from "components";
+import { AddressInput, TransferButton, TokenInput, DirectCheck } from "components";
 import { IToken } from "types/types";
 import { ZERO, NULL_ADDRESS } from "config/constants";
 import { useConnectedWeb3Context } from "contexts";
@@ -20,10 +20,11 @@ interface IState {
   token?: IToken;
   amount: BigNumber;
   recipient: string;
+  isDirect: boolean;
 }
 
 export const TokenTransfer = (props: IProps) => {
-  const [state, setState] = useState<IState>({ amount: ZERO, recipient: props.recipient });  
+  const [state, setState] = useState<IState>({ amount: ZERO, recipient: props.recipient, isDirect: false });  
   const { networkId, setTxModalInfo, account } = useConnectedWeb3Context();
   const { valve } = useServices();
   const { balance } = useTokenBalance(state.token?.address || NULL_ADDRESS);
@@ -63,7 +64,8 @@ export const TokenTransfer = (props: IProps) => {
       const hash = await valve.createTransfer(
         state.token.address,
         state.recipient,
-        state.amount
+        state.amount,
+        state.isDirect
       );
       setTxModalInfo(
         true,
@@ -71,8 +73,7 @@ export const TokenTransfer = (props: IProps) => {
         "Please wait until transaction is confirmed",
         hash
       );
-      const waitResp = await valve.provider.waitForTransaction(hash).on("NewTransfer");
-      console.log({ waitResp });
+      await valve.provider.waitForTransaction(hash).on("NewTransfer");
 
       await props.onReload();
 
@@ -126,9 +127,18 @@ export const TokenTransfer = (props: IProps) => {
           }}
           label="Enter Recipient Address"
         />
-        <TransferButton disabled={getMessage() !== ""} onClick={onTransfer} />
-        <div className="text-red-600">
-          {getMessage()}
+        <TransferButton 
+          disabled={getMessage() !== ""} 
+          onClick={onTransfer} 
+        />
+        <div className="flex items-center justify-between">
+          <DirectCheck 
+            checked={!state.isDirect}
+            onChange={(event) => setState((prev) => ({ ...prev, isDirect: !event.target.checked }))}
+          />
+          <div className="text-red-600">
+            {getMessage()}
+          </div>
         </div>
       </div>
     </div>
