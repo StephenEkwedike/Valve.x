@@ -1,5 +1,5 @@
 {
-  "name": "valve-x-contracts",
+  "name": "valv-fi-contracts",
   "version": "1.0.0",
   "dependencies": {
     "@openzeppelin/contracts": "^4.1.0",

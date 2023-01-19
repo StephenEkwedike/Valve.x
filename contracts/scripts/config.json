@@ -2,36 +2,50 @@
   "mainnet": {
     "feeRecipient": "0x4003ECF65560a29C937cE9D7C4F2B0F5451E5E86",
     "feePercent": 59,
-    "validDuration": 259200
+    "validDuration": 259200,
+    "erc721Fee": "0.001",
+    "erc1155Fee": "0.001"
   },
   "bsc": {
     "feeRecipient": "0x4003ECF65560a29C937cE9D7C4F2B0F5451E5E86",
     "feePercent": 59,
-    "validDuration": 259200
+    "validDuration": 259200,
+    "erc721Fee": "0.01",
+    "erc1155Fee": "0.01"
   },
   "matic": {
     "feeRecipient": "0x4003ECF65560a29C937cE9D7C4F2B0F5451E5E86",
     "feePercent": 59,
-    "validDuration": 259200
+    "validDuration": 259200,
+    "erc721Fee": "1",
+    "erc1155Fee": "1"
   },
   "avax": {
     "feeRecipient": "0x4003ECF65560a29C937cE9D7C4F2B0F5451E5E86",
     "feePercent": 59,
-    "validDuration": 259200
+    "validDuration": 259200,
+    "erc721Fee": "0.1",
+    "erc1155Fee": "0.1"
   },
   "ftm": {
     "feeRecipient": "0x4003ECF65560a29C937cE9D7C4F2B0F5451E5E86",
     "feePercent": 59,
-    "validDuration": 259200
+    "validDuration": 259200,
+    "erc721Fee": "10",
+    "erc1155Fee": "10"
   },
   "optimism": {
     "feeRecipient": "0x4003ECF65560a29C937cE9D7C4F2B0F5451E5E86",
     "feePercent": 59,
-    "validDuration": 259200
+    "validDuration": 259200,
+    "erc721Fee": "1",
+    "erc1155Fee": "1"
   },
   "bsct": {
     "feeRecipient": "0xCa3A16281b4dfBe8991BCD4848aF3E6Be56AC496",
     "feePercent": 59,
-    "validDuration": 300
+    "validDuration": 259200,
+    "erc721Fee": "0.01",
+    "erc1155Fee": "0.01"
   }
 }

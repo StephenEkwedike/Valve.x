@@ -73,7 +73,7 @@ const config: HardhatUserConfig = {
     },
     bsct: {
       accounts: [PRIVATEKEY],
-      url: "https://data-seed-prebsc-1-s1.binance.org:8545/",
+      url: "https://data-seed-prebsc-1-s3.binance.org:8545/",
       chainId: chainIds.bsct,
     },
     mainnet: {

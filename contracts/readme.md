@@ -1,4 +1,4 @@
-# Valve-Contracts
+# VALV.FI-Contracts
 
 ## BSC Testnet tokens
 
@@ -12,7 +12,9 @@
 - BTC: https://testnet.bscscan.com/address/0x8c0640134B0C75E45DB79449a147736C020D09ac
 - FTM: https://testnet.bscscan.com/address/0x64D5a9B640414312Dbf50e7153070FFE0CffB910
 
-- Valve: https://testnet.bscscan.com/address/0x7f57C43f677621219271094A41AbeA71bFE96856
+- Valve: https://testnet.bscscan.com/address/0x6f4Fa6626eA6aa11007849d0030b65d05aFDAed4
+- Valve721: https://testnet.bscscan.com/address/0x0d45783b56a894afAad0209ed5ae6409254d3EDF
+- Valve1155: https://testnet.bscscan.com/address/0xaD6203585d29193022b4B260ce0505eE6407eF8b
 - Multicall2: https://testnet.bscscan.com/address/0x62dDb8449123CF925137632ca214E8Be6Ec92b5e
 
 ## BSC mainnet
