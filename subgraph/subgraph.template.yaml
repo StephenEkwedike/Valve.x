@@ -22,7 +22,7 @@ dataSources:
         - name: Valve
           file: ./abis/Valve.json
       eventHandlers:
-        - event: NewTransfer(address,uint256,address,address,uint256,uint256,bytes32)
+        - event: NewTransfer(address,uint256,address,address,uint256,uint256,uint8,bytes32)
           handler: handleNewTransfer
         - event: TransferAccepted(uint256,bytes32)
           handler: handleTransferAccepted
@@ -49,7 +49,7 @@ dataSources:
         - name: Valve721
           file: ./abis/Valve721.json
       eventHandlers:
-        - event: NewTransfer(address,uint256,address,address,uint256,bytes,uint256,bytes32)
+        - event: NewTransfer(address,uint256,address,address,uint256,bytes,uint256,uint8,bytes32)
           handler: handleValve721NewTransfer
         - event: TransferAccepted(uint256,bytes32)
           handler: handleValve721TransferAccepted
@@ -76,7 +76,7 @@ dataSources:
         - name: Valve1155
           file: ./abis/Valve1155.json
       eventHandlers:
-        - event: NewTransfer(address,uint256,address,address,uint256[],uint256[],bytes,uint256,bytes32)
+        - event: NewTransfer(address,uint256,address,address,uint256[],uint256[],bytes,uint256,uint8,bytes32)
           handler: handleValve1155NewTransfer
         - event: TransferAccepted(uint256,bytes32)
           handler: handleValve1155TransferAccepted

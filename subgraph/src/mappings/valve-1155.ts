@@ -8,8 +8,20 @@ import {
 import { Transfer } from "../../generated/schema"
 import { mapTokenType, mapTransferStatus, TokenType, TransferStatus } from "../enums"
 import { getOrCreateToken } from "../models/Token"
-import { increaseFromCount, increaseToCount, increaseAcceptedCount } from "../models/User"
-import { increaseAccepted, increaseCancelled, increaseERC1155, increaseTransfer } from "../models/Overview"
+import { 
+  increaseFromCount, 
+  increaseToCount, 
+  increaseAcceptedCount, 
+  increaseDirectFromCount, 
+  increaseDirectToCount 
+} from "../models/User"
+import { 
+  increaseAccepted, 
+  increaseCancelled, 
+  increaseDirect, 
+  increaseERC1155, 
+  increaseTransfer 
+} from "../models/Overview"
 
 export function handleValve1155NewTransfer(
   event: Valve1155NewTransferEvent
@@ -17,12 +29,20 @@ export function handleValve1155NewTransfer(
   increaseERC1155()
   increaseTransfer()
 
+  let isDirect = false
+  if (event.params.status === TransferStatus.Sent) {
+    isDirect = true
+    increaseDirectFromCount(event.params.from)
+    increaseDirectToCount(event.params.to)
+    increaseDirect()
+  }
+
   let transfer = new Transfer(
-    mapTokenType(TokenType.ERC1155) + '-' + event.params.tid.toString()
+    mapTokenType(TokenType.ERC1155) + '-' + event.params.tId.toString()
   )
   
-  transfer.tId = event.params.tid
-  transfer.status = mapTransferStatus(TransferStatus.Init)
+  transfer.tId = event.params.tId
+  transfer.status = mapTransferStatus(event.params.status)
   transfer.token = getOrCreateToken(event.params.token, mapTokenType(TokenType.ERC1155)).id
   transfer.from = increaseFromCount(event.params.from).id
   transfer.to = increaseToCount(event.params.to).id
@@ -30,6 +50,7 @@ export function handleValve1155NewTransfer(
   transfer.amounts = event.params.amounts
   transfer.tokenIds = event.params.tokenIds
   transfer.expireAt = event.params.expireAt
+  transfer.isDirect = isDirect
   transfer.createTimestamp = event.block.timestamp
   transfer.createHash = event.transaction.hash
 
@@ -41,7 +62,7 @@ export function handleValve1155TransferAccepted(
 ): void {
   increaseAccepted()
 
-  let transfer = Transfer.load(mapTokenType(TokenType.ERC1155) + '-' + event.params.tid.toString())
+  let transfer = Transfer.load(mapTokenType(TokenType.ERC1155) + '-' + event.params.tId.toString())
 
   if(transfer){
     increaseAcceptedCount(Address.fromString(transfer.to))
@@ -59,7 +80,7 @@ export function handleValve1155TransferCancelled(
 ): void {
   increaseCancelled()
   
-  let transfer = Transfer.load(mapTokenType(TokenType.ERC1155) + '-' + event.params.tid.toString())
+  let transfer = Transfer.load(mapTokenType(TokenType.ERC1155) + '-' + event.params.tId.toString())
   
   if(transfer){
     transfer.status = mapTransferStatus(TransferStatus.Cancelled)

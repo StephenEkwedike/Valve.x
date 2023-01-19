@@ -11,7 +11,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "tid",
+        "name": "tId",
         "type": "uint256"
       },
       {
@@ -49,6 +49,12 @@
         "internalType": "uint256",
         "name": "expireAt",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "enum Valve1155.TransferStatus",
+        "name": "status",
+        "type": "uint8"
       },
       {
         "indexed": false,
@@ -104,7 +110,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "tid",
+        "name": "tId",
         "type": "uint256"
       },
       {
@@ -123,7 +129,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "tid",
+        "name": "tId",
         "type": "uint256"
       },
       {
@@ -207,6 +213,11 @@
         "internalType": "bytes",
         "name": "data",
         "type": "bytes"
+      },
+      {
+        "internalType": "bool",
+        "name": "isDirect",
+        "type": "bool"
       }
     ],
     "name": "createTransfer",
@@ -254,7 +265,7 @@
         "components": [
           {
             "internalType": "uint256",
-            "name": "tid",
+            "name": "id",
             "type": "uint256"
           },
           {
@@ -332,7 +343,7 @@
         "components": [
           {
             "internalType": "uint256",
-            "name": "tid",
+            "name": "id",
             "type": "uint256"
           },
           {
@@ -422,7 +433,7 @@
         "components": [
           {
             "internalType": "uint256",
-            "name": "tid",
+            "name": "id",
             "type": "uint256"
           },
           {
@@ -503,7 +514,7 @@
         "components": [
           {
             "internalType": "uint256",
-            "name": "tid",
+            "name": "id",
             "type": "uint256"
           },
           {
@@ -589,7 +600,7 @@
         "components": [
           {
             "internalType": "uint256",
-            "name": "tid",
+            "name": "id",
             "type": "uint256"
           },
           {
@@ -684,7 +695,7 @@
         "components": [
           {
             "internalType": "uint256",
-            "name": "tid",
+            "name": "id",
             "type": "uint256"
           },
           {
@@ -1008,7 +1019,7 @@
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "tid",
+        "name": "id",
         "type": "uint256"
       },
       {

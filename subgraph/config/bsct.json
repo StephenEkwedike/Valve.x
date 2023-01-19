@@ -1,7 +1,7 @@
 {
   "network": "chapel",
-  "addrValve": "0x7f57C43f677621219271094A41AbeA71bFE96856",
-  "addrValve721": "0x261F4EFb8C96C5ec13Ba446E8e1923aEd9dd0917",
-  "addrValve1155": "0xF3121eD0E4F5a5603217815c7f0212a799185879",
-  "startBlockNum": 22635334
+  "addrValve": "0x6f4Fa6626eA6aa11007849d0030b65d05aFDAed4",
+  "addrValve721": "0x0d45783b56a894afAad0209ed5ae6409254d3EDF",
+  "addrValve1155": "0xaD6203585d29193022b4B260ce0505eE6407eF8b",
+  "startBlockNum": 26469735
 }

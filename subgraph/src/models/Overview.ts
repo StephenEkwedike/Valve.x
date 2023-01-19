@@ -2,15 +2,16 @@ import { BigInt } from "@graphprotocol/graph-ts";
 import { Overview } from "../../generated/schema";
 
 export function getOrCreateOverview(): Overview {
-  let overview = Overview.load("valve-overview")
+  let overview = Overview.load("valv.fi-overview")
   if (overview == null) {
-    overview = new Overview("valve-overview")
+    overview = new Overview("valv.fi-overview")
     overview.erc1155TokenCount = BigInt.fromI32(0)
     overview.erc721TokenCount = BigInt.fromI32(0)
     overview.erc20TokenCount = BigInt.fromI32(0)
     overview.transferCount = BigInt.fromI32(0)
     overview.totalCancelled = BigInt.fromI32(0)
     overview.totalAccepted = BigInt.fromI32(0)
+    overview.totalDirect = BigInt.fromI32(0)
     overview.save()
   }
   return overview
@@ -49,4 +50,10 @@ export function increaseCancelled(): void {
   let overview = getOrCreateOverview()
   overview.totalCancelled = overview.totalCancelled.plus(BigInt.fromI32(1))
   overview.save() 
+}
+
+export function increaseDirect(): void {
+  let overview = getOrCreateOverview()
+  overview.totalDirect = overview.totalDirect.plus(BigInt.fromI32(1))
+  overview.save()
 }

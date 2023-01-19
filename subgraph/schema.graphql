@@ -23,6 +23,7 @@ type Transfer @entity {
   to: User!
   token: Token!
   expireAt: BigInt!
+  isDirect: Boolean!
   createTimestamp: BigInt!
   createHash: Bytes!
   acceptTimestamp: BigInt
@@ -39,6 +40,8 @@ type User @entity {
   fromCount: BigInt!
   toCount: BigInt!
   acceptedCount: BigInt!
+  directFromCount: BigInt!
+  directToCount: BigInt!
 }
 
 type Token @entity {
@@ -56,4 +59,5 @@ type Overview @entity {
   transferCount: BigInt!
   totalAccepted: BigInt!
   totalCancelled: BigInt!
+  totalDirect: BigInt!
 }
