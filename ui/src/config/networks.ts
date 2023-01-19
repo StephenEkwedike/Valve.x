@@ -28,11 +28,11 @@ export const networks: { [K in NetworkId]: INetwork } = {
     label: "Binance Testnet",
     symbol: "BNB",
     icon: "/assets/tokens/bnb.png",
-    url: "https://data-seed-prebsc-1-s1.binance.org:8545/",
+    url: "https://data-seed-prebsc-1-s3.binance.org:8545/",
     contracts: {
-      valve: "0x7f57C43f677621219271094A41AbeA71bFE96856",
-      valve721: "0x261F4EFb8C96C5ec13Ba446E8e1923aEd9dd0917",
-      valve1155: "0xF3121eD0E4F5a5603217815c7f0212a799185879",
+      valve: "0x6f4Fa6626eA6aa11007849d0030b65d05aFDAed4",
+      valve721: "0x0d45783b56a894afAad0209ed5ae6409254d3EDF",
+      valve1155: "0xaD6203585d29193022b4B260ce0505eE6407eF8b",
       multicall: "0x62dDb8449123CF925137632ca214E8Be6Ec92b5e",
     },
     etherscanUri: "https://testnet.bscscan.com/",
@@ -530,12 +530,20 @@ export const knownNFTs: { [K in KnownNFT] : IKnownNFTData } = {
     image: ["/assets/nfts/zion-lion.png"],
     collectionId: "zion-lion",
   },
- marco: {
+  marco: {
     name: "Marco NFT",
     symbol: "Marco",
     address: "0x978Ad4B703624ab33835D67D63512DFA5F1554F7",
     platformId: networkIds.bsct,
     image: ["/assets/nfts/marco.png"],
+    collectionId: "marco",
+  },
+  genesispass: {
+    name: "GenesisPass",
+    symbol: "RichRabbit",
+    address: "0x993F5971C8d337919e42116d19D7759aA46263C7",
+    platformId: networkIds.bsct,
+    image: ["/assets/nfts/genesispass.png"],
     collectionId: "marco",
   },
 };

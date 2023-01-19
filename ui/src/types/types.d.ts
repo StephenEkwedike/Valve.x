@@ -71,7 +71,8 @@ export type KnownNFT =
   | "valhalla"
   | "doodle"
   | "zionlions"
-  | "marco";
+  | "marco"
+  | "genesispass";
 
 export interface IKnownNFTData {
   name: string;

@@ -4,8 +4,14 @@
     "inputs": [
       {
         "indexed": false,
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "indexed": false,
         "internalType": "uint256",
-        "name": "id",
+        "name": "tId",
         "type": "uint256"
       },
       {
@@ -31,6 +37,12 @@
         "internalType": "uint256",
         "name": "expireAt",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "enum Valve.TransferStatus",
+        "name": "status",
+        "type": "uint8"
       },
       {
         "indexed": false,
@@ -86,7 +98,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "id",
+        "name": "tId",
         "type": "uint256"
       },
       {
@@ -105,7 +117,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "id",
+        "name": "tId",
         "type": "uint256"
       },
       {
@@ -179,6 +191,11 @@
         "internalType": "uint256",
         "name": "amount",
         "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "isDirect",
+        "type": "bool"
       }
     ],
     "name": "createTransfer",

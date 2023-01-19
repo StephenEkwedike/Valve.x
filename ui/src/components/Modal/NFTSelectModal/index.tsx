@@ -6,6 +6,7 @@ import { useConnectedWeb3Context } from "contexts";
 import { useNFTBalances, useNFTItems } from "helpers";
 import { INFT, KnownNFT } from "types/types";
 import { DEFAULT_NETWORK_ID, ZERO } from "config/constants";
+import { Spinner } from "components";
 
 interface IProps {
   nft?: INFT;
@@ -22,13 +23,17 @@ export const NFTSelectModal = (props: IProps) => {
     .map((key) => getNFT(key as KnownNFT))
     .filter((nft) => nft?.platformId === fNetworkId);
   const balances = useNFTBalances(nftCollections);
-  const nftItems = useNFTItems(nftCollection?.address);
+  const { loading, nfts: nftItems } = useNFTItems(nftCollection?.address);
 
   const renderNFTItems = () => {
     return (
       <div className="flex-1 min-h-[50vh] lg:min-h-fit divide-dark-800 text-white text-center">
         <div className="flex flex-wrap gap-2">
-          {nftItems?.length ? (
+          {loading ? ( 
+            <div className="w-full items-center">
+              <Spinner className="lds-ring--small" />
+            </div>
+          ) : nftItems.length > 0 ? (
             nftItems.map((nftItem) => {
               const isSelected = (nft?.tokenId || "") === nftItem.tokenId;
               return (

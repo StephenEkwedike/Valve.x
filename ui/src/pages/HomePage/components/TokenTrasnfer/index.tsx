@@ -73,7 +73,7 @@ export const TokenTransfer = (props: IProps) => {
         "Please wait until transaction is confirmed",
         hash
       );
-      await valve.provider.waitForTransaction(hash).on("NewTransfer");
+      await valve.provider.waitForTransaction(hash);
 
       await props.onReload();
 

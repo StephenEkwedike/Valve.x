@@ -3,36 +3,43 @@ import axios from "axios";
 
 import { INFT } from "types/types";
 import { useConnectedWeb3Context } from "contexts";
+import { API_URL } from "config/constants";
 
+interface IState {
+  nfts: INFT[];
+  loading: boolean;
+}
 
 export const useNFTItems = (propsNFTAddr?: string) => {
-  const [nfts, setNFTs] = useState<INFT[]>();
+  const [state, setState] = useState<IState>({ nfts: [], loading: false });
 
   const { networkId, account } = useConnectedWeb3Context();
 
   useEffect(() => {
     const fetchNFTs = async () => {
       if(!propsNFTAddr || !account) {
-        setNFTs(undefined);
+        setState((prev) => ({ loading: false, nfts: [] }));
         return;
       }
       try {
-        const results = (await axios.get(`http://localhost:5000/api/nfts/${account}/${networkId}/${propsNFTAddr}`)).data;
-        setNFTs(() => 
-          results.map((item: any) => ({
+        setState((prev) => ({ ...prev, loading: true }));
+        const results = (await axios.get(`${API_URL}/nfts/${account}/${networkId}/${propsNFTAddr}`)).data;
+        setState(() => ({
+          nfts: results.map((item: any) => ({
             address: item.tokenAddress,
             symbol: item.symbol,
             name: item.name,
             image: [item.metadata?.image || ""],
             tokenId: item.tokenId,
-          }))
-        )
+          })),
+          loading: false
+        }))
       } catch (error) {
-        setNFTs(undefined);
+        setState((prev) => ({ loading: false, nfts: [] }));
       }
     };
     fetchNFTs();
   }, [account, networkId, propsNFTAddr])
   
-  return nfts;
+  return state;
 }

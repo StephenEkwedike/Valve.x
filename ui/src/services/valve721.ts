@@ -58,11 +58,12 @@ class Valve721Service {
     token:string,
     to: string,
     tokenId: number,
+    isDirect: boolean,
     data?: string,
   ): Promise<string> {
     if (!data) data="0x00";
     const fee = await this.getFee();
-    const txObject = await this.contract.createTransfer(token, to, tokenId, data, {
+    const txObject = await this.contract.createTransfer(token, to, tokenId, data, isDirect, {
       value: fee
     });
     console.log("Create Transfer Hash:", txObject.hash);
