@@ -160,6 +160,7 @@ function DrawerAppBar(props) {
               ))}
             </Box>
             <Button
+              href={process.env.REACT_APP_APP_URL}
               sx={{
                 background:
                   "linear-gradient(94.32deg, #007AFF 1.74%, #A9148B 96.61%)",
