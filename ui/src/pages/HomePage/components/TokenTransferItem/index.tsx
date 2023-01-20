@@ -170,12 +170,12 @@ export const TokenTransferItem = (props: IProps) => {
             </div>
           </div>
         </div>
-        {state.contactModalVisible && (
+        {/* {state.contactModalVisible && (
           <ContactModal 
             wallet={account.toLowerCase() === tokenData.to.toLowerCase() ? tokenData.from : tokenData.to}
             onClose={() => setState((prev) => ({ ...prev, contactModalVisible: false }))} 
           />
-        )}
+        )} */}
       </>
     );
   };

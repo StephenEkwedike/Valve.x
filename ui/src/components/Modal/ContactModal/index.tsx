@@ -2,30 +2,40 @@ import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { XIcon } from "@heroicons/react/solid";
+import * as yup from "yup";
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import { isAddress } from "utils/tools";
 import { useContacts } from "helpers";
 import { useConnectedWeb3Context } from "contexts";
+import { FormInput } from "components";
 
 interface IProps {
   wallet?: string;
-  email?: string;
   name?: string;
   onClose: () => void;
 }
 
 interface IFormData {
   wallet: string;
-  email: string;
   name: string;
 }
 
+const validationSchema = yup.object().shape({
+  wallet: yup.string().required("This field is required"),
+  name: yup.string().required("This field is required"),
+});
+
 export const ContactModal = (props: IProps) => {
-  const { wallet, email, name, onClose } = props;
+  const { wallet, name, onClose } = props;
   
   const { account, setTxModalInfo, library: provider } = useConnectedWeb3Context();
   const { postContact, loadContact } = useContacts();
-  const { register, handleSubmit } = useForm<IFormData>();
+  const { handleSubmit, control } = useForm<IFormData>({
+    mode: "onBlur",
+    resolver: yupResolver(validationSchema),
+    defaultValues: { wallet, name }
+  });
 
   const onSubmit: SubmitHandler<IFormData> = async (data) => {
     try {
@@ -44,13 +54,12 @@ export const ContactModal = (props: IProps) => {
       const msg = [
         account,
         data.wallet,
-        data.email,
         data.name,
         timestamp.toString(),
       ].join("-");
       const signatureHash = await signer.signMessage(msg);
   
-      setTxModalInfo(true, "Submitting");
+      setTxModalInfo(true, "Saving!");
       const isSuccess = await postContact({ ...data, user: account, signature: signatureHash, timestamp });
       await loadContact("");
   
@@ -81,27 +90,24 @@ export const ContactModal = (props: IProps) => {
           </div>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col text-white text-lg items-center md:p-4 p-2 gap-4 h-full border rounded border-dark-800 bg-[rgba(0,0,0,0.2)]">
-              <input
-                className="w-full bg-transparent border border-gray-500 rounded-2xl px-4 py-3 placeholder-low-emphesis focus:placeholder-primary focus:placeholder:text-low-emphesis"  
-                type="text" 
-                placeholder="Enter friend address"
-                {...register("wallet", {required: true, value: wallet})}
+              <FormInput
+                name="wallet"
+                label="Wallet"
+                type="text"
+                placeholder={"Enter a wallet"}
+                control={control}
+              />
+              <FormInput
+                name="name"
+                label="Friend name"
+                type="text"
+                placeholder={"Enter a name"}
+                control={control}
               />
               <input
-                className="w-full bg-transparent border border-gray-500 rounded-2xl px-4 py-3 placeholder-low-emphesis focus:placeholder-primary focus:placeholder:text-low-emphesis" 
-                type="email" 
-                placeholder="Enter friend email" 
-                {...register("email", {required: true, value: email})}
-              />
-              <input
-                className="w-full bg-transparent border border-gray-500 rounded-2xl px-4 py-3 placeholder-low-emphesis focus:placeholder-primary focus:placeholder:text-low-emphesis" 
-                type="text" 
-                placeholder="Enter friend name" 
-                {...register("name", {required: true, value: name})}
-              />
-              <input
-                className="text-white bg-blue-600 rounded-full px-6 py-2 disabled:bg-[#4F4E57] disabled:text-[#A5A1A1]" 
+                className="text-white bg-blue-600 rounded-xl px-4 w-36 py-2 disabled:bg-[#4F4E57] disabled:text-[#A5A1A1]" 
                 type="submit"
+                value="Save"
               />
             </div>
           </form>

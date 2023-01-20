@@ -172,12 +172,12 @@ export const NFTTransferItem = (props: IProps) => {
             </div>
           </div>
         </div>
-        {state.contactModalVisible && (
+        {/* {state.contactModalVisible && (
           <ContactModal 
             wallet={account.toLowerCase() === nftData.to.toLowerCase() ? nftData.from : nftData.to}
             onClose={() => setState((prev) => ({ ...prev, contactModalVisible: false }))} 
           />
-        )}
+        )} */}
       </>
     );
   };

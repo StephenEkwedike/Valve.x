@@ -37,7 +37,7 @@ export const ContactItem = (props: IProps) => {
           </div>
         </div>
         <div className="flex flex-row items-center justify-between">
-          <div className="text-blue-600 underline flex flex-row gap-2">
+          <div className="text-blue-600 flex underline flex-row gap-2">
             <div 
               className="select-none cursor-pointer"
               onClick={() => onTransfer(TokenType.Token, contact.wallet)}
@@ -51,14 +51,9 @@ export const ContactItem = (props: IProps) => {
               Send NFT
             </div>
           </div>
-          {/* <TrashIcon 
-            className="w-6 h-6 text-blue-600 cursor-pointer" 
-            onClick={async (event) => {
-              event.stopPropagation();
-              const [isOK] = await AlertConfirm("Are you sure?");
-              if (isOK) alert("Yes");
-            }}
-          /> */}
+          <div className="text-white underline cursor-pointer">
+            Edit contact
+          </div>
         </div>
       </div>
       {state.contactModalVisible && (
