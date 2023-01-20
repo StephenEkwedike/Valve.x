@@ -1,0 +1,7 @@
+{
+  "network": "matic",
+  "addrValve": "0x3F6066BcbA8ECe43369650Dd564b36380C1cC211",
+  "addrValve721": "0xF76E739009df2A2068D97bB72932A69635BBD7F3",
+  "addrValve1155": "0x129505b7D50cC1913edda331C0Ca6b40Ad026f38",
+  "startBlockNum": 38298172
+}

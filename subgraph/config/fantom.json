@@ -1,7 +1,7 @@
 {
-  "network": "mainnet",
-  "addrValve": "0x2364e841458051f04498b54cD65133A018C897B7",
+  "network": "fantom",
+  "addrValve": "0xF76E739009df2A2068D97bB72932A69635BBD7F3",
   "addrValve721": "0x129505b7D50cC1913edda331C0Ca6b40Ad026f38",
   "addrValve1155": "0xBA3CE31F255523421EAD1642793C44244188b5C3",
-  "startBlockNum": 16446092
+  "startBlockNum": 54066422
 }

@@ -1,0 +1,7 @@
+{
+  "network": "avalanche",
+  "addrValve": "0x50E06a532c89A2a68517dB8DbD8D8E25185534AD",
+  "addrValve721": "0xd5784474A853863B4A3E0Eb1216B3e826A19b58c",
+  "addrValve1155": "0xaf907209BfDF4d7F49De4667784b4bF74f67f000",
+  "startBlockNum": 25168885
+}

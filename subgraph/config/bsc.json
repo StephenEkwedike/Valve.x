@@ -1,7 +1,7 @@
 {
   "network": "bsc",
-  "addrValve": "0x1A2cF3BB19391a96aC06F6Bc2c5b42750E1b60D6",
-  "addrValve721": "",
-  "addrValve1155": "",
-  "startBlockNum": 0
+  "addrValve": "0xA6C4Dca896B156234aF2E62Df5374cc1379f0105",
+  "addrValve721": "0xB866bC67D6c30D8EBEa2e55FD7720Ac6DB9329dD",
+  "addrValve1155": "0xdb99DA9c64de85F821BD8d3074b478c9fd426554",
+  "startBlockNum": 24939366
 }
