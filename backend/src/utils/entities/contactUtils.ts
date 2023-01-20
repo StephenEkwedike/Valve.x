@@ -7,7 +7,6 @@ export const contactUtils = {
       id: entity.id,
       user: entity.user,
       wallet: entity.wallet,
-      email: entity.email,
       name: entity.name,
       timestamp: Number(entity.timestamp),
       signature: entity.signature,
@@ -23,8 +22,6 @@ export const contactUtils = {
     entity.wallet = item.wallet.toLowerCase();
 
     entity.id = `${entity.user}-${entity.wallet}`;
-
-    entity.email = item.email;
 
     entity.name = item.name;
     entity.timestamp = item.timestamp.toString();

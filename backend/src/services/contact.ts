@@ -15,10 +15,6 @@ export class ContactService {
         },
         {
           user: Raw(alias => `LOWER(${alias}) Like '%${user.toLowerCase()}%'`),
-          email: Raw(alias => `LOWER(${alias}) Like '%${search.toLowerCase()}%'`),
-        },
-        {
-          user: Raw(alias => `LOWER(${alias}) Like '%${user.toLowerCase()}%'`),
           name: Raw(alias => `LOWER(${alias}) Like '%${search.toLowerCase()}%'`),
         }
       ],
