@@ -24,10 +24,7 @@ export const ContactItem = (props: IProps) => {
 
   return (
     <>
-      <div 
-        className="py-4 gap-2 flex flex-col"
-        onClick={() => setState(() => ({ contactModalVisible: true }))}
-      >
+      <div className="py-4 gap-2 flex flex-col">
         <div className="flex flex-row justify-between">
           <div className="text-white">
             {contact.name} | {shortenAddress(contact.wallet)}
@@ -51,7 +48,10 @@ export const ContactItem = (props: IProps) => {
               Send NFT
             </div>
           </div>
-          <div className="text-white underline cursor-pointer">
+          <div 
+            className="text-white underline cursor-pointer"
+            onClick={() => setState(() => ({ contactModalVisible: true }))}
+          >
             Edit contact
           </div>
         </div>

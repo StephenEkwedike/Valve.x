@@ -32,7 +32,7 @@ export const ContactSection = (props: IProps) => {
             setState((prev) => ({ ...prev, contactModalVisible: true }))
           }}
         >
-          NewContact
+          Add Contact
         </button>
       </div>
       <SearchInput 
