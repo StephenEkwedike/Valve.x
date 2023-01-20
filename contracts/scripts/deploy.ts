@@ -47,7 +47,7 @@ async function main(): Promise<void> {
   await valve721.setFeeInfo(params.feeRecipient, ethers.utils.parseEther(params.erc721Fee));
   await valve721.setValidDuration(params.validDuration);
 
-  // Deploy the Valve721 contract for erc721 token
+  // Deploy the Valve1155 contract for erc1155 token
   const Valve1155 = await ethers.getContractFactory("Valve1155");
 
   const valve1155 = await upgrades.deployProxy(Valve1155, { initializer: "initialize" });
@@ -60,7 +60,7 @@ async function main(): Promise<void> {
 
   await waitSeconds(5);
 
-  // Verify Valve721 contract
+  // Verify Valve contract
   await hre.run("verify:verify", {
     address: valveImpl,
     contract: "contracts/Valve.sol:Valve",
