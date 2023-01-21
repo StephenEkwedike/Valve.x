@@ -50,7 +50,7 @@ export const networks: { [K in NetworkId]: INetwork } = {
       multicall: "0x87B45489F1cC9Cc8DB1D75AaaF094da1a6C433de",
     },
     etherscanUri: "https://bscscan.com/",
-    subgraph: "",
+    subgraph: "https://api.thegraph.com/subgraphs/name/nevermind0825/valv-fi-bsc",
   },
   [networkIds.mainnet]: {
     label: "Ethereum ",
@@ -64,7 +64,7 @@ export const networks: { [K in NetworkId]: INetwork } = {
       multicall: "0x87B45489F1cC9Cc8DB1D75AaaF094da1a6C433de",
     },
     etherscanUri: "https://etherscan.io/",
-    subgraph: "",
+    subgraph: "https://api.thegraph.com/subgraphs/name/nevermind0825/valv-fi-mainnet",
   },
   [networkIds.matic]: {
     label: "Polygon ",
@@ -78,7 +78,7 @@ export const networks: { [K in NetworkId]: INetwork } = {
       multicall: "0x87B45489F1cC9Cc8DB1D75AaaF094da1a6C433de",
     },
     etherscanUri: "https://polygonscan.com/",
-    subgraph: "",
+    subgraph: "https://api.thegraph.com/subgraphs/name/nevermind0825/valv-fi-polygon",
   },
   [networkIds.avax]: {
     label: "Avalanche ",
@@ -92,7 +92,7 @@ export const networks: { [K in NetworkId]: INetwork } = {
       multicall: "0x87B45489F1cC9Cc8DB1D75AaaF094da1a6C433de",
     },
     etherscanUri: "https://snowtrace.io/",
-    subgraph: "",
+    subgraph: "https://api.thegraph.com/subgraphs/name/nevermind0825/valv-fi-avalanche",
   },
   [networkIds.optimism]: {
     label: "Optimism ",
@@ -106,7 +106,7 @@ export const networks: { [K in NetworkId]: INetwork } = {
       multicall: "0x87B45489F1cC9Cc8DB1D75AaaF094da1a6C433de",
     },
     etherscanUri: "https://optimistic.etherscan.io/",
-    subgraph: "",
+    subgraph: "https://api.thegraph.com/subgraphs/name/nevermind0825/valv-fi-optimism",
   },
   [networkIds.ftm]: {
     label: "Fantom ",
@@ -120,7 +120,7 @@ export const networks: { [K in NetworkId]: INetwork } = {
       multicall: "0x87B45489F1cC9Cc8DB1D75AaaF094da1a6C433de",
     },
     etherscanUri: "https://ftmscan.com/",
-    subgraph: "",
+    subgraph: "https://api.thegraph.com/subgraphs/name/nevermind0825/valv-fi-fantom",
   },
 };
 
