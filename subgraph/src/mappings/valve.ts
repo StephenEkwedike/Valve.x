@@ -13,7 +13,8 @@ import {
   increaseToCount, 
   increaseAcceptedCount, 
   increaseDirectFromCount, 
-  increaseDirectToCount 
+  increaseDirectToCount, 
+  increaseCancelledCount
 } from "../models/User"
 import { 
   increaseAccepted, 
@@ -63,8 +64,8 @@ export function handleTransferAccepted(event: TransferAcceptedEvent): void {
     increaseAcceptedCount(Address.fromString(transfer.to))
 
     transfer.status = mapTransferStatus(TransferStatus.Sent)
-    transfer.createTimestamp = event.block.timestamp
-    transfer.createHash = event.transaction.hash
+    transfer.acceptTimestamp = event.block.timestamp
+    transfer.acceptHash = event.transaction.hash
     
     transfer.save()
   }
@@ -76,9 +77,11 @@ export function handleTransferCancelled(event: TransferCancelledEvent): void {
   let transfer = Transfer.load(mapTokenType(TokenType.ERC20) + '-' + event.params.tId.toString())
 
   if(transfer){
+    increaseCancelledCount(Address.fromString(transfer.from))
+
     transfer.status = mapTransferStatus(TransferStatus.Cancelled)
-    transfer.createTimestamp = event.block.timestamp
-    transfer.createHash = event.transaction.hash
+    transfer.cancelTimestamp = event.block.timestamp
+    transfer.cancelHash = event.transaction.hash
     
     transfer.save()
   }

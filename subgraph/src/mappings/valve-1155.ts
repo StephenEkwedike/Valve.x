@@ -13,7 +13,8 @@ import {
   increaseToCount, 
   increaseAcceptedCount, 
   increaseDirectFromCount, 
-  increaseDirectToCount 
+  increaseDirectToCount, 
+  increaseCancelledCount
 } from "../models/User"
 import { 
   increaseAccepted, 
@@ -83,6 +84,8 @@ export function handleValve1155TransferCancelled(
   let transfer = Transfer.load(mapTokenType(TokenType.ERC1155) + '-' + event.params.tId.toString())
   
   if(transfer){
+    increaseCancelledCount(Address.fromString(transfer.from))
+
     transfer.status = mapTransferStatus(TransferStatus.Cancelled)
     transfer.cancelTimestamp = event.block.timestamp
     transfer.cancelHash = event.transaction.hash

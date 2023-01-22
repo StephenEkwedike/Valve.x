@@ -40,6 +40,7 @@ type User @entity {
   fromCount: BigInt!
   toCount: BigInt!
   acceptedCount: BigInt!
+  cancelledCount: BigInt!
   directFromCount: BigInt!
   directToCount: BigInt!
 }

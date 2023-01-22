@@ -15,6 +15,7 @@ export function upsertUser(userAddress: Address): User {
   user.fromCount = BigInt.fromI32(0)
   user.toCount = BigInt.fromI32(0)
   user.acceptedCount = BigInt.fromI32(0)
+  user.cancelledCount = BigInt.fromI32(0)
   user.directFromCount = BigInt.fromI32(0)
   user.directToCount = BigInt.fromI32(0)
   user.save()
@@ -41,6 +42,14 @@ export function increaseToCount(userAddress: Address): User {
 export function increaseAcceptedCount(userAddress: Address): User {
   let user = getOrCreateUser(userAddress);
   user.acceptedCount = user.acceptedCount.plus(BigInt.fromI32(1))
+  user.save()
+
+  return user
+}
+
+export function increaseCancelledCount(userAddress: Address): User {
+  let user = getOrCreateUser(userAddress);
+  user.cancelledCount = user.cancelledCount.plus(BigInt.fromI32(1))
   user.save()
 
   return user
