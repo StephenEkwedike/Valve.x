@@ -17,7 +17,7 @@ export const DirectCheck = (props: IProps) => {
       />
       <label 
         htmlFor="checkbox-directly" 
-        className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+        className="ml-2 text-sm font-medium text-white"
       >
         2FA
       </label>

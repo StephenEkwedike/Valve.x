@@ -8,7 +8,7 @@ interface IProps {
 export const TabBar = (props: IProps) => {
   return (
     <div className="px-1 md:px-4 flex flex-row items-center justify-between">
-      <div className="flex gap-4">
+      <div className="flex gap-2">
         {["Transfer", "History", "Contact"].map((tab) => {
           let isSelected = true;
           
@@ -53,7 +53,7 @@ export const TabBar = (props: IProps) => {
                 }
                 props.onChange(hometab);
               }}
-              className={`leading-5 px-3 py-2 rounded-full cursor-pointer select-none text-white ${
+              className={`leading-5 px-3 py-1 rounded-full cursor-pointer select-none text-white ${
                 isSelected && "bg-blue-600"
               }`}
             >

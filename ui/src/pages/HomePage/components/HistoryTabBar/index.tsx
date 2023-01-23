@@ -7,7 +7,7 @@ interface IProps {
 
 export const HistoryTabBar = (props: IProps) => {
   return (
-    <div className="md:px-8 px-4">
+    <div className="px-4">
       <div className="flex gap-4">
         {["Sent", "Received"].map((tab) => {
           const isSelected = tab === props.tab;

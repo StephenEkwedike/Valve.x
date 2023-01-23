@@ -106,7 +106,7 @@ export const TokenTransfer = (props: IProps) => {
 
   return (
     <div>
-      <div className="relative flex flex-col items-center py-5">
+      <div className="relative flex flex-col items-center">
         <TokenInput
           amount={state.amount}
           token={state.token}
@@ -117,9 +117,9 @@ export const TokenTransfer = (props: IProps) => {
             setState((prev) => ({ ...prev, token }));
           }}
         />
-        <ArrowDownIcon className="absolute -bottom-5 bg-blue-600 rounded-full w-9 h-9 p-1 text-white" />
+        <ArrowDownIcon className="absolute -bottom-4 bg-blue-600 rounded-full w-8 h-8 p-1 text-white" />
       </div>
-      <div className="bg-dark-900 p-4 pt-12 rounded-b-[16px] flex flex-col gap-4">
+      <div className="bg-dark-900 p-4 pt-8 rounded-b-2xl flex flex-col gap-4">
         <AddressInput 
           value={state.recipient}
           onChange={(recipient) => {

@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-// import { BigNumber } from "ethers";
+// import { ArrowDownIcon } from "@heroicons/react/solid";
 
 import { AddressInput, DirectCheck, NFTInput, TransferButton } from "components";
-// import { NULL_ADDRESS } from "config/constants";
 import { useConnectedWeb3Context } from "contexts";
 import { useServices } from "helpers";
 import { INFT } from "types/types";
@@ -95,7 +94,7 @@ export const NFTTransfer = (props: IProps) => {
 
   return (
     <div>
-      <div className="flex flex-col items-center py-5">
+      <div className="flex flex-col items-center">
         <NFTInput
           nft={state.nft}
           onChangeNFT={(nft) => {
@@ -103,7 +102,7 @@ export const NFTTransfer = (props: IProps) => {
           }}
         />
       </div>
-      <div className="bg-dark-900 p-4 pt-12 rounded-b-[16px] flex flex-col gap-4">
+      <div className="bg-dark-900 p-4 rounded-b-2xl flex flex-col gap-4">
         <AddressInput 
           value={state.recipient}
           onChange={(recipient) => {

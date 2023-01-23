@@ -98,7 +98,7 @@ const HomePage = () => {
 
   return (
     <>
-      <div className="text-white md:text-6xl text-4xl font-bold text-center mb-8">Transfer</div>
+      <div className="text-white sm:text-4xl text-2xl font-bold text-center mb-4">Transfer</div>
       <TokenTypeToggle />
       <div className="w-full flex flex-col gap-3 pt-4 rounded-2xl shadow-md shadow-dark-1000 bg-base">
         <TabBar

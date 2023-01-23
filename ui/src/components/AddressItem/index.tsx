@@ -15,7 +15,7 @@ export const AddressItem = (props: IProps) => {
 
   return (
     <div
-      className={`inline-flex items-center justify-center lg:text-base text-sm text-primary ${className}`}
+      className={`inline-flex items-center justify-center text-sm text-primary ${className}`}
     >
       <p>{isYou ? "Your wallet" : shortenAddress(address)}</p>
       &nbsp;

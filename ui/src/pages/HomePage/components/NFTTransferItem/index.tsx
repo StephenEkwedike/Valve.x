@@ -118,42 +118,37 @@ export const NFTTransferItem = (props: IProps) => {
           onClick={() => setState((prev) => ({ ...prev, contactModalVisible: true }))}
         >
           <img 
-            src={nft.image[0]} 
-            // src={"/assets/nfts/shonen 1619.png"} 
+            // src={nft.image[0]} 
+            src={"/assets/nfts/shonen 1619.png"} 
             alt="img" 
-            className="rounded-xl w-20 sm:w-24 h-20 sm:h-24 m-auto" 
+            className="rounded-xl w-20 h-20 m-auto" 
           />
           <div className="flex-1 flex flex-col justify-between">
-            <div className="text-primary flex items-center text-sm sm:text-base">
+            <div className="text-primary flex items-center text-sm">
               {nft.symbol} # {nftData.tokenId.toString()}
             </div>
-            <div className="text-primary text-sm sm:text-base">
+            <div className="text-primary text-sm">
               From: <AddressItem address={nftData.from} />
             </div>
-            <div className="text-primary text-sm sm:text-base">
+            <div className="text-primary text-sm">
               To: <AddressItem address={nftData.to} />
             </div>
-            {timestamp < nftData.expireAt && (
-              <div className="text-primary text-sm sm:text-base">
-                Expire In {formatSeconds(nftData.expireAt - timestamp)}
-              </div>
-            )}
           </div>
 
-          <div className="flex flex-col items-end justify-between">
+          <div className="flex flex-col items-end gap-1 justify-between">
             {nftData.status === TransferStatus.Init &&
             timestamp < nftData.expireAt &&
             isReceiver ? (
               <button
-                className="text-higher-emphesis hover:bg-gradient-to-b hover:to-black/20 disabled:pointer-events-none disabled:opacity-40 !bg-gradient-to-r from-blue to-pink-600 hover:from-blue/80 hover:to-pink-600/80 focus:from-blue/80 focus:to-pink-600/80 active:from-blue/70 active:to-pink-600/70 focus:border-blue-700 px-2 sm:px-4 py-1 sm:text-base text-sm rounded-full"
+                className="text-higher-emphesis hover:bg-gradient-to-b hover:to-black/20 disabled:pointer-events-none disabled:opacity-40 !bg-gradient-to-r from-blue to-pink-600 hover:from-blue/80 hover:to-pink-600/80 focus:from-blue/80 focus:to-pink-600/80 active:from-blue/70 active:to-pink-600/70 focus:border-blue-700 px-2 sm:px-4 py-1 text-sm rounded-full"
                 onClick={onAccept}
               >
                 Accept
               </button>
             ) : null}
-            {nftData.status === TransferStatus.Init && isSender ? (
+            {true ? (
               <button
-                className="text-higher-emphesis hover:bg-gradient-to-b hover:to-black/20 disabled:pointer-events-none disabled:opacity-40 !bg-gradient-to-r from-blue to-pink-600 hover:from-blue/80 hover:to-pink-600/80 focus:from-blue/80 focus:to-pink-600/80 active:from-blue/70 active:to-pink-600/70 focus:border-blue-700 px-2 sm:px-4 py-1 sm:text-base text-sm rounded-full"
+                className="text-higher-emphesis hover:bg-gradient-to-b hover:to-black/20 disabled:pointer-events-none disabled:opacity-40 !bg-gradient-to-r from-blue to-pink-600 hover:from-blue/80 hover:to-pink-600/80 focus:from-blue/80 focus:to-pink-600/80 active:from-blue/70 active:to-pink-600/70 focus:border-blue-700 px-2 sm:px-4 py-1 text-sm rounded-full"
                 onClick={onCancel}
               >
                 Cancel
@@ -162,7 +157,7 @@ export const NFTTransferItem = (props: IProps) => {
             {nftData.status === TransferStatus.Sent ||
             nftData.status === TransferStatus.Cancelled ||
             (nftData.status === TransferStatus.Init && timestamp > nftData.expireAt) ? (
-              <div className="text-primary sm:text-base text-sm">
+              <div className="text-primary text-sm">
                 <span>
                   {nftData.status === TransferStatus.Sent
                     ? "Sent"
@@ -174,9 +169,14 @@ export const NFTTransferItem = (props: IProps) => {
                 <span>at {getTransferTimeStamp()}</span>
               </div>
             ) : null}
+            {nftData.status === TransferStatus.Init && timestamp < nftData.expireAt && (
+              <div className="text-primary text-sm">
+                Expire In {formatSeconds(nftData.expireAt - timestamp)}
+              </div>
+            )}
             <div className="text-right">
               <span
-                className="inline-flex items-center text-white text-center sm:text-base text-sm cursor-pointer rounded-full bg-blue-600 py-1 sm:px-8 px-2"
+                className="inline-flex items-center text-white text-center text-sm cursor-pointer rounded-full bg-blue-600 py-1 sm:px-6 px-2"
                 onClick={(event) => {
                   event.stopPropagation();
                   const link = `${window.location.origin}/transfer/${TokenType.NFT}/${nftData.exId}/${networkId}`;

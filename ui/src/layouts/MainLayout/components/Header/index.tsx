@@ -29,7 +29,9 @@ export const Header = () => {
   return (
     <>
       <div
-        className={`layout__main__header fixed z-30 inset-x-0 top-0`}
+        className={`layout__main__header fixed z-30 inset-x-0 top-0 ${
+          yPosition > 80 && "layout__main__header--blur"
+        }`}
       >
         <div className="h-full flex justify-between items-center px-4 sm:px-6 md:px-10">
           <Logo />

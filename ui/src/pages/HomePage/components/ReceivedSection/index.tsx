@@ -26,7 +26,7 @@ export const ReceivedSection = (props: IProps) => {
   }
 
   return (
-    <div className="pb-4 px-8">
+    <div className="pb-4 px-4">
       {loading && transferIds.length === 0 ? (
         <div className="flex items-center my-4 justify-center">
           <Spinner />

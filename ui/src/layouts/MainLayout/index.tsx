@@ -10,7 +10,7 @@ export const MainLayout = (props: {
   return (
     <div className="layout__main">
       <Header />
-      <div className="py-4 md:py-12 lg:py-[80px] px-2 mx-auto max-w-2xl w-full">
+      <div className="p-2 lg:py-4 mx-auto max-w-md w-full">
         <main>
           <SelectedTokenType>
             {props.children}

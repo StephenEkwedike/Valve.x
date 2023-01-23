@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { ContactModal } from "components";
 import { IContact } from "types/types"
-import { getTimeStr, shortenAddress } from "utils";
+import { getDateStr, getTimeStr, shortenAddress } from "utils";
 import { TokenType } from "utils/enums";
 
 interface IState {
@@ -30,7 +30,7 @@ export const ContactItem = (props: IProps) => {
             {contact.name} | {shortenAddress(contact.wallet)}
           </div>
           <div className="text-secondary">
-            at {getTimeStr(contact.timestamp / 1000)}
+            at {getDateStr(contact.timestamp / 1000)}
           </div>
         </div>
         <div className="flex flex-row items-center justify-between">
