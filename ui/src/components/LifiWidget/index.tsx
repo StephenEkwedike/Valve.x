@@ -5,7 +5,7 @@ export const LifiWidget = () => {
   const [count, setCount] = useState(1);
   const widgetConfig: WidgetConfig = useMemo(() => {
     return {
-      integrator: "valve-ui",
+      integrator: "valv-ui",
       variant: "drawer",
     };
   }, []);

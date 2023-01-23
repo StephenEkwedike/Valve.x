@@ -4,7 +4,7 @@ import { ConnectorNames } from "utils/enums";
 
 export const STORAGE_KEY_CONNECTOR = "CONNECTOR";
 
-export const LOGGER_ID = "VALVE";
+export const LOGGER_ID = "VALV.FI";
 
 export const DEFAULT_NETWORK_ID = 97; // mainnet
 

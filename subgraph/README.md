@@ -1,6 +1,6 @@
 # VALV.FI-Subgraph
 
-This is a subgraph for [valve contracts](https://github.com/StephenEkwedike/Valve.x/tree/master/contracts) on [The Graph](http://thegraph.com/).
+This is a subgraph for [valv contracts](https://github.com/StephenEkwedike/Valve.x/tree/master/contracts) on [The Graph](http://thegraph.com/).
 
 ## Deploy
 

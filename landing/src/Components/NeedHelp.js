@@ -35,7 +35,7 @@ function NeedHelp() {
                                         marginTop: "25px",
                                     }}
                                 >
-                                    Get in touch with Valve team
+                                    Get in touch with Valv team
                                 </Typography>
                                 <Box>
                                     <Button

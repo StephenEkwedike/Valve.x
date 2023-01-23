@@ -1,8 +1,6 @@
-import { NavLink } from "react-router-dom";
-
 export const Logo = () => {
   return (
-    <NavLink className="flex items-center justify-center app__logo gap-1" to="/">
+    <a className="flex items-center justify-center app__logo gap-1" href="https://valv.fi">
       <svg width="16" height="24" viewBox="0 0 65 95" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M2.86169 51.5024V14.717H32.2231V41.5063C31.4187 63.0978 42.6806 62.6979 50.3226 62.6979L52.7359 92.686C44.0481 93.3258 30.078 91.0867 26.19 89.8871C7.68823 84.1791 3.26391 62.1648 2.86169 51.5024Z" fill="url(#paint0_linear_223_251)"/>
         <ellipse cx="17.9874" cy="10.0157" rx="10.0157" ry="17.9874" transform="rotate(-90 17.9874 10.0157)" fill="url(#paint1_linear_223_251)"/>
@@ -33,6 +31,6 @@ export const Logo = () => {
         </defs>
       </svg>
       <p className="text-lg font-bold">VALV.FI</p>
-    </NavLink>
+    </a>
   );
 };
