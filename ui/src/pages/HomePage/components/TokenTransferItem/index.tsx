@@ -6,7 +6,7 @@ import { AddressItem, ContactModal, Spinner } from "components";
 import { getTokenFromAddress } from "config/networks";
 import { useConnectedWeb3Context } from "contexts";
 import { useServices, useTransfer } from "helpers";
-import { formatBigNumber, formatSeconds, getCurrentTimestamp } from "utils";
+import { formatBigNumber, formatSeconds, getCurrentTimestamp, getDateStr } from "utils";
 import { TokenType, TransferStatus } from "utils/enums";
 
 interface IProps {
@@ -84,6 +84,22 @@ export const TokenTransferItem = (props: IProps) => {
     }
   };
 
+  const getTransferTimeStamp = () => {
+    const timestamp = getCurrentTimestamp();
+    let tokenTimestamp;
+    switch (tokenData?.status) {
+      case TransferStatus.Init:
+        tokenTimestamp = timestamp > tokenData.expireAt ? tokenData.expireAt : tokenData.createTimestamp;
+        break;
+      case TransferStatus.Sent:
+        tokenTimestamp = tokenData.isDirect ? tokenData.createTimestamp : tokenData.acceptTimestamp;
+        break;
+      case TransferStatus.Cancelled:
+        tokenTimestamp = tokenData.cancelTimestamp;
+    }
+    return tokenTimestamp && getDateStr(tokenTimestamp);
+  }
+
   if (!account || !networkId) {
     return null;
   }
@@ -144,13 +160,17 @@ export const TokenTransferItem = (props: IProps) => {
             {tokenData.status === TransferStatus.Sent ||
             tokenData.status === TransferStatus.Cancelled ||
             (tokenData.status === TransferStatus.Init && timestamp > tokenData.expireAt) ? (
-              <p className="text-primary sm:text-base text-sm">
-                {tokenData.status === TransferStatus.Sent
-                  ? "Sent"
-                  : tokenData.status === TransferStatus.Cancelled
-                  ? "Cancelled"
-                  : "Expired"}
-              </p>
+              <div className="flex items-end text-primary sm:text-base text-sm">
+                <span>
+                  {tokenData.status === TransferStatus.Sent
+                    ? "Sent"
+                    : tokenData.status === TransferStatus.Cancelled
+                    ? "Cancelled"
+                    : "Expired"}
+                </span>
+                &nbsp;
+                <span>at {getTransferTimeStamp()}</span>
+              </div>
             ) : null}
             <div className="text-right">
               <span

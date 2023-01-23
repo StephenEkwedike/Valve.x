@@ -112,6 +112,7 @@ export const NFTTransfer = (props: IProps) => {
           label="Enter Recipient Address"
         />
         <TransferButton 
+          isDirect={state.isDirect}
           disabled={state.nft?.tokenId === undefined} 
           onClick={onTransfer} 
         />

@@ -6,7 +6,7 @@ import { AddressItem, ContactModal, Spinner } from "components";
 import { getNFTFromAddress } from "config/networks";
 import { useConnectedWeb3Context } from "contexts";
 import { useServices, useTransfer } from "helpers";
-import { formatSeconds, getCurrentTimestamp } from "utils";
+import { formatSeconds, getCurrentTimestamp, getDateStr } from "utils";
 import { TokenType, TransferStatus } from "utils/enums";
 
 interface IProps {
@@ -84,6 +84,22 @@ export const NFTTransferItem = (props: IProps) => {
     }
   };
 
+  const getTransferTimeStamp = () => {
+    const timestamp = getCurrentTimestamp();
+    let tokenTimestamp;
+    switch (nftData?.status) {
+      case TransferStatus.Init:
+        tokenTimestamp = timestamp > nftData.expireAt ? nftData.expireAt : nftData.createTimestamp;
+        break;
+      case TransferStatus.Sent:
+        tokenTimestamp = nftData.isDirect ? nftData.createTimestamp : nftData.acceptTimestamp;
+        break;
+      case TransferStatus.Cancelled:
+        tokenTimestamp = nftData.cancelTimestamp;
+    }
+    return tokenTimestamp && getDateStr(tokenTimestamp);
+  }
+
   if (!account || !networkId) {
     return null;
   }
@@ -146,13 +162,17 @@ export const NFTTransferItem = (props: IProps) => {
             {nftData.status === TransferStatus.Sent ||
             nftData.status === TransferStatus.Cancelled ||
             (nftData.status === TransferStatus.Init && timestamp > nftData.expireAt) ? (
-              <p className="text-primary sm:text-base text-sm">
-                {nftData.status === TransferStatus.Sent
-                  ? "Sent"
-                  : nftData.status === TransferStatus.Cancelled
-                  ? "Cancelled"
-                  : "Expired"}
-              </p>
+              <div className="text-primary sm:text-base text-sm">
+                <span>
+                  {nftData.status === TransferStatus.Sent
+                    ? "Sent"
+                    : nftData.status === TransferStatus.Cancelled
+                    ? "Cancelled"
+                    : "Expired"}
+                </span>
+                &nbsp;
+                <span>at {getTransferTimeStamp()}</span>
+              </div>
             ) : null}
             <div className="text-right">
               <span

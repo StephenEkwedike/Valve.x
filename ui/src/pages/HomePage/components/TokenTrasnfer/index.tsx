@@ -128,6 +128,7 @@ export const TokenTransfer = (props: IProps) => {
           label="Enter Recipient Address"
         />
         <TransferButton 
+          isDirect={state.isDirect}
           disabled={getMessage() !== ""} 
           onClick={onTransfer} 
         />

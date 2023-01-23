@@ -52,6 +52,10 @@ export const useTransfer = (id: any, tokenType: TokenType) => {
                   status
                   expireAt
                   exId
+                  isDirect
+                  createTimestamp
+                  cancelTimestamp
+                  acceptTimestamp
                 }
               }
             `
@@ -70,7 +74,11 @@ export const useTransfer = (id: any, tokenType: TokenType) => {
           amount: BigNumber.from(response.data.transfer.amount),
           status: getTransferStatus(response.data.transfer.status),
           expireAt: response.data.transfer.expireAt,
-          exId: response.data.transfer.exId
+          exId: response.data.transfer.exId,
+          isDirect: response.data.transfer.isDirect,
+          createTimestamp: response.data.transfer.createTimestamp,
+          cancelTimestamp: response.data.transfer.cancelTimestamp,
+          acceptTimestamp: response.data.transfer.acceptTimestamp,
         }
       } else {
         result = await valve.getTransfer(id);
@@ -116,6 +124,10 @@ export const useTransfer = (id: any, tokenType: TokenType) => {
                   expireAt
                   status
                   exId
+                  isDirect
+                  createTimestamp
+                  cancelTimestamp
+                  acceptTimestamp
                 }
               }
             `
@@ -134,7 +146,11 @@ export const useTransfer = (id: any, tokenType: TokenType) => {
           tokenId: BigNumber.from(response.data.transfer.tokenId),
           status: getTransferStatus(response.data.transfer.status),
           expireAt: response.data.transfer.expireAt,
-          exId: response.data.transfer.exId
+          exId: response.data.transfer.exId,
+          isDirect: response.data.transfer.isDirect,
+          createTimestamp: response.data.transfer.createTimestamp,
+          cancelTimestamp: response.data.transfer.cancelTimestamp,
+          acceptTimestamp: response.data.transfer.acceptTimestamp,
         }
       } else {
         result = await valve721.getTransfer(id);
