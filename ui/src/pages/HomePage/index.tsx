@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 import { useUserReceives, useUserTransfers } from "helpers";
 import { HomeTab, TokenType } from "utils/enums";
@@ -20,7 +21,8 @@ interface IState {
 }
 
 const HomePage = () => {
-  const [state, setState] = useState<IState>({ tab: HomeTab.Transfer, recipient: "" });
+  const location = useLocation();
+  const [state, setState] = useState<IState>({ tab: HomeTab.Transfer, recipient: location.state?.recipient || "" });
   const { tokenType, setTokenType } = useSelectedTokenTypeContext();
   const {
     transferIds,
@@ -32,6 +34,11 @@ const HomePage = () => {
     load: loadReceives,
     loading: receivesLoading,
   } = useUserReceives();
+
+  useEffect(() => {
+    if(location.state?.tokenType)
+      setTokenType(location.state.tokenType);
+  }, [location.state?.tokenType])
 
   const renderContent = () => {
     switch (state.tab) {

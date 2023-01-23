@@ -103,6 +103,10 @@ export interface INFTTransfer {
   expireAt: number;
   status: TransferStatus;
   exId: string;
+  isDirect: boolean;
+  createTimestamp?: number;
+  cancelTimestamp?: number;
+  acceptTimestamp?: number;
 }
 
 export interface Call {
@@ -126,6 +130,10 @@ export interface ITokenTransfer {
   expireAt: number;
   status: TransferStatus;
   exId: string;
+  isDirect: boolean;
+  createTimestamp?: number;
+  cancelTimestamp?: number;
+  acceptTimestamp?: number;
 }
 
 export interface IContact {

@@ -128,6 +128,11 @@ export const getTimeStr = (timestamp: number) => {
   return obj.format("MM/DD/YYYY HH:mm:ss");
 };
 
+export const getDateStr = (timestamp: number) => {
+  const obj = moment.unix(timestamp);
+  return obj.format("MM/DD/YYYY");
+};
+
 export const getTransferStatus = (status: string) => {
   switch (status) {
     case "Init":

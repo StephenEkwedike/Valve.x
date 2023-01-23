@@ -1,3 +1,7 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Menu, Transition } from '@headlessui/react'
+
 import { Logo } from "components";
 import {
   DEFAULT_NETWORK_ID,
@@ -17,6 +21,7 @@ export const Header = () => {
 
   const yPosition = useScrollYPosition();
   const { balance } = useTokenBalance(NULL_ADDRESS);
+  const navigate = useNavigate();
 
   const selectedNetwork =
     networks[(networkId || DEFAULT_NETWORK_ID) as NetworkId];
@@ -31,7 +36,7 @@ export const Header = () => {
         <div className="h-full flex justify-between items-center px-4 sm:px-6 md:px-10">
           <Logo />
 
-          <div className="flex items-center">
+          <Menu as="div" className="relative flex items-center">
             {account ? (
               <>
                 <p className="text-primary text-sm">
@@ -39,14 +44,47 @@ export const Header = () => {
                   {selectedNetwork.symbol.toUpperCase()}
                 </p>
                 <NetworkSelector />
-                <button
-                  onClick={() => {
-                    onDisconnect();
-                  }}
-                  className="text-primary text-sm font-bold px-3 h-9"
-                >
+                <Menu.Button className="text-primary text-sm font-bold px-3 h-9">
                   {shortenAddress(account)}
-                </button>
+                </Menu.Button>
+                <Transition
+                  as={React.Fragment}
+                  enter="transition ease-out duration-100"
+                  enterFrom="transform opacity-0 scale-95"
+                  enterTo="transform opacity-100 scale-100"
+                  leave="transition ease-in duration-75"
+                  leaveFrom="transform opacity-100 scale-100"
+                  leaveTo="transform opacity-0 scale-95"
+                >
+                  <Menu.Items className="absolute top-6 right-0 z-10 mt-2 w-36 origin-top-right rounded-md bg-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <div className="py-1">
+                      <Menu.Item>
+                        <button
+                          className="block px-4 py-2 text-white text-sm text-right"
+                          onClick={() => navigate("/")}
+                        >
+                          Transfer
+                        </button>
+                      </Menu.Item>
+                      <Menu.Item>
+                        <button
+                          className="block px-4 py-2 text-white text-sm text-right"
+                          onClick={() => navigate("/profile")}
+                        >
+                          My Profile
+                        </button>
+                      </Menu.Item>
+                      <Menu.Item>
+                        <button
+                          className="block px-4 py-2 text-white text-sm text-right"
+                          onClick={() => onDisconnect()}
+                        >
+                          Disconnect
+                        </button>
+                      </Menu.Item>
+                    </div>
+                  </Menu.Items>
+                </Transition>
               </>
             ) : (
               <button
@@ -58,7 +96,7 @@ export const Header = () => {
                 Connect Wallet
               </button>
             )}
-          </div>
+          </Menu>
         </div>
       </div>
     </>
