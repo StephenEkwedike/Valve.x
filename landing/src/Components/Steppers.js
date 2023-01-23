@@ -173,7 +173,7 @@ ColorlibStepIcon.propTypes = {
 const steps = [
   "You enter amount and recipient address",
   "We generate an expirable link ",
-  "Recipient enters wallet on the link for confimation",
+  "Recipient connects wallet on the link page for confirmation",
   "Your payment or NFT gets sent",
 ];
 

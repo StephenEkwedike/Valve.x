@@ -26,7 +26,7 @@ function SendCrypto() {
                   lineHeight: "56px",
                 }}
               >
-                Send any crypto seamlessly
+                Decentralized Web3 Contact List
               </Typography>
               <Typography
                 sx={{
@@ -37,12 +37,12 @@ function SendCrypto() {
                   paddingRight: "20px",
                 }}
               >
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it. <br /> <br />
-                It has survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged.
+                Give custom names to wallets & send crypto and NFT’s to wallets 
+                belonging to you, friends, hires and others from a contact list, 
+                enabling one-click transactions and saving time when making 
+                recurring transfers<br /> <br />
+                Save and edit different wallet addresses in your contacts with 
+                any custom name.
               </Typography>
             </Box>
             <Button

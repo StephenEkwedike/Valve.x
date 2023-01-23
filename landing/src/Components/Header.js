@@ -17,7 +17,7 @@ import Button from "@mui/material/Button";
 import { Container, Menu, MenuItem } from "@mui/material";
 
 const drawerWidth = 240;
-const navItems = ["How it works", "Platforms", "Fees", "About"];
+const navItems = ["Fees"];
 
 function DrawerAppBar(props) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);

@@ -23,9 +23,10 @@ function NeedHelp() {
                                         lineHeight: "25px",
                                     }}
                                 >
-                                    Valve.fi prevents creates a two-party
-                                    verification system that coiners from
-                                    sending their funds to the wrong addresses.
+                                    Valv.fi offers a decentralized web3 contact 
+                                    list as well as allows for a two-party verification 
+                                    system that prevents users from sending their funds 
+                                    to the wrong addresses.
                                 </Typography>
                                 <Typography
                                     sx={{
@@ -38,6 +39,7 @@ function NeedHelp() {
                                 </Typography>
                                 <Box>
                                     <Button
+                                        href="https://discord.gg/pUEjXcCJeX"
                                         sx={{
                                             fontSize: "14px",
                                             textTransform: "inherit",
@@ -70,6 +72,7 @@ function NeedHelp() {
                                 </Box>
                                 <Box>
                                     <Button
+                                        href="https://twitter.com/valv_fi"
                                         sx={{
                                             fontSize: "14px",
                                             textTransform: "inherit",
@@ -208,7 +211,7 @@ function NeedHelp() {
                 >
                     <Box>
                         <Typography sx={{ fontSize: "14px", mb: 2 }}>
-                            Copyright Valve.fi 2023
+                            Copyright Valv.fi 2023
                         </Typography>
                     </Box>
                     <Box

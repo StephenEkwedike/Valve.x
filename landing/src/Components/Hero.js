@@ -22,8 +22,10 @@ function Hero() {
                                     marginTop: "20px",
                                 }}
                             >
-                                Eliminate manual double and triple checking.
-                                Never send crypto to the wrong address.
+                                Essentially two-factor authentication (2FA) 
+                                for cryptocurrency and NFT transfers. Eliminate 
+                                manual double and triple checking. Never send 
+                                crypto to the wrong address.
                             </Typography>
                         </Box>
                     </Grid>
