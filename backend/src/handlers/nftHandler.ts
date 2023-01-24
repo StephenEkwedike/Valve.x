@@ -5,12 +5,11 @@ export const getNFTsbyWallet = async (
   req: express.Request,
   res: express.Response
 ) => {
-  const { account, networkId, nftAddr } = req.params;
+  const { account, networkId } = req.params;
   try {
     const response = await Moralis.EvmApi.nft.getWalletNFTs({
       address: account,
       chain: networkId,
-      tokenAddresses: [nftAddr]
     });
 
     return res.status(200).json(response.result); 

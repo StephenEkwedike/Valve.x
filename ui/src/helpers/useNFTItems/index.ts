@@ -10,20 +10,20 @@ interface IState {
   loading: boolean;
 }
 
-export const useNFTItems = (propsNFTAddr?: string) => {
+export const useNFTItems = () => {
   const [state, setState] = useState<IState>({ nfts: [], loading: false });
 
   const { networkId, account } = useConnectedWeb3Context();
 
   useEffect(() => {
     const fetchNFTs = async () => {
-      if(!propsNFTAddr || !account) {
+      if(!account) {
         setState((prev) => ({ loading: false, nfts: [] }));
         return;
       }
       try {
         setState((prev) => ({ ...prev, loading: true }));
-        const results = (await axios.get(`${API_URL}/nfts/${account}/${networkId}/${propsNFTAddr}`)).data;
+        const results = (await axios.get(`${API_URL}/nfts/${account}/${networkId}`)).data;
         setState(() => ({
           nfts: results.map((item: any) => ({
             address: item.tokenAddress,
@@ -39,7 +39,7 @@ export const useNFTItems = (propsNFTAddr?: string) => {
       }
     };
     fetchNFTs();
-  }, [account, networkId, propsNFTAddr])
+  }, [account, networkId]);
   
   return state;
 }

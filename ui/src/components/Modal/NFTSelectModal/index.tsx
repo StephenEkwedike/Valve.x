@@ -16,14 +16,14 @@ interface IProps {
 
 export const NFTSelectModal = (props: IProps) => {
   const { nft, onSelect, onClose } = props;
-  const [nftCollection, setNftCollection] = useState<INFT>()
-  const { networkId } = useConnectedWeb3Context();
-  const fNetworkId = networkId || DEFAULT_NETWORK_ID;
-  const nftCollections = Object.keys(knownNFTs)
-    .map((key) => getNFT(key as KnownNFT))
-    .filter((nft) => nft?.platformId === fNetworkId);
-  const balances = useNFTBalances(nftCollections);
-  const { loading, nfts: nftItems } = useNFTItems(nftCollection?.address);
+  // const [nftCollection, setNftCollection] = useState<INFT>()
+  // const { networkId } = useConnectedWeb3Context();
+  // const fNetworkId = networkId || DEFAULT_NETWORK_ID;
+  // const nftCollections = Object.keys(knownNFTs)
+  //   .map((key) => getNFT(key as KnownNFT))
+  //   .filter((nft) => nft?.platformId === fNetworkId);
+  // const balances = useNFTBalances(nftCollections);
+  const { loading, nfts: nftItems } = useNFTItems();
 
   const renderNFTItems = () => {
     return (
@@ -65,53 +65,53 @@ export const NFTSelectModal = (props: IProps) => {
     );
   }
 
-  const renderNFTCollections = () => {
-    return (
-      <div className="flex flex-col flex-1 flex-grow min-h-[50vh] lg:min-h-fit overflow-hidden h-full divide-y divide-dark-800">
-        {nftCollections.length ? (
-          nftCollections.map((nftCollection) => {
-            const isSelected = 
-              (nft?.address.toLowerCase() || "") === 
-              nftCollection.address.toLowerCase();
-            return (
-              <div
-                key={nftCollection.address}
-                className={
-                  isSelected
-                    ? "opacity-20 flex items-center w-full hover:bg-dark-800/40 px-4 py-2  border-none"
-                    : "flex items-center w-full hover:bg-dark-800/40 px-4 py-2 border-none"
-                }
-                onClick={() => {
-                  setNftCollection(nftCollection);
-                }}
-              >
-                <div className="flex items-center flex-grow gap-2 rounded cursor-pointer">
-                  <img
-                    className="rounded-full w-6 h-6"
-                    src={nftCollection.image[0]}
-                    alt="img"
-                  />
-                  <div className="flex flex-col flex-1">
-                    <div className="text-[0.625rem] leading-[1.2] font-medium text-secondary">
-                      {nftCollection.name}
-                    </div>
-                    <div className="text-sm leading-5 font-bold text-high-emphesis">
-                      {nftCollection.symbol}
-                    </div>
-                  </div>
-                  <div className="text-sm leading-5 text-primary">
-                    {(balances[nftCollection.address.toLowerCase()] || ZERO).toString()}
-                  </div>
-                </div>
-              </div>
-            );
-          })
-        ) : (
-          <div className="w-full text-white text-center">No collections</div>
-        )}
-      </div>
-    )
-  }
+  // const renderNFTCollections = () => {
+  //   return (
+  //     <div className="flex flex-col flex-1 flex-grow min-h-[50vh] lg:min-h-fit overflow-hidden h-full divide-y divide-dark-800">
+  //       {nftCollections.length ? (
+  //         nftCollections.map((nftCollection) => {
+  //           const isSelected = 
+  //             (nft?.address.toLowerCase() || "") === 
+  //             nftCollection.address.toLowerCase();
+  //           return (
+  //             <div
+  //               key={nftCollection.address}
+  //               className={
+  //                 isSelected
+  //                   ? "opacity-20 flex items-center w-full hover:bg-dark-800/40 px-4 py-2  border-none"
+  //                   : "flex items-center w-full hover:bg-dark-800/40 px-4 py-2 border-none"
+  //               }
+  //               onClick={() => {
+  //                 setNftCollection(nftCollection);
+  //               }}
+  //             >
+  //               <div className="flex items-center flex-grow gap-2 rounded cursor-pointer">
+  //                 <img
+  //                   className="rounded-full w-6 h-6"
+  //                   src={nftCollection.image[0]}
+  //                   alt="img"
+  //                 />
+  //                 <div className="flex flex-col flex-1">
+  //                   <div className="text-[0.625rem] leading-[1.2] font-medium text-secondary">
+  //                     {nftCollection.name}
+  //                   </div>
+  //                   <div className="text-sm leading-5 font-bold text-high-emphesis">
+  //                     {nftCollection.symbol}
+  //                   </div>
+  //                 </div>
+  //                 <div className="text-sm leading-5 text-primary">
+  //                   {(balances[nftCollection.address.toLowerCase()] || ZERO).toString()}
+  //                 </div>
+  //               </div>
+  //             </div>
+  //           );
+  //         })
+  //       ) : (
+  //         <div className="w-full text-white text-center">No collections</div>
+  //       )}
+  //     </div>
+  //   )
+  // }
 
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">
@@ -125,27 +125,27 @@ export const NFTSelectModal = (props: IProps) => {
       >
         <div className="lg:max-h-[92vh] lg:h-[40rem] h-full flex flex-col gap-4">
           <div className="flex justify-between items-center w-full">
-            {nftCollection && (
+            {/* {nftCollection && (
               <button 
                 className="p-2" 
                 onClick={() => setNftCollection(undefined)}
               >
                 <ArrowNarrowLeftIcon className="w-6 h-6 text-white" />
               </button>
-            )}
+            )} */}
             <p className="text-base md:text-lg font-medium text-white">
-              {nftCollection ? "Select a NFT" : "Select a NFT Collection"}
+              {"Select a NFT"}
             </p>
             <button className="p-2" onClick={onClose}>
               <XIcon className="w-6 h-6 text-white" />
             </button>
           </div>
           <div className="h-full overflow-hidden overflow-y-auto border rounded border-dark-800 bg-[rgba(0,0,0,0.2)]">
-            {nftCollection ? (
-              renderNFTItems()
-            ) : (
+            {/* {nftCollection ? ( */}
+              {renderNFTItems()}
+            {/* ) : (
               renderNFTCollections()
-            )}
+            )} */}
           </div>
         </div>
       </div>

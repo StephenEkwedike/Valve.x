@@ -25,7 +25,7 @@ import { dbCreateConnection } from "./typeorm/dbCreateConnection";
   app.get("/", rootHandler);
   app.get("/api/contacts/:user", getUserContacts);
   app.post("/api/contacts", postContact);
-  app.get("/api/nfts/:account/:networkId/:nftAddr", getNFTsbyWallet);
+  app.get("/api/nfts/:account/:networkId", getNFTsbyWallet);
 
   const server = createServer(app);
   server.listen(process.env.PORT);
