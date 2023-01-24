@@ -14,7 +14,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { Container, Menu, MenuItem } from "@mui/material";
+import { Container, Menu, MenuItem, Link } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 const navItems = ["Fees"];
@@ -22,6 +23,8 @@ const navItems = ["Fees"];
 function DrawerAppBar(props) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -105,10 +108,10 @@ function DrawerAppBar(props) {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {navItems.map((data) => {
+              {navItems.map((data, index) => {
                 return (
-                  <MenuItem onClick={handleCloseNavMenu}>
-                    <Typography>{data}</Typography>
+                  <MenuItem key={index} onClick={handleCloseNavMenu}>
+                    <Typography onClick={() => navigate("/" + data.toLowerCase())}>{data}</Typography>
                   </MenuItem>
                 );
               })}
@@ -144,6 +147,7 @@ function DrawerAppBar(props) {
                 cursor: "pointer",
                 alignItems: "center",
               }}
+              onClick={() => navigate("/")}
             >
               <img style={{ height: "27px" }} src="/img/logo.png" alt="logo" />
               <Typography
@@ -154,7 +158,7 @@ function DrawerAppBar(props) {
             </Box>
             <Box sx={{ display: { xs: "none", md: "block" } }}>
               {navItems.map((item) => (
-                <Button key={item} sx={{ color: "#fff" }}>
+                <Button key={item} sx={{ color: "#fff" }} onClick={() => navigate("/" + item.toLowerCase())}>
                   {item}
                 </Button>
               ))}
