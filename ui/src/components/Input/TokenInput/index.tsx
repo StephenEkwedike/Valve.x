@@ -96,10 +96,10 @@ export const TokenInput = (props: IProps) => {
               className="w-5 h-5 rounded"
             />
           )}
-          <div className="text-xs">
-            {token?.symbol || "Select a Token"}
+          <div className="text-sm text-center">
+            {token?.symbol || "Select Token"}
           </div>
-          <ChevronDownIcon className="w-4 h-4" />
+          <ChevronDownIcon className="w-8 h-4" />
         </div>
       </div>
       <div className="flex flex-row items-center justify-between">
