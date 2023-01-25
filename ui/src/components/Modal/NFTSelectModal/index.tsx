@@ -58,7 +58,7 @@ export const NFTSelectModal = (props: IProps) => {
                 >
                   <img
                     className="w-24 h-24 rounded-[8px]" 
-                    src={nftItem.image[0].startsWith("http") ? nftItem.image[0] : "assets/nfts/empty-nft.png"}
+                    src={nftItem.image[0].startsWith("http") ? nftItem.image[0] : "assets/tokens/empty-nft.png"}
                     alt={nftItem.name}
                   />
                   <div className="w-24 text-sm text-center overflow overflow-hidden text-ellipsis whitespace-nowrap">

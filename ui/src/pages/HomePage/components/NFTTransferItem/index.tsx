@@ -118,7 +118,7 @@ export const NFTTransferItem = (props: IProps) => {
           onClick={() => setState((prev) => ({ ...prev, contactModalVisible: true }))}
         >
           <img 
-            src={nft.image[0].startsWith("http") ? nft.image[0] : "assets/nfts/empty-nft.png"} 
+            src={nft.image[0].startsWith("http") ? nft.image[0] : "assets/tokens/empty-nft.png"} 
             alt="img" 
             className="rounded-xl w-20 h-20 m-auto" 
           />
