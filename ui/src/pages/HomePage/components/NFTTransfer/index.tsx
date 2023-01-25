@@ -112,7 +112,7 @@ export const NFTTransfer = (props: IProps) => {
         />
         <TransferButton 
           isDirect={state.isDirect}
-          disabled={state.nft?.tokenId === undefined} 
+          disabled={getMessage() !== ""} 
           onClick={onTransfer} 
         />
         <div className="flex items-center justify-between">

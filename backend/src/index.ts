@@ -8,7 +8,7 @@ import Moralis from "moralis";
 
 import { rootHandler } from "./handlers/rootHandler";
 import { getUserContacts, postContact } from "./handlers/contactHandler";
-import { getNFTsbyWallet } from "./handlers/nftHandler";
+import { getNFTMetaData, getNFTsbyWallet } from "./handlers/nftHandler";
 
 import { dbCreateConnection } from "./typeorm/dbCreateConnection";
 
@@ -26,6 +26,7 @@ import { dbCreateConnection } from "./typeorm/dbCreateConnection";
   app.get("/api/contacts/:user", getUserContacts);
   app.post("/api/contacts", postContact);
   app.get("/api/nfts/:account/:networkId", getNFTsbyWallet);
+  app.get("/api/nfts/:address/:networkId/:tokenId", getNFTMetaData);
 
   const server = createServer(app);
   server.listen(process.env.PORT);

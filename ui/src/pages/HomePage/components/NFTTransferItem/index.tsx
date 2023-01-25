@@ -5,7 +5,7 @@ import copy from "copy-to-clipboard";
 import { AddressItem, ContactModal, Spinner } from "components";
 import { getNFTFromAddress } from "config/networks";
 import { useConnectedWeb3Context } from "contexts";
-import { useServices, useTransfer } from "helpers";
+import { useNFTMetadata, useServices, useTransfer } from "helpers";
 import { formatSeconds, getCurrentTimestamp, getDateStr } from "utils";
 import { TokenType, TransferStatus } from "utils/enums";
 
@@ -20,8 +20,9 @@ interface IState {
 
 export const NFTTransferItem = (props: IProps) => {
   const { account, networkId, setTxModalInfo } = useConnectedWeb3Context();
-  const { loading, nftData, loadNFT } = useTransfer(props.transferId, TokenType.NFT);
+  const { loading: loadingTransfer, nftData, loadNFT } = useTransfer(props.transferId, TokenType.NFT);
   const { valve721 } = useServices();
+  const { loading: loadingMetadata, nft } = useNFTMetadata(nftData);
   const [state, setState] = useState<IState>({
     timestamp: getCurrentTimestamp(),
     contactModalVisible: false,
@@ -105,10 +106,9 @@ export const NFTTransferItem = (props: IProps) => {
   }
 
   const renderContent = () => {
-    if (!nftData) return null;
+    if (!nft || !nftData) return null;
     const isReceiver = account.toLowerCase() === nftData.to.toLowerCase();
     const isSender = account.toLowerCase() === nftData.from.toLowerCase();
-    const nft = getNFTFromAddress(nftData.token, networkId);
     const timestamp = getCurrentTimestamp();
 
     return (
@@ -118,14 +118,13 @@ export const NFTTransferItem = (props: IProps) => {
           onClick={() => setState((prev) => ({ ...prev, contactModalVisible: true }))}
         >
           <img 
-            // src={nft.image[0]} 
-            src={"/assets/nfts/shonen 1619.png"} 
+            src={nft.image[0].startsWith("http") ? nft.image[0] : "assets/nfts/empty-nft.png"} 
             alt="img" 
             className="rounded-xl w-20 h-20 m-auto" 
           />
           <div className="flex-1 flex flex-col justify-between">
-            <div className="text-primary flex items-center text-sm">
-              {nft.symbol} # {nftData.tokenId.toString()}
+            <div className="w-28 text-primary text-sm overflow overflow-hidden text-ellipsis whitespace-nowrap">
+              {nft.symbol} #{nftData.tokenId.toString()}
             </div>
             <div className="text-primary text-sm">
               From: <AddressItem address={nftData.from} />
@@ -146,7 +145,7 @@ export const NFTTransferItem = (props: IProps) => {
                 Accept
               </button>
             ) : null}
-            {true ? (
+            {nftData.status === TransferStatus.Init && isSender ? (
               <button
                 className="text-higher-emphesis hover:bg-gradient-to-b hover:to-black/20 disabled:pointer-events-none disabled:opacity-40 !bg-gradient-to-r from-blue to-pink-600 hover:from-blue/80 hover:to-pink-600/80 focus:from-blue/80 focus:to-pink-600/80 active:from-blue/70 active:to-pink-600/70 focus:border-blue-700 px-2 sm:px-4 py-1 text-sm rounded-full"
                 onClick={onCancel}
@@ -204,7 +203,7 @@ export const NFTTransferItem = (props: IProps) => {
 
   return (
     <div className="border border-gray-500 hover:border-gray-300 rounded-[14px] p-3 flex flex-col gap-4 component__token_input">
-      {loading && !nftData ? (
+      {loadingTransfer || loadingMetadata ? (
         <div className="text-center">
           <Spinner className="lds-ring--small" />
         </div>

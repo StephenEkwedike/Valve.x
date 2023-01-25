@@ -28,7 +28,7 @@ export const NFTInput = (props: IProps) => {
         {nft ? (
           <div className="flex flex-row items-center gap-2 overflow-hidden overflow-ellipsis">
             <img
-              src={nft.image[0]}
+              src={nft.image[0].startsWith("http") ? nft.image[0] : "assets/nfts/empty-nft.png"}
               alt="logo"
               className="w-5 h-5 rounded flex-none"
             />
@@ -37,7 +37,7 @@ export const NFTInput = (props: IProps) => {
             </div>
           </div>
         ): (
-          <div>Select a NFT</div>
+          <div>Select NFT</div>
         )}
         <ChevronDownIcon className="w-4 h-4 " />
       </div>

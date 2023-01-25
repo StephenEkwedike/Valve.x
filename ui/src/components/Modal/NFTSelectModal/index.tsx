@@ -1,11 +1,20 @@
-import { useState } from "react";
-import { XIcon, ArrowNarrowLeftIcon } from "@heroicons/react/solid";
+// import { useState } from "react";
+import { 
+  XIcon, 
+  // ArrowNarrowLeftIcon 
+} from "@heroicons/react/solid";
 
-import { getNFT, knownNFTs } from "config/networks";
-import { useConnectedWeb3Context } from "contexts";
-import { useNFTBalances, useNFTItems } from "helpers";
-import { INFT, KnownNFT } from "types/types";
-import { DEFAULT_NETWORK_ID, ZERO } from "config/constants";
+// import { getNFT, knownNFTs } from "config/networks";
+// import { useConnectedWeb3Context } from "contexts";
+import { 
+  // useNFTBalances, 
+  useNFTItems 
+} from "helpers";
+import { 
+  INFT, 
+  // KnownNFT 
+} from "types/types";
+// import { DEFAULT_NETWORK_ID, ZERO } from "config/constants";
 import { Spinner } from "components";
 
 interface IProps {
@@ -49,11 +58,12 @@ export const NFTSelectModal = (props: IProps) => {
                 >
                   <img
                     className="w-24 h-24 rounded-[8px]" 
-                    // src={"/assets/nfts/shonen 1619.png"}
-                    src={nftItem.image[0]}
+                    src={nftItem.image[0].startsWith("http") ? nftItem.image[0] : "assets/nfts/empty-nft.png"}
                     alt={nftItem.name}
                   />
-                  <div>#{nftItem.tokenId}</div>
+                  <div className="w-24 text-sm text-center overflow overflow-hidden text-ellipsis whitespace-nowrap">
+                    {`${nftItem.name} #${nftItem.tokenId}`}
+                  </div>
                 </div>
               )
             })
@@ -134,7 +144,7 @@ export const NFTSelectModal = (props: IProps) => {
               </button>
             )} */}
             <p className="text-base md:text-lg font-medium text-white">
-              {"Select a NFT"}
+              {"Select NFT"}
             </p>
             <button className="p-2" onClick={onClose}>
               <XIcon className="w-6 h-6 text-white" />

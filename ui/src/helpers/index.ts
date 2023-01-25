@@ -12,4 +12,5 @@ export * from "./useNFTBalance";
 export * from "./useNFTBalances";
 export * from "./useNFTPrice";
 export * from "./useNFTItems";
+export * from "./useNFTMetadata";
 export * from "./useContacts";

@@ -8,31 +8,31 @@ function FeesPage() {
   const feesInfo = `{
     "Fees": {
       "Mainnet": {
-        "Token": "59%",
+        "Token": "0.59%",
         "NFT": "0.002 eth"
       },
       "BSC": {
-        "Token": "59%",
+        "Token": "0.59%",
         "NFT": "0.02 bnb"
       },
       "Polygon": {
-        "Token": "59%",
+        "Token": "0.59%",
         "NFT": "2 matic"
       },
       "Avalanche": {
-        "Token": "59%",
+        "Token": "0.59%",
         "NFT": "0.2 avax"
       },
       "Fantom": {
-        "Token": "59%",
+        "Token": "0.59%",
         "NFT": "20 ftm"
       },
       "Optimism": {
-        "Token": "59%",
+        "Token": "0.59%",
         "NFT": "2 op"
       },
       "BSC testnet": {
-        "Token": "59%",
+        "Token": "0.59%",
         "NFT": "0.02 tbnb"
       }
     }
