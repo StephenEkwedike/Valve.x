@@ -9,6 +9,11 @@
   box-sizing: border-box;
 }
 
+html body {
+  min-width: 357px;
+  height: 600px;
+}
+
 body {
   background-color: $primary-color;
 }

@@ -15,7 +15,7 @@ export const TransferButton = (props: IProps) => {
       disabled={disabled}
       onClick={onClick}
     >
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 text-sm sm:text-md">
         {isDirect ? (
           <>
             <span>Transfer</span>
